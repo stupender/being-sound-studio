@@ -289,15 +289,17 @@ div.button-container {
 
 h1 {
     font-family: 'Chivo', sans-serif;
+    font-weight: 500;
     margin: 0 0;
     padding: 0 0 0 0;
-    /* font-size: 1.55em; */
+    font-size: 1.25em;
 }
 
 h2 {
     font-family: 'Chivo', sans-serif;
-    font-size: 1.05em;
-    font-weight: 300;
+    font-weight: 100;
+    font-size: .9em;
+    /* font-weight: 300; */
     margin: 0 0 0 0;
     padding: 8px 0 0 0;
 }
