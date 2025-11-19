@@ -202,6 +202,11 @@ div.button-container {
     border-top: 1px solid #0000001c;
 }
 
+.music-lessons-container .offers-container,
+.sound-sessions-container .offers-container {
+    display: flex;
+}
+
 .text-section {
     display: flex;
     flex-direction: column;
