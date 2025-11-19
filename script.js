@@ -5,12 +5,6 @@ const servicesButton = document.querySelector(".teaching");
 const personalButton = document.querySelector(".personal");
 const collaborationButton = document.querySelector(".collaboration");
 const eventsButton = document.querySelector(".events");
-const musicLessonLinks = document.querySelectorAll(
-  ".music-lessons, .music-lessons-2"
-);
-const soundSessionLinks = document.querySelectorAll(
-  ".sound-sessions, .sound-sessions-2"
-);
 
 const aboutCard = document.querySelector(".about-container");
 const contactCard = document.querySelector(".contact-container");
@@ -30,7 +24,14 @@ const pageRegistry = {
   services: {
     button: servicesButton,
     path: "/services",
-    sections: [offersCard, teachingCard, testimonialScroll, scrollingItems],
+    sections: [
+      offersCard,
+      teachingCard,
+      testimonialScroll,
+      scrollingItems,
+      musiclessonsCard,
+      soundsessionsCard,
+    ],
   },
   events: {
     button: eventsButton,
@@ -51,16 +52,6 @@ const pageRegistry = {
     button: collaborationButton,
     path: "/collaboration",
     sections: [collaborationCard],
-  },
-  musicLessons: {
-    button: null,
-    path: "/music-lessons",
-    sections: [musiclessonsCard],
-  },
-  soundSessions: {
-    button: null,
-    path: "/sound-sessions",
-    sections: [soundsessionsCard],
   },
 };
 
@@ -84,20 +75,6 @@ if (contactButton) {
     toggleContact();
   });
 }
-
-musicLessonLinks.forEach((link) => {
-  link.addEventListener("click", (event) => {
-    event.preventDefault();
-    navigateToPage("musicLessons");
-  });
-});
-
-soundSessionLinks.forEach((link) => {
-  link.addEventListener("click", (event) => {
-    event.preventDefault();
-    navigateToPage("soundSessions");
-  });
-});
 
 function navigateToPage(pageKey, options = {}) {
   const { updateHistory = true, replaceState = false } = options;
