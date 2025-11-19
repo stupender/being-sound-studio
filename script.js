@@ -1,172 +1,186 @@
-// DOM Bindings 
-let aboutButton = document.querySelector(".about");
-let contactButton = document.querySelector(".contact");
-let teachingButton = document.querySelector(".teaching");
-let personalButton = document.querySelector(".personal");
-let collaborationButton = document.querySelector(".collaboration");
-let eventsButton = document.querySelector(".events");
-let musiclessonsButton = document.querySelector(".music-lessons");
-let musiclessons2Button = document.querySelector(".music-lessons-2");
-let soundsessionsButton = document.querySelector(".sound-sessions");
-let soundsessions2Button = document.querySelector(".sound-sessions-2");
+// DOM Bindings
+const aboutButton = document.querySelector(".about");
+const contactButton = document.querySelector(".contact");
+const servicesButton = document.querySelector(".teaching");
+const personalButton = document.querySelector(".personal");
+const collaborationButton = document.querySelector(".collaboration");
+const eventsButton = document.querySelector(".events");
+const musicLessonsMenuLink = document.querySelector(
+  ".offers-container .music-lessons"
+);
+const soundSessionsMenuLink = document.querySelector(
+  ".offers-container .sound-sessions"
+);
+const musicLessonLinks = document.querySelectorAll(
+  ".music-lessons, .music-lessons-2"
+);
+const soundSessionLinks = document.querySelectorAll(
+  ".sound-sessions, .sound-sessions-2"
+);
 
+const aboutCard = document.querySelector(".about-container");
+const contactCard = document.querySelector(".contact-container");
+const offersCard = document.querySelector(".offers-container");
+const teachingCard = document.querySelector(".teaching-container");
+const personalCard = document.querySelector(".personal-container");
+const collaborationCard = document.querySelector(".collaboration-container");
+const eventsCard = document.querySelector(".events-container");
+const musiclessonsCard = document.querySelector(".music-lessons-container");
+const soundsessionsCard = document.querySelector(".sound-sessions-container");
+const testimonialScroll = document.querySelector(".testimonials");
+const scrollingItems = document.querySelector(".horizontal-scrolling-items");
 
-// let soundsessionsButton = document.querySelector(".sound-sessions");
+const defaultPageKey = "services";
 
-let aboutCard = document.querySelector(".about-container");
-let contactCard = document.querySelector(".contact-container");
-let offersCard = document.querySelector(".offers-container");
-let teachingCard = document.querySelector(".teaching-container")
-let personalCard = document.querySelector(".personal-container");
-let collaborationCard = document.querySelector(".collaboration-container");
-let eventsCard = document.querySelector(".events-container");
-let musiclessonsCard = document.querySelector(".music-lessons-container");
-let soundsessionsCard = document.querySelector(".sound-sessions-container");
+const pageRegistry = {
+  services: {
+    button: servicesButton,
+    path: "/services",
+    sections: [offersCard, teachingCard, testimonialScroll, scrollingItems],
+    activeElements: [servicesButton],
+  },
+  events: {
+    button: eventsButton,
+    path: "/events",
+    sections: [eventsCard],
+    activeElements: [eventsButton],
+  },
+  about: {
+    button: aboutButton,
+    path: "/about",
+    sections: [aboutCard],
+    activeElements: [aboutButton],
+  },
+  personal: {
+    button: personalButton,
+    path: "/personal",
+    sections: [personalCard],
+    activeElements: [personalButton],
+  },
+  collaboration: {
+    button: collaborationButton,
+    path: "/collaboration",
+    sections: [collaborationCard],
+    activeElements: [collaborationButton],
+  },
+  musicLessons: {
+    button: null,
+    path: "/music-lessons",
+    sections: [offersCard, musiclessonsCard],
+    activeElements: [servicesButton, musicLessonsMenuLink],
+  },
+  soundSessions: {
+    button: null,
+    path: "/sound-sessions",
+    sections: [offersCard, soundsessionsCard],
+    activeElements: [servicesButton, soundSessionsMenuLink],
+  },
+};
 
-let testimonialScroll = document.querySelector(".testimonials");
-let scrollingItems = document.querySelector(".horizontal-scrolling-items");
+const highlightableElements = new Set();
+Object.values(pageRegistry).forEach((config) => {
+  (config.activeElements || []).forEach((element) => {
+    if (element) {
+      highlightableElements.add(element);
+    }
+  });
+});
 
-// Event Listeners
-aboutButton.addEventListener("click", displayAbout);
-contactButton.addEventListener("click", displayContact);
-teachingButton.addEventListener("click", displayTeaching);
-collaborationButton.addEventListener("click", displayCollaboration);
-personalButton.addEventListener("click", displayPersonal);
-eventsButton.addEventListener("click", displayEvents);
-// musiclessonsButton.addEventListener("click", displayMusicLessons);
-// musiclessons2Button.addEventListener("click", displayMusicLessons);
-// soundsessionsButton.addEventListener("click", displaySoundSessions);
-// soundsessions2Button.addEventListener("click", displaySoundSessions);
+const pathToPageMap = { "/": defaultPageKey, "/index.html": defaultPageKey };
+Object.entries(pageRegistry).forEach(([key, config]) => {
+  const normalized = normalizePath(config.path);
+  pathToPageMap[normalized] = key;
+});
 
+Object.entries(pageRegistry).forEach(([key, config]) => {
+  if (!config.button) return;
+  config.button.addEventListener("click", (event) => {
+    event.preventDefault();
+    navigateToPage(key);
+  });
+});
 
-// soundsessionsButton.addEventListener("click", displaySoundSessions);
-
-// Functions
-function displayAbout() {
-    aboutCard.classList.toggle("show");
-    aboutButton.classList.toggle("showing");
+if (contactButton) {
+  contactButton.addEventListener("click", (event) => {
+    event.preventDefault();
+    toggleContact();
+  });
 }
 
-function displayTeaching() {
-  if (teachingCard.classList.contains('show')) {
-    teachingCard.classList.remove("show");
-    soundsessionsCard.classList.remove("show");
-    testimonialScroll.classList.remove("show");
-    scrollingItems.classList.remove("show");
-    // offersCard.classList.remove("show");
-    // musiclessonsCard.classList.toggle("show");
-    teachingButton.classList.remove("showing");
-  } else {
-    teachingCard.classList.add("show");
-    soundsessionsCard.classList.add("show");
-    testimonialScroll.classList.add("show");
-    scrollingItems.classList.add("show");
-    offersCard.classList.remove("show");
-    // musiclessonsCard.classList.toggle("show");
-    teachingButton.classList.add("showing");
+musicLessonLinks.forEach((link) => {
+  link.addEventListener("click", (event) => {
+    event.preventDefault();
+    navigateToPage("musicLessons");
+  });
+});
+
+soundSessionLinks.forEach((link) => {
+  link.addEventListener("click", (event) => {
+    event.preventDefault();
+    navigateToPage("soundSessions");
+  });
+});
+
+function navigateToPage(pageKey, options = {}) {
+  const { updateHistory = true, replaceState = false } = options;
+  const targetKey = pageRegistry[pageKey] ? pageKey : defaultPageKey;
+
+  Object.entries(pageRegistry).forEach(([key, config]) => {
+    const isActive = key === targetKey;
+    config.sections.forEach((section) => {
+      if (!section) return;
+      section.classList.toggle("show", isActive);
+    });
+  });
+
+  highlightableElements.forEach((element) => {
+    element.classList.remove("showing");
+  });
+
+  (pageRegistry[targetKey].activeElements || []).forEach((element) => {
+    if (element) {
+      element.classList.add("showing");
+    }
+  });
+
+  if (updateHistory) {
+    const desiredPath = pageRegistry[targetKey].path;
+    const normalizedCurrent = normalizePath(window.location.pathname);
+    const normalizedDesired = normalizePath(desiredPath);
+    if (replaceState) {
+      window.history.replaceState({ page: targetKey }, "", desiredPath);
+    } else if (normalizedCurrent !== normalizedDesired) {
+      window.history.pushState({ page: targetKey }, "", desiredPath);
+    }
   }
-  if (musiclessonsButton.classList.contains('showing')) {
-      musiclessonsButton.classList.remove('showing');
+}
+
+function normalizePath(pathname) {
+  if (!pathname) return "/";
+  if (pathname.length > 1 && pathname.endsWith("/")) {
+    return pathname.slice(0, -1);
   }
-  if (soundsessionsButton.classList.contains('showing')) {
-      soundsessionsButton.classList.remove("showing");
-  }
-
-  if (musiclessonsCard.classList.contains('show')) {
-      musiclessonsCard.classList.remove('show');
-      // musiclessonsButton.classList.remove('showing');
-      teachingButton.classList.add("showing");
-      // teachingCard.classList.remove("show");
-  }
-  if (soundsessionsCard.classList.contains('show')) {
-    soundsessionsCard.classList.remove('show');
-    // musiclessonsButton.classList.remove('showing');
-    teachingButton.classList.add("showing");
-    // teachingCard.classList.remove("show");
+  return pathname;
 }
 
+function getPageFromPath(pathname) {
+  const normalized = normalizePath(pathname);
+  return pathToPageMap[normalized] || defaultPageKey;
 }
 
-function displayMusicLessons() {
-  if (teachingCard.classList.contains("show")) {
-    teachingCard.classList.remove("show");
-    musiclessonsCard.classList.add("show");
-    musiclessonsButton.classList.add("showing");
-    offersCard.classList.add("show");
-  } else if (musiclessonsCard.classList.contains("show")) {
-    teachingCard.classList.add("show");
-    musiclessonsCard.classList.remove("show");
-    musiclessonsButton.classList.remove("showing");
-    offersCard.classList.remove("show");
-  } else if (soundsessionsCard.classList.contains('show')) {
-    soundsessionsCard.classList.remove("show");
-    soundsessionsButton.classList.remove("showing");
-    musiclessonsCard.classList.add("show");
-    musiclessonsButton.classList.add("showing");
-  }
-
-  // musiclessonsCard.classList.toggle("show");
-  // musiclessonsButton.classList.toggle("showing");
-  // offersCard.classList.toggle("show");
-
-  // if (soundsessionsCard.classList.contains('show')) {
-  //   soundsessionsCard.classList.remove("show");
-  //   soundsessionsButton.classList.remove("showing");
-  // }
+function toggleContact() {
+  if (!contactCard || !contactButton) return;
+  contactCard.classList.toggle("show");
+  contactButton.classList.toggle("showing");
 }
 
-function displaySoundSessions() {
-  if (teachingCard.classList.contains("show")) {
-    teachingCard.classList.remove("show");
-    soundsessionsCard.classList.add("show");
-    soundsessionsButton.classList.add("showing");
-    offersCard.classList.add("show");
-   } else if (soundsessionsCard.classList.contains("show")) {
-    teachingCard.classList.add("show");
-    soundsessionsCard.classList.remove("show");
-    soundsessionsButton.classList.remove("showing");
-    offersCard.classList.remove("show");
-   } else if (musiclessonsCard.classList.contains('show')) {
-    musiclessonsCard.classList.remove("show");
-    musiclessonsButton.classList.remove("showing");
-    soundsessionsCard.classList.add("show");
-    soundsessionsButton.classList.add("showing");
+window.addEventListener("popstate", () => {
+  const pageKey = getPageFromPath(window.location.pathname);
+  navigateToPage(pageKey, { updateHistory: false });
+});
 
-  }
-}
-
-function displayEvents() {
-  eventsCard.classList.toggle("show");
-  eventsButton.classList.toggle("showing");
-}
-
-
-function displayContact() {
-    contactCard.classList.toggle("show");
-    contactButton.classList.toggle("showing");
-}
-
-// function displayOffers() {
-//   offersCard.classList.toggle("show");
-//   teachingCard.classList.toggle("show");
-//   testimonialScroll.classList.toggle("show");
-//   scrollingItems.classList.toggle("show");
-
-//   teachingButton.classList.toggle("showing");
-// }
-
-function displayCollaboration() {
-    collaborationCard.classList.toggle("show");
-    collaborationButton.classList.toggle("showing");
-}
-
-function displayPersonal() {
-    personalCard.classList.toggle("show");
-    personalButton.classList.toggle("showing");
-}
-
-displayTeaching();
-displayAbout();
+const initialPage = getPageFromPath(window.location.pathname);
+navigateToPage(initialPage, { replaceState: true });
 
 // Generative Music Player
 
