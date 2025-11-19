@@ -5,6 +5,12 @@ const servicesButton = document.querySelector(".teaching");
 const personalButton = document.querySelector(".personal");
 const collaborationButton = document.querySelector(".collaboration");
 const eventsButton = document.querySelector(".events");
+const musicLessonsMenuLink = document.querySelector(
+  ".offers-container .music-lessons"
+);
+const soundSessionsMenuLink = document.querySelector(
+  ".offers-container .sound-sessions"
+);
 const musicLessonLinks = document.querySelectorAll(
   ".music-lessons, .music-lessons-2"
 );
@@ -31,38 +37,54 @@ const pageRegistry = {
     button: servicesButton,
     path: "/services",
     sections: [offersCard, teachingCard, testimonialScroll, scrollingItems],
+    activeElements: [servicesButton],
   },
   events: {
     button: eventsButton,
     path: "/events",
     sections: [eventsCard],
+    activeElements: [eventsButton],
   },
   about: {
     button: aboutButton,
     path: "/about",
     sections: [aboutCard],
+    activeElements: [aboutButton],
   },
   personal: {
     button: personalButton,
     path: "/personal",
     sections: [personalCard],
+    activeElements: [personalButton],
   },
   collaboration: {
     button: collaborationButton,
     path: "/collaboration",
     sections: [collaborationCard],
+    activeElements: [collaborationButton],
   },
   musicLessons: {
     button: null,
     path: "/music-lessons",
-    sections: [musiclessonsCard],
+    sections: [offersCard, musiclessonsCard],
+    activeElements: [servicesButton, musicLessonsMenuLink],
   },
   soundSessions: {
     button: null,
     path: "/sound-sessions",
-    sections: [soundsessionsCard],
+    sections: [offersCard, soundsessionsCard],
+    activeElements: [servicesButton, soundSessionsMenuLink],
   },
 };
+
+const highlightableElements = new Set();
+Object.values(pageRegistry).forEach((config) => {
+  (config.activeElements || []).forEach((element) => {
+    if (element) {
+      highlightableElements.add(element);
+    }
+  });
+});
 
 const pathToPageMap = { "/": defaultPageKey, "/index.html": defaultPageKey };
 Object.entries(pageRegistry).forEach(([key, config]) => {
@@ -105,13 +127,20 @@ function navigateToPage(pageKey, options = {}) {
 
   Object.entries(pageRegistry).forEach(([key, config]) => {
     const isActive = key === targetKey;
-    if (config.button) {
-      config.button.classList.toggle("showing", isActive);
-    }
     config.sections.forEach((section) => {
       if (!section) return;
       section.classList.toggle("show", isActive);
     });
+  });
+
+  highlightableElements.forEach((element) => {
+    element.classList.remove("showing");
+  });
+
+  (pageRegistry[targetKey].activeElements || []).forEach((element) => {
+    if (element) {
+      element.classList.add("showing");
+    }
   });
 
   if (updateHistory) {
