@@ -5,18 +5,6 @@ const servicesButton = document.querySelector(".teaching");
 const personalButton = document.querySelector(".personal");
 const collaborationButton = document.querySelector(".collaboration");
 const eventsButton = document.querySelector(".events");
-const musicLessonsMenuLink = document.querySelector(
-  ".offers-container .music-lessons"
-);
-const soundSessionsMenuLink = document.querySelector(
-  ".offers-container .sound-sessions"
-);
-const musicLessonLinks = document.querySelectorAll(
-  ".music-lessons, .music-lessons-2"
-);
-const soundSessionLinks = document.querySelectorAll(
-  ".sound-sessions, .sound-sessions-2"
-);
 
 const aboutCard = document.querySelector(".about-container");
 const contactCard = document.querySelector(".contact-container");
@@ -25,8 +13,6 @@ const teachingCard = document.querySelector(".teaching-container");
 const personalCard = document.querySelector(".personal-container");
 const collaborationCard = document.querySelector(".collaboration-container");
 const eventsCard = document.querySelector(".events-container");
-const musiclessonsCard = document.querySelector(".music-lessons-container");
-const soundsessionsCard = document.querySelector(".sound-sessions-container");
 const testimonialScroll = document.querySelector(".testimonials");
 const scrollingItems = document.querySelector(".horizontal-scrolling-items");
 
@@ -63,18 +49,6 @@ const pageRegistry = {
     sections: [collaborationCard],
     activeElements: [collaborationButton],
   },
-  musicLessons: {
-    button: null,
-    path: "/music-lessons",
-    sections: [offersCard, musiclessonsCard],
-    activeElements: [servicesButton, musicLessonsMenuLink],
-  },
-  soundSessions: {
-    button: null,
-    path: "/sound-sessions",
-    sections: [offersCard, soundsessionsCard],
-    activeElements: [servicesButton, soundSessionsMenuLink],
-  },
 };
 
 const highlightableElements = new Set();
@@ -106,20 +80,6 @@ if (contactButton) {
     toggleContact();
   });
 }
-
-musicLessonLinks.forEach((link) => {
-  link.addEventListener("click", (event) => {
-    event.preventDefault();
-    navigateToPage("musicLessons");
-  });
-});
-
-soundSessionLinks.forEach((link) => {
-  link.addEventListener("click", (event) => {
-    event.preventDefault();
-    navigateToPage("soundSessions");
-  });
-});
 
 function navigateToPage(pageKey, options = {}) {
   const { updateHistory = true, replaceState = false } = options;
