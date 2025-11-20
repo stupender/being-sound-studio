@@ -152,30 +152,6 @@ div.button-container {
     color: #e0e0e0;
 }
 
-.music-lessons-container {
-    margin-left: 5%;
-    margin-right: 5%;
-    /* margin-right: 5%; */
-    display: none;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    background-color: rgb(24 24 24);
-    color: #e0e0e0;
-}
-
-.sound-sessions-container {
-    margin-left: 5%;
-    margin-right: 5%;
-    /* margin-right: 5%; */
-    display: none;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    background-color: rgb(24 24 24);
-    color: #e0e0e0;
-}
-
 .contact-container {
     margin-left: 5%;
     margin-right: 5%;
@@ -200,11 +176,6 @@ div.button-container {
     justify-content: space-between;
     align-items: left;
     border-top: 1px solid #0000001c;
-}
-
-.music-lessons-container .offers-container,
-.sound-sessions-container .offers-container {
-    display: flex;
 }
 
 .text-section {
@@ -486,18 +457,6 @@ a:hover {
     }
     
     .teaching-container {
-        margin-left: 0;
-        margin-right: 0;
-        flex-direction: column;
-    }
-
-    .music-lessons-container {
-        margin-left: 0;
-        margin-right: 0;
-        flex-direction: column;
-    }
-
-    .sound-sessions-container {
         margin-left: 0;
         margin-right: 0;
         flex-direction: column;
