@@ -93,7 +93,7 @@ div.button-container {
     display: none;
     flex-direction: row;
     justify-content: space-between;
-    align-items: center;
+    align-items: stretch;
     background-color: rgb(24 24 24);
     color: #e0e0e0;
 }
@@ -147,7 +147,7 @@ div.button-container {
     display: none;
     flex-direction: row;
     justify-content: space-between;
-    align-items: center;
+    align-items: stretch;
     background-color: rgb(24 24 24);
     color: #e0e0e0;
 }
@@ -377,8 +377,12 @@ a:hover {
     /* border-bottom: 1px solid rgb(24 24 24); */
 }
 
-#about-pic {
+.section-pic {
     width: 50%;
+    height: 100%;
+    object-fit: cover;
+    align-self: stretch;
+    display: block;
 }
 
 #lesson-pic {
@@ -497,8 +501,9 @@ a:hover {
     }
 
     
-    #about-pic {
+    .section-pic {
         width: 100%;
+        height: auto;
     }
 
     #filters {
