@@ -85,6 +85,10 @@ function navigateToPage(pageKey, options = {}) {
     });
   });
 
+  if (contactCard) {
+    contactCard.classList.toggle("show", targetKey === "about");
+  }
+
   highlightableElements.forEach((element) => {
     element.classList.remove("showing");
   });
