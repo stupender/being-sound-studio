@@ -1,6 +1,5 @@
 // DOM Bindings
 const aboutButton = document.querySelector(".about");
-const contactButton = document.querySelector(".contact");
 const servicesButton = document.querySelector(".teaching");
 const personalButton = document.querySelector(".personal");
 const collaborationButton = document.querySelector(".collaboration");
@@ -34,7 +33,7 @@ const pageRegistry = {
   about: {
     button: aboutButton,
     path: "/about",
-    sections: [aboutCard],
+    sections: [aboutCard, contactCard],
     activeElements: [aboutButton],
   },
   personal: {
@@ -73,13 +72,6 @@ Object.entries(pageRegistry).forEach(([key, config]) => {
     navigateToPage(key);
   });
 });
-
-if (contactButton) {
-  contactButton.addEventListener("click", (event) => {
-    event.preventDefault();
-    toggleContact();
-  });
-}
 
 function navigateToPage(pageKey, options = {}) {
   const { updateHistory = true, replaceState = false } = options;
@@ -126,12 +118,6 @@ function normalizePath(pathname) {
 function getPageFromPath(pathname) {
   const normalized = normalizePath(pathname);
   return pathToPageMap[normalized] || defaultPageKey;
-}
-
-function toggleContact() {
-  if (!contactCard || !contactButton) return;
-  contactCard.classList.toggle("show");
-  contactButton.classList.toggle("showing");
 }
 
 window.addEventListener("popstate", () => {
