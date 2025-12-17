@@ -91,7 +91,6 @@ div.button-container {
     margin-right: 5%;
     /* margin-right: 5%; */
     display: none;
-    flex-direction: row;
     justify-content: space-between;
     align-items: stretch;
     background-color: rgb(24 24 24);
@@ -145,7 +144,6 @@ div.button-container {
     margin-right: 5%;
     /* margin-right: 5%; */
     display: none;
-    flex-direction: row;
     justify-content: space-between;
     align-items: stretch;
     background-color: rgb(24 24 24);
@@ -378,11 +376,24 @@ a:hover {
 }
 
 .section-pic {
-    width: 50%;
+    flex: 1 1 50%;
+    width: 100%;
     height: 100%;
     object-fit: cover;
     align-self: stretch;
     display: block;
+}
+
+.about-container.show,
+.teaching-container.show {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    align-items: stretch;
+}
+
+.text-section,
+.about-container .text-block {
+    flex: 1 1 50%;
 }
 
 #lesson-pic {
@@ -463,6 +474,12 @@ a:hover {
     .teaching-container {
         margin-left: 0;
         margin-right: 0;
+        flex-direction: column;
+    }
+
+    .about-container.show,
+    .teaching-container.show {
+        display: flex;
         flex-direction: column;
     }
 
