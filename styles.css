@@ -97,6 +97,25 @@ div.button-container {
     color: #e0e0e0;
 }
 
+.bespoke-sonic-worlds-container {
+    margin-left: 5%;
+    margin-right: 5%;
+    display: none;
+    justify-content: space-between;
+    align-items: stretch;
+    background-color: rgb(24 24 24);
+    color: #e0e0e0;
+}
+
+.music-lessons-container {
+    margin-left: 5%;
+    margin-right: 5%;
+    display: none;
+    justify-content: space-between;
+    align-items: stretch;
+    background-color: rgb(24 24 24);
+    color: #e0e0e0;
+}
 .collaboration-container {
     margin-left: 5%;
     margin-right: 5%;
@@ -300,17 +319,19 @@ ul {
     margin: 0 0 0 0;
     padding: 0 0 0 0;
     line-height: 1.5em; 
-    list-style-position: inside;
+    list-style-position: outside;
     list-style-type: none;
 }
 
 ul.offer-items {
     /* list-style-type: circle; */
     list-style-type: "𖦹 ";
+    padding-left: 1.1em;
 }
 
 li.offer-items {
     margin: 15px 0 0 0; 
+    text-indent: 0;
 }
 
 .contact-link {
@@ -325,6 +346,10 @@ li.offer-items {
     font-size: .9em;
     text-align: justify;
     margin: 0px 30px 30px 30px;
+}
+
+#about-text.about-text-tight {
+    margin-bottom: 12px;
 }
 
 #offer-text {
@@ -385,6 +410,8 @@ a:hover {
 }
 
 .about-container.show,
+.bespoke-sonic-worlds-container.show,
+.music-lessons-container.show,
 .teaching-container.show {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -392,7 +419,9 @@ a:hover {
 }
 
 .text-section,
-.about-container .text-block {
+.about-container .text-block,
+.bespoke-sonic-worlds-container .text-block,
+.music-lessons-container .text-block {
     flex: 1 1 50%;
 }
 
@@ -478,12 +507,26 @@ a:hover {
     }
 
     .about-container.show,
+    .bespoke-sonic-worlds-container.show,
+    .music-lessons-container.show,
     .teaching-container.show {
         display: flex;
         flex-direction: column;
     }
 
     .about-container {
+        margin-left: 0;
+        margin-right: 0;
+        flex-direction: column;
+    }
+
+    .bespoke-sonic-worlds-container {
+        margin-left: 0;
+        margin-right: 0;
+        flex-direction: column;
+    }
+
+    .music-lessons-container {
         margin-left: 0;
         margin-right: 0;
         flex-direction: column;
