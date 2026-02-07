@@ -4,11 +4,15 @@ const servicesButton = document.querySelector(".teaching");
 const personalButton = document.querySelector(".personal");
 const collaborationButton = document.querySelector(".collaboration");
 const eventsButton = document.querySelector(".events");
+const bespokeSonicWorldsLinks = Array.from(document.querySelectorAll(".bespoke-sonic-worlds"));
+const musicLessonsLinks = Array.from(document.querySelectorAll(".music-lessons"));
 
 const aboutCard = document.querySelector(".about-container");
 const contactCard = document.querySelector(".contact-container");
 const offersCard = document.querySelector(".offers-container");
 const teachingCard = document.querySelector(".teaching-container");
+const bespokeSonicWorldsCard = document.querySelector(".bespoke-sonic-worlds-container");
+const musicLessonsCard = document.querySelector(".music-lessons-container");
 const personalCard = document.querySelector(".personal-container");
 const collaborationCard = document.querySelector(".collaboration-container");
 const eventsCard = document.querySelector(".events-container");
@@ -48,6 +52,18 @@ const pageRegistry = {
     sections: [collaborationCard],
     activeElements: [collaborationButton],
   },
+  "bespoke-sonic-worlds": {
+    path: "/bespoke-sonic-worlds",
+    sections: [offersCard, bespokeSonicWorldsCard],
+    activeElements: bespokeSonicWorldsLinks,
+    triggerElements: bespokeSonicWorldsLinks,
+  },
+  "music-lessons": {
+    path: "/music-lessons",
+    sections: [offersCard, musicLessonsCard],
+    activeElements: musicLessonsLinks,
+    triggerElements: musicLessonsLinks,
+  },
 };
 
 const highlightableElements = new Set();
@@ -66,10 +82,17 @@ Object.entries(pageRegistry).forEach(([key, config]) => {
 });
 
 Object.entries(pageRegistry).forEach(([key, config]) => {
-  if (!config.button) return;
-  config.button.addEventListener("click", (event) => {
-    event.preventDefault();
-    navigateToPage(key);
+  const triggerElements = [];
+  if (config.button) triggerElements.push(config.button);
+  if (config.buttons) triggerElements.push(...config.buttons);
+  if (config.triggerElements) triggerElements.push(...config.triggerElements);
+
+  triggerElements.forEach((element) => {
+    if (!element) return;
+    element.addEventListener("click", (event) => {
+      event.preventDefault();
+      navigateToPage(key);
+    });
   });
 });
 
@@ -77,12 +100,17 @@ function navigateToPage(pageKey, options = {}) {
   const { updateHistory = true, replaceState = false } = options;
   const targetKey = pageRegistry[pageKey] ? pageKey : defaultPageKey;
 
-  Object.entries(pageRegistry).forEach(([key, config]) => {
-    const isActive = key === targetKey;
-    config.sections.forEach((section) => {
-      if (!section) return;
-      section.classList.toggle("show", isActive);
+  const sectionsToShow = new Set(
+    (pageRegistry[targetKey].sections || []).filter(Boolean)
+  );
+  const allSections = new Set();
+  Object.values(pageRegistry).forEach((config) => {
+    (config.sections || []).forEach((section) => {
+      if (section) allSections.add(section);
     });
+  });
+  allSections.forEach((section) => {
+    section.classList.toggle("show", sectionsToShow.has(section));
   });
 
   if (contactCard) {
@@ -109,6 +137,9 @@ function navigateToPage(pageKey, options = {}) {
       window.history.pushState({ page: targetKey }, "", desiredPath);
     }
   }
+
+  // Reset scroll so each "page" loads at the top.
+  window.scrollTo({ top: 0, left: 0, behavior: "auto" });
 }
 
 function normalizePath(pathname) {
