@@ -338,6 +338,13 @@ function hideTransport() {
   document.body.classList.remove('transport-visible');
 }
 
+// Clicking track name triggers play button
+document.querySelectorAll('.playlist-track-name').forEach(name => {
+  name.addEventListener('click', () => {
+    name.closest('.playlist-item').querySelector('.playlist-play-btn').click();
+  });
+});
+
 playlistBtns.forEach(btn => {
   btn.addEventListener('click', () => {
     const src = btn.getAttribute('data-src');

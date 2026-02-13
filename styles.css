@@ -571,6 +571,8 @@ ul.playlist {
     font-size: 0.9em;
     font-weight: 100;
     color: #e0e0e0;
+    border-bottom: 1px solid #e0e0e0;
+    cursor: pointer;
 }
 
 /* MOBILE */
