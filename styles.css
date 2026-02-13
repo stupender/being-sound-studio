@@ -232,7 +232,7 @@ div.button-container {
     margin-right: 10px;
     margin-bottom: 2px;
     font-size: .75em;
-    color: rgb(228 107 108);
+    color: #e0e0e0;
     font-weight: 400;
 }
 
@@ -252,7 +252,7 @@ div.button-container {
 .testimonial-subtitle {
     display: block;
     font-size: .7em;
-    color: rgb(228 107 108 / 70%);
+    color: #e0e0e0;
     font-weight: 300;
     margin-bottom: 6px;
 }
