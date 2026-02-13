@@ -576,6 +576,23 @@ ul.playlist {
     cursor: pointer;
 }
 
+.booking-container {
+    margin-left: 5%;
+    margin-right: 5%;
+    padding-top: 15px;
+    padding-right: 30px;
+    padding-bottom: 17px;
+    display: none;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: left;
+    border-top: 1px solid #0000001c;
+}
+
+.booking-container.show {
+    display: flex;
+}
+
 .events-container li {
     margin-bottom: 12px;
 }

@@ -102,6 +102,7 @@ const bespokeSonicWorldsCard = document.querySelector(".bespoke-sonic-worlds-con
 const musicLessonsCard = document.querySelector(".music-lessons-container");
 const personalCard = document.querySelector(".personal-container");
 const collaborationCard = document.querySelector(".collaboration-container");
+const bookingCard = document.querySelector(".booking-container");
 const eventsCard = document.querySelector(".events-container");
 
 const defaultPageKey = "services";
@@ -116,7 +117,7 @@ const pageRegistry = {
   events: {
     button: eventsButton,
     path: "/events",
-    sections: [eventsCard],
+    sections: [bookingCard, eventsCard],
     activeElements: [eventsButton],
   },
   about: {
