@@ -36,7 +36,7 @@ if (calendarEl) {
           if (!allDay) {
             dateStr += ', ' + date.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' });
           }
-          var html = '<span style="font-size:.75em;font-weight:600;text-transform:uppercase">' + dateStr + '</span>';
+          var html = '<span style="font-size:.75em;font-weight:600;text-transform:uppercase">' + dateStr + '</span><br>';
           var eventUrl = null;
           if (event.description) {
             var decoded = event.description.replace(/&amp;/g, '&').replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&quot;/g, '"');
@@ -50,7 +50,7 @@ if (calendarEl) {
           if (event.summary) {
             var title = event.summary.replace(/</g, '&lt;');
             var link = eventUrl || event.htmlLink;
-            html += ' \u2014 <a href="' + link + '" target="_blank">' + title + '</a>';
+            html += '<a href="' + link + '" target="_blank">' + title + '</a>';
           }
           if (event.location) {
             var locParts = event.location.split(',').map(function(s) { return s.trim(); });
