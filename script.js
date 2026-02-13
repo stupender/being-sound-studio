@@ -1,3 +1,91 @@
+// Google Calendar Events
+const calendarEl = document.getElementById('fullcalendar');
+if (calendarEl) {
+  const apiKey = 'AIzaSyDTAx9201QV8pY3oI42yRxOrpo0LQ08FKU';
+  const calendarId = '0b81213b0b68868f63461ad324b9a749e0e9a316b5a0a55458815570664c1046@group.calendar.google.com';
+  const now = new Date().toISOString();
+  const url = 'https://www.googleapis.com/calendar/v3/calendars/' +
+    encodeURIComponent(calendarId) +
+    '/events?key=' + apiKey +
+    '&timeMin=' + now +
+    '&orderBy=startTime&singleEvents=true&maxResults=50';
+
+  fetch(url)
+    .then(function(res) { return res.json(); })
+    .then(function(data) {
+      console.log('Calendar API response:', JSON.stringify(data, null, 2));
+      var events = data.items || [];
+      var ul = document.createElement('ul');
+      if (events.length === 0) {
+        var li = document.createElement('li');
+        li.textContent = 'No Upcoming Events';
+        li.style.opacity = '0.6';
+        ul.appendChild(li);
+      } else {
+        events.forEach(function(event) {
+          var li = document.createElement('li');
+          var startRaw = event.start.dateTime || event.start.date;
+          var date;
+          var allDay = event.start.date && !event.start.dateTime;
+          if (allDay) {
+            var parts = event.start.date.split('-');
+            date = new Date(parts[0], parts[1] - 1, parts[2]);
+          } else {
+            date = new Date(startRaw);
+          }
+          var dateStr = date.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+          if (!allDay) {
+            dateStr += ', ' + date.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' });
+          }
+          var html = '<span style="font-size:.75em;font-weight:600;text-transform:uppercase">' + dateStr + '</span>';
+          var eventUrl = null;
+          if (event.description) {
+            var decoded = event.description.replace(/&amp;/g, '&').replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&quot;/g, '"');
+            var urlMatch = decoded.match(/https?:\/\/[^\s<"']+/);
+            if (urlMatch) {
+              var raw = urlMatch[0];
+              var qMatch = raw.match(/google\.com\/url\?q=([^&]+)/);
+              eventUrl = qMatch ? decodeURIComponent(qMatch[1]) : raw;
+            }
+          }
+          if (event.summary) {
+            var title = event.summary.replace(/</g, '&lt;');
+            var link = eventUrl || event.htmlLink;
+            html += ' \u2014 <a href="' + link + '" target="_blank">' + title + '</a>';
+          }
+          if (event.location) {
+            var locParts = event.location.split(',').map(function(s) { return s.trim(); });
+            var venue = locParts[0];
+            var cityState = '';
+            if (locParts.length >= 4) {
+              cityState = locParts[locParts.length - 3] + ', ' + locParts[locParts.length - 2].replace(/\s*\d{5}.*/, '');
+            } else if (locParts.length === 3) {
+              cityState = locParts[1] + ', ' + locParts[2].replace(/\s*\d{5}.*/, '');
+            }
+            var loc = venue;
+            if (cityState) loc += ', ' + cityState;
+            html += ' \u2014 <span style="font-size:.75em;font-weight:300">' + loc.replace(/</g, '&lt;') + '</span>';
+          }
+          if (event.description) {
+            var stripped = event.description.replace(/<[^>]*>/g, '').replace(/https?:\/\/[^\s]+/g, '').trim();
+            if (stripped) html += '<br><span style="font-size:.75em;font-weight:300">' + stripped.replace(/</g, '&lt;') + '</span>';
+          }
+          li.innerHTML = html;
+          ul.appendChild(li);
+        });
+      }
+      calendarEl.appendChild(ul);
+    })
+    .catch(function() {
+      var ul = document.createElement('ul');
+      var li = document.createElement('li');
+      li.textContent = 'No Upcoming Events';
+      li.style.opacity = '0.6';
+      ul.appendChild(li);
+      calendarEl.appendChild(ul);
+    });
+}
+
 // DOM Bindings
 const aboutButton = document.querySelector(".about");
 const servicesButton = document.querySelector(".teaching");
