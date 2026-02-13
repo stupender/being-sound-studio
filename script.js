@@ -13,7 +13,6 @@ if (calendarEl) {
   fetch(url)
     .then(function(res) { return res.json(); })
     .then(function(data) {
-      console.log('Calendar API response:', JSON.stringify(data, null, 2));
       var events = data.items || [];
       var ul = document.createElement('ul');
       if (events.length === 0) {
