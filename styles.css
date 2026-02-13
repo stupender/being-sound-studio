@@ -662,6 +662,13 @@ ul.playlist {
         align-items: center;
     }
 
+    .booking-container {
+        flex-direction: column;
+        padding-top: 5px;
+        align-items: start;
+        align-content: center;
+    }
+
     .offers-container {
         flex-direction: column;
         padding-top: 5px;
