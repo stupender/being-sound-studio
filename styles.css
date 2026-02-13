@@ -236,6 +236,27 @@ div.button-container {
     font-weight: 400;
 }
 
+.testimonial-text + .testimonial-title {
+    display: block;
+    margin-top: 4px;
+}
+
+.social-proof-list li.offer-items {
+    margin-top: 25px;
+}
+
+.social-proof-list li.offer-items:first-child {
+    margin-top: 15px;
+}
+
+.testimonial-subtitle {
+    display: block;
+    font-size: .7em;
+    color: rgb(228 107 108 / 70%);
+    font-weight: 300;
+    margin-bottom: 6px;
+}
+
 .body-title {
     margin-right: 10px;
     font-size: .75em;
