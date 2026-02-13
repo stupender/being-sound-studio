@@ -305,9 +305,108 @@ button.onclick = function() {
   }
 }
 
-// Could we make a record button and personal record function on this
-// as an app for people to make their own version....
+// Playlist Player
 
-// Perhaps combine the user input sound with a qualitative/quantitative 
-// musical elements exploration .... an app for ear training, theory
-// etc through this lens ... 
+const playIconSVG = '<svg width="14" height="14" viewBox="0 0 14 14" fill="white"><polygon points="3,1 12,7 3,13"/></svg>';
+const pauseIconSVG = '<svg width="14" height="14" viewBox="0 0 14 14" fill="white"><rect x="2" y="1" width="4" height="12" rx="1"/><rect x="8" y="1" width="4" height="12" rx="1"/></svg>';
+const transportPlaySVG = '<svg width="16" height="16" viewBox="0 0 16 16" fill="white"><polygon points="3,1 14,8 3,15"/></svg>';
+const transportPauseSVG = '<svg width="16" height="16" viewBox="0 0 16 16" fill="white"><rect x="3" y="2" width="4" height="12" rx="1"/><rect x="9" y="2" width="4" height="12" rx="1"/></svg>';
+
+const playlistAudio = new Audio();
+let currentTrackSrc = null;
+let activePlaylistBtn = null;
+
+const transportBar = document.getElementById('transport-bar');
+const transportPlayPause = document.getElementById('transport-play-pause');
+const transportTrackName = document.getElementById('transport-track-name');
+const playlistBtns = document.querySelectorAll('.playlist-play-btn');
+
+function resetAllPlaylistBtns() {
+  playlistBtns.forEach(btn => { btn.innerHTML = playIconSVG; });
+  activePlaylistBtn = null;
+}
+
+function showTransport(trackName) {
+  transportBar.classList.add('visible');
+  document.body.classList.add('transport-visible');
+  transportTrackName.textContent = trackName;
+  transportPlayPause.innerHTML = transportPauseSVG;
+}
+
+function hideTransport() {
+  transportBar.classList.remove('visible');
+  document.body.classList.remove('transport-visible');
+}
+
+playlistBtns.forEach(btn => {
+  btn.addEventListener('click', () => {
+    const src = btn.getAttribute('data-src');
+    const trackName = btn.closest('.playlist-item').querySelector('.playlist-track-name').textContent;
+
+    // Pause generative player if running
+    if (audioContext.state === 'running') {
+      audioContext.suspend().then(() => { button.textContent = 'Play'; });
+    }
+
+    if (currentTrackSrc === src && !playlistAudio.paused) {
+      // Same track playing — pause it
+      playlistAudio.pause();
+      btn.innerHTML = playIconSVG;
+      transportPlayPause.innerHTML = transportPlaySVG;
+    } else if (currentTrackSrc === src && playlistAudio.paused) {
+      // Same track paused — resume
+      playlistAudio.play();
+      btn.innerHTML = pauseIconSVG;
+      transportPlayPause.innerHTML = transportPauseSVG;
+    } else {
+      // Different track or nothing playing
+      resetAllPlaylistBtns();
+      playlistAudio.src = src;
+      currentTrackSrc = src;
+      playlistAudio.play();
+      btn.innerHTML = pauseIconSVG;
+      activePlaylistBtn = btn;
+      showTransport(trackName);
+    }
+  });
+});
+
+transportPlayPause.addEventListener('click', () => {
+  if (playlistAudio.paused) {
+    playlistAudio.play();
+    transportPlayPause.innerHTML = transportPauseSVG;
+    if (activePlaylistBtn) activePlaylistBtn.innerHTML = pauseIconSVG;
+  } else {
+    playlistAudio.pause();
+    transportPlayPause.innerHTML = transportPlaySVG;
+    if (activePlaylistBtn) activePlaylistBtn.innerHTML = playIconSVG;
+  }
+});
+
+playlistAudio.addEventListener('ended', () => {
+  resetAllPlaylistBtns();
+  hideTransport();
+  currentTrackSrc = null;
+});
+
+// Spacebar to toggle playlist playback
+document.addEventListener('keydown', (e) => {
+  if (e.code === 'Space' && currentTrackSrc && e.target === document.body) {
+    e.preventDefault();
+    transportPlayPause.click();
+  }
+});
+
+// When generative Play button resumes, pause playlist
+const origOnClick = button.onclick;
+button.onclick = function() {
+  if (audioContext.state === 'suspended') {
+    // Generative player is resuming — pause playlist if playing
+    if (!playlistAudio.paused) {
+      playlistAudio.pause();
+      resetAllPlaylistBtns();
+      transportPlayPause.innerHTML = transportPlaySVG;
+    }
+  }
+  origOnClick.call(this);
+};

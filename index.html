@@ -15,6 +15,12 @@
             <link href="https://fonts.googleapis.com/css2?family=Chivo:ital,wght@0,100..900;1,100..900&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Playfair+Display&display=swap" rel="stylesheet">
         </head>
         <body>
+            <div class="transport-bar" id="transport-bar">
+                <button class="transport-play-pause" id="transport-play-pause">
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="white"><rect x="3" y="2" width="4" height="12" rx="1"/><rect x="9" y="2" width="4" height="12" rx="1"/></svg>
+                </button>
+                <span class="transport-track-name" id="transport-track-name"></span>
+            </div>
             <header>
                 <!-- <img src="images/spiral.png" id="spiral"> -->
                 <h1>Being Sound Studio</h1>
@@ -24,7 +30,7 @@
                 <a href="#" class="teaching">Services</a>
                 <a href="#" class="about">About</a>
                 <a href="#" class="events">Events</a>
-                <button class="play">Play</button>
+                <button class="play" style="display:none">Play</button>
     
     
                 <div id="filters">
@@ -322,6 +328,21 @@
                         <li class="offer-items">Want a sonic identity that feels intentional</li>
                         <li class="offer-items">Value craft, subtlety, and long-term coherence</li>
                         <li class="offer-items">Are drawn to work made with care, depth, and integrity</li>
+                    </ul>
+                    <p class="body-subtitle">LISTEN</p>
+                    <ul class="playlist" id="offer-text">
+                        <li class="playlist-item">
+                            <button class="playlist-play-btn" data-src="Samples/Playlist/Thought To Thing.mp3">
+                                <svg width="14" height="14" viewBox="0 0 14 14" fill="white"><polygon points="3,1 12,7 3,13"/></svg>
+                            </button>
+                            <span class="playlist-track-name">Thought To Thing Podcast</span>
+                        </li>
+                        <li class="playlist-item">
+                            <button class="playlist-play-btn" data-src="Samples/Playlist/Creative Living.mp3">
+                                <svg width="14" height="14" viewBox="0 0 14 14" fill="white"><polygon points="3,1 12,7 3,13"/></svg>
+                            </button>
+                            <span class="playlist-track-name">Creative Living App</span>
+                        </li>
                     </ul>
                     <p class="body-subtitle">WHAT PEOPLE SAY</p>
                     <ul class="offer-items social-proof-list" id="offer-text">
