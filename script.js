@@ -397,6 +397,21 @@ document.addEventListener('keydown', (e) => {
   }
 });
 
+// Re-sync transport bar when returning from lock screen / tab switch
+document.addEventListener('visibilitychange', () => {
+  if (document.visibilityState === 'visible' && currentTrackSrc) {
+    if (!playlistAudio.paused) {
+      showTransport(transportTrackName.textContent);
+      if (activePlaylistBtn) activePlaylistBtn.innerHTML = pauseIconSVG;
+    } else {
+      transportBar.classList.add('visible');
+      document.body.classList.add('transport-visible');
+      transportPlayPause.innerHTML = transportPlaySVG;
+      if (activePlaylistBtn) activePlaylistBtn.innerHTML = playIconSVG;
+    }
+  }
+});
+
 // When generative Play button resumes, pause playlist
 const origOnClick = button.onclick;
 button.onclick = function() {
