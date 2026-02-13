@@ -378,7 +378,7 @@ playlistBtns.forEach(btn => {
   });
 });
 
-transportPlayPause.addEventListener('click', () => {
+transportBar.addEventListener('click', () => {
   if (playlistAudio.paused) {
     playlistAudio.play();
     transportPlayPause.innerHTML = transportPauseSVG;

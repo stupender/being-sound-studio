@@ -505,6 +505,7 @@ a:hover {
 
 .transport-bar.visible {
     display: flex;
+    cursor: pointer;
 }
 
 body.transport-visible {
