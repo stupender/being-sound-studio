@@ -422,6 +422,13 @@ function showTransport(trackName, triggerBtn) {
   transportTrackName.textContent = trackName;
   transportPlayPause.innerHTML = transportPauseSVG;
   buildQueue(triggerBtn);
+  closeQueue();
+  if (transportQueue.children.length > 1) {
+    setTimeout(() => {
+      transportQueue.classList.add('open');
+      transportQueueToggle.classList.add('open');
+    }, 0);
+  }
 }
 
 function buildQueue(triggerBtn) {
@@ -432,7 +439,7 @@ function buildQueue(triggerBtn) {
   const items = playlist.querySelectorAll('.playlist-item');
   items.forEach(item => {
     const btn = item.querySelector('.playlist-play-btn');
-    const name = item.querySelector('.playlist-track-name').textContent;
+    const name = item.getAttribute('data-transport-name') || item.querySelector('.playlist-track-name').textContent;
     const src = btn.getAttribute('data-src');
     const li = document.createElement('li');
     li.textContent = name;
@@ -474,7 +481,8 @@ document.querySelectorAll('.playlist-track-name').forEach(name => {
 playlistBtns.forEach(btn => {
   btn.addEventListener('click', () => {
     const src = btn.getAttribute('data-src');
-    const trackName = btn.closest('.playlist-item').querySelector('.playlist-track-name').textContent;
+    const item = btn.closest('.playlist-item');
+    const trackName = item.getAttribute('data-transport-name') || item.querySelector('.playlist-track-name').textContent;
 
     // Pause generative player if running
     if (audioContext.state === 'running') {
@@ -505,7 +513,10 @@ playlistBtns.forEach(btn => {
   });
 });
 
-transportBar.addEventListener('click', () => {
+const transportLeft = document.getElementById('transport-left');
+const transportRight = document.getElementById('transport-right');
+
+transportLeft.addEventListener('click', () => {
   if (playlistAudio.paused) {
     playlistAudio.play();
     transportPlayPause.innerHTML = transportPauseSVG;
@@ -517,8 +528,7 @@ transportBar.addEventListener('click', () => {
   }
 });
 
-transportQueueToggle.addEventListener('click', (e) => {
-  e.stopPropagation();
+transportRight.addEventListener('click', () => {
   transportQueue.classList.toggle('open');
   transportQueueToggle.classList.toggle('open');
 });
@@ -527,8 +537,10 @@ transportQueue.addEventListener('click', (e) => {
   e.stopPropagation();
 });
 
-document.addEventListener('click', () => {
-  closeQueue();
+document.addEventListener('click', (e) => {
+  if (!transportBar.contains(e.target)) {
+    closeQueue();
+  }
 });
 
 playlistAudio.addEventListener('ended', () => {
@@ -541,7 +553,7 @@ playlistAudio.addEventListener('ended', () => {
 document.addEventListener('keydown', (e) => {
   if (e.code === 'Space' && currentTrackSrc && e.target === document.body) {
     e.preventDefault();
-    transportPlayPause.click();
+    transportLeft.click();
   }
 });
 

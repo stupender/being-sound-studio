@@ -514,6 +514,21 @@ body.transport-visible {
     padding-top: 50px;
 }
 
+.transport-left {
+    width: 50%;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+
+.transport-right {
+    width: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    cursor: pointer;
+}
+
 .transport-play-pause {
     background: transparent;
     border: none;
@@ -597,6 +612,28 @@ body.transport-visible {
     color: rgb(228 107 108);
 }
 
+.playlist-item.queue-only {
+    display: none;
+}
+
+ul.playlist.playlist-light {
+    margin: 0;
+}
+
+
+.playlist-light .playlist-play-btn svg {
+    fill: rgb(24 24 24);
+}
+
+.playlist-light .playlist-track-name {
+    color: rgb(24 24 24);
+    border-bottom-color: rgb(24 24 24);
+}
+
+.playlist-light .playlist-play-btn {
+    padding: 0;
+}
+
 /* PLAYLIST */
 ul.playlist {
     list-style-type: none;
@@ -637,6 +674,16 @@ ul.playlist {
     color: #e0e0e0;
     border-bottom: 1px solid #e0e0e0;
     cursor: pointer;
+}
+
+.playlist-track-name:hover {
+    background-color: #e0e0e0;
+    color: rgb(24 24 24);
+}
+
+.playlist-light .playlist-track-name:hover {
+    background-color: rgb(24 24 24);
+    color: #e0e0e0;
 }
 
 .booking-container {
