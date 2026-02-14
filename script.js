@@ -407,6 +407,8 @@ let activePlaylistBtn = null;
 const transportBar = document.getElementById('transport-bar');
 const transportPlayPause = document.getElementById('transport-play-pause');
 const transportTrackName = document.getElementById('transport-track-name');
+const transportQueueToggle = document.getElementById('transport-queue-toggle');
+const transportQueue = document.getElementById('transport-queue');
 const playlistBtns = document.querySelectorAll('.playlist-play-btn');
 
 function resetAllPlaylistBtns() {
@@ -414,16 +416,52 @@ function resetAllPlaylistBtns() {
   activePlaylistBtn = null;
 }
 
-function showTransport(trackName) {
+function showTransport(trackName, triggerBtn) {
   transportBar.classList.add('visible');
   document.body.classList.add('transport-visible');
   transportTrackName.textContent = trackName;
   transportPlayPause.innerHTML = transportPauseSVG;
+  buildQueue(triggerBtn);
+}
+
+function buildQueue(triggerBtn) {
+  transportQueue.innerHTML = '';
+  if (!triggerBtn) return;
+  const playlist = triggerBtn.closest('ul.playlist');
+  if (!playlist) return;
+  const items = playlist.querySelectorAll('.playlist-item');
+  items.forEach(item => {
+    const btn = item.querySelector('.playlist-play-btn');
+    const name = item.querySelector('.playlist-track-name').textContent;
+    const src = btn.getAttribute('data-src');
+    const li = document.createElement('li');
+    li.textContent = name;
+    li.setAttribute('data-src', src);
+    if (src === currentTrackSrc) li.classList.add('active');
+    li.addEventListener('click', (e) => {
+      e.stopPropagation();
+      btn.click();
+      closeQueue();
+    });
+    transportQueue.appendChild(li);
+  });
+}
+
+function updateQueueActive() {
+  transportQueue.querySelectorAll('li').forEach(li => {
+    li.classList.toggle('active', li.getAttribute('data-src') === currentTrackSrc);
+  });
+}
+
+function closeQueue() {
+  transportQueue.classList.remove('open');
+  transportQueueToggle.classList.remove('open');
 }
 
 function hideTransport() {
   transportBar.classList.remove('visible');
   document.body.classList.remove('transport-visible');
+  closeQueue();
 }
 
 // Clicking track name triggers play button
@@ -461,8 +499,9 @@ playlistBtns.forEach(btn => {
       playlistAudio.play();
       btn.innerHTML = pauseIconSVG;
       activePlaylistBtn = btn;
-      showTransport(trackName);
+      showTransport(trackName, btn);
     }
+    updateQueueActive();
   });
 });
 
@@ -476,6 +515,20 @@ transportBar.addEventListener('click', () => {
     transportPlayPause.innerHTML = transportPlaySVG;
     if (activePlaylistBtn) activePlaylistBtn.innerHTML = playIconSVG;
   }
+});
+
+transportQueueToggle.addEventListener('click', (e) => {
+  e.stopPropagation();
+  transportQueue.classList.toggle('open');
+  transportQueueToggle.classList.toggle('open');
+});
+
+transportQueue.addEventListener('click', (e) => {
+  e.stopPropagation();
+});
+
+document.addEventListener('click', () => {
+  closeQueue();
 });
 
 playlistAudio.addEventListener('ended', () => {
