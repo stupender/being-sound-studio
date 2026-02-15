@@ -133,14 +133,10 @@ div.button-container {
 .personal-container {
     margin-left: 5%;
     margin-right: 5%;
-    padding-top: 15;
-    padding-right: 5%;
-    padding-bottom: 25;
+    padding-top: 15px;
+    padding-bottom: 25px;
     display: none;
     flex-direction: column;
-    justify-content: space-around;
-    align-items: flex-start;
-    /* align-items: center; */
     border-top: 1px solid #0000001c;
 }
 
@@ -686,6 +682,90 @@ ul.playlist {
     color: #e0e0e0;
 }
 
+/* ALBUM CARDS */
+.album-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+    margin-top: 15px;
+    margin-bottom: 25px;
+}
+
+.album-card {
+    border: 1px solid rgb(24 24 24);
+    padding: 8px;
+    padding-bottom: 20px;
+    cursor: pointer;
+}
+
+.album-card-image {
+    position: relative;
+    aspect-ratio: 1;
+    overflow: hidden;
+    border: 1px solid rgb(24 24 24);
+}
+
+.album-card-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.album-card-overlay {
+    position: absolute;
+    inset: 0;
+    background: black;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+    pointer-events: none;
+}
+
+.album-card:hover .album-card-overlay {
+    opacity: 0.4;
+}
+
+.album-card-play {
+    position: absolute;
+    bottom: 8px;
+    right: 8px;
+    z-index: 20;
+    pointer-events: none;
+    width: 40px;
+    height: 40px;
+    background: rgb(24 24 24 / 0.75);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.album-card-info {
+    padding: 8px 0 4px 0;
+}
+
+.album-card-title {
+    font-family: 'Chivo', sans-serif;
+    font-size: 0.75em;
+    font-weight: 300;
+    text-transform: uppercase;
+    color: rgb(24 24 24);
+}
+
+.album-card-meta {
+    font-family: 'Chivo', sans-serif;
+    font-size: 0.65em;
+    font-weight: 300;
+    text-transform: uppercase;
+    color: rgb(24 24 24);
+    opacity: 0.6;
+    padding-top: 2px;
+}
+
+ul.playlist.album-card-playlist {
+    display: none;
+}
+
 .booking-container {
     margin-left: 5%;
     margin-right: 5%;
@@ -817,5 +897,13 @@ ul.playlist {
     
       .horizontal-scrolling-items__item {
         /* font-size: .75em; */
+    }
+
+    .album-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .personal-container {
+        padding-right: 0;
     }
 }

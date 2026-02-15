@@ -471,6 +471,49 @@ function hideTransport() {
   closeQueue();
 }
 
+const cardPlaySVG = '<svg width="16" height="16" viewBox="0 0 16 16" fill="white"><polygon points="3,1 14,8 3,15"/></svg>';
+const cardPauseSVG = '<svg width="16" height="16" viewBox="0 0 16 16" fill="white"><rect x="3" y="2" width="4" height="12" rx="1"/><rect x="9" y="2" width="4" height="12" rx="1"/></svg>';
+
+function updateCardStates() {
+  document.querySelectorAll('.album-card').forEach(card => {
+    const playlist = card.querySelector('ul.playlist');
+    if (!playlist) return;
+    const srcs = Array.from(playlist.querySelectorAll('.playlist-play-btn')).map(b => b.getAttribute('data-src'));
+    const isPlaying = currentTrackSrc && srcs.includes(currentTrackSrc) && !playlistAudio.paused;
+    const isPaused = currentTrackSrc && srcs.includes(currentTrackSrc) && playlistAudio.paused;
+    const playBtn = card.querySelector('.album-card-play');
+    if (!playBtn) return;
+    if (isPlaying) {
+      card.classList.add('playing');
+      playBtn.innerHTML = cardPauseSVG;
+    } else if (isPaused) {
+      card.classList.add('playing');
+      playBtn.innerHTML = cardPlaySVG;
+    } else {
+      card.classList.remove('playing');
+      playBtn.innerHTML = cardPlaySVG;
+    }
+  });
+}
+
+// Clicking album card triggers first track or toggles play/pause
+document.querySelectorAll('.album-card-image').forEach(img => {
+  img.addEventListener('click', () => {
+    const card = img.closest('.album-card');
+    const playlist = card.querySelector('ul.playlist');
+    if (!playlist) return;
+    const srcs = Array.from(playlist.querySelectorAll('.playlist-play-btn')).map(b => b.getAttribute('data-src'));
+    if (currentTrackSrc && srcs.includes(currentTrackSrc)) {
+      // This album is active — toggle play/pause via transport
+      transportLeft.click();
+      updateCardStates();
+      return;
+    }
+    const firstBtn = card.querySelector('.playlist-play-btn');
+    if (firstBtn) firstBtn.click();
+  });
+});
+
 // Clicking track name triggers play button
 document.querySelectorAll('.playlist-track-name').forEach(name => {
   name.addEventListener('click', () => {
@@ -510,6 +553,7 @@ playlistBtns.forEach(btn => {
       showTransport(trackName, btn);
     }
     updateQueueActive();
+    updateCardStates();
   });
 });
 
@@ -526,6 +570,7 @@ transportLeft.addEventListener('click', () => {
     transportPlayPause.innerHTML = transportPlaySVG;
     if (activePlaylistBtn) activePlaylistBtn.innerHTML = playIconSVG;
   }
+  updateCardStates();
 });
 
 transportRight.addEventListener('click', () => {
@@ -547,6 +592,7 @@ playlistAudio.addEventListener('ended', () => {
   resetAllPlaylistBtns();
   hideTransport();
   currentTrackSrc = null;
+  updateCardStates();
 });
 
 // Spacebar to toggle playlist playback
@@ -569,6 +615,7 @@ document.addEventListener('visibilitychange', () => {
       transportPlayPause.innerHTML = transportPlaySVG;
       if (activePlaylistBtn) activePlaylistBtn.innerHTML = playIconSVG;
     }
+    updateCardStates();
   }
 });
 
