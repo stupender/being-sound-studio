@@ -589,10 +589,19 @@ document.addEventListener('click', (e) => {
 });
 
 playlistAudio.addEventListener('ended', () => {
-  resetAllPlaylistBtns();
-  hideTransport();
-  currentTrackSrc = null;
-  updateCardStates();
+  // Advance to next track in queue
+  const queueItems = Array.from(transportQueue.querySelectorAll('li'));
+  const currentIndex = queueItems.findIndex(li => li.getAttribute('data-src') === currentTrackSrc);
+  if (currentIndex >= 0 && currentIndex < queueItems.length - 1) {
+    // Play next track
+    queueItems[currentIndex + 1].click();
+  } else {
+    // End of queue — stop playback
+    resetAllPlaylistBtns();
+    hideTransport();
+    currentTrackSrc = null;
+    updateCardStates();
+  }
 });
 
 // Spacebar to toggle playlist playback
