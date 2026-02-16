@@ -421,7 +421,9 @@ function showTransport(trackName, triggerBtn) {
   document.body.classList.add('transport-visible');
   transportTrackName.textContent = trackName;
   transportPlayPause.innerHTML = transportPauseSVG;
-  buildQueue(triggerBtn);
+  if (triggerBtn) {
+    buildQueue(triggerBtn);
+  }
   closeQueue();
   if (transportQueue.children.length > 1) {
     setTimeout(() => {
@@ -432,8 +434,8 @@ function showTransport(trackName, triggerBtn) {
 }
 
 function buildQueue(triggerBtn) {
-  transportQueue.innerHTML = '';
   if (!triggerBtn) return;
+  transportQueue.innerHTML = '';
   const playlist = triggerBtn.closest('ul.playlist');
   if (!playlist) return;
   const items = playlist.querySelectorAll('.playlist-item');
