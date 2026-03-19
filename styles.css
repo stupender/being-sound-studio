@@ -119,15 +119,16 @@ div.button-container {
 .collaboration-container {
     margin-left: 5%;
     margin-right: 5%;
-    padding-top: 15;
-    padding-right: 5%;
-    padding-bottom: 15;
+    padding-top: 15px;
+    padding-bottom: 15px;
     display: none;
     flex-direction: column;
-    justify-content: space-around;
-    align-items: flex-start;
-    /* align-items: center; */
     border-top: 1px solid #0000001c;
+}
+
+.personal-container ul:not(.playlist),
+.collaboration-container ul:not(.playlist) {
+    margin-top: 0;
 }
 
 .personal-container {
@@ -152,6 +153,12 @@ div.button-container {
     align-items: flex-start;
     /* align-items: center; */
     border-top: 1px solid #0000001c;
+}
+
+.events-container .contact-title,
+.personal-container .contact-title,
+.collaboration-container .contact-title {
+    margin-bottom: 15px;
 }
 
 .teaching-container {
@@ -260,7 +267,7 @@ div.button-container {
     font-size: .75em;
     color: rgb(228 107 108);
     font-weight: 400;
-    margin: 30px 30px 0px 30px;
+    margin: 30px 30px 15px 30px;
 }
 
 .body-title-alt {
@@ -268,7 +275,11 @@ div.button-container {
     font-size: .75em;
     color: rgb(228 107 108);
     font-weight: 400;
-    margin: 0px 30px 0px 30px;
+    margin: 0px 30px 15px 30px;
+}
+
+.text-section #about-text {
+    margin-top: 15px;
 }
 
 .body-link {
@@ -687,7 +698,7 @@ ul.playlist {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 8px;
-    margin-top: 15px;
+    margin-top: 0;
     margin-bottom: 25px;
 }
 
@@ -710,6 +721,33 @@ ul.playlist {
     height: 100%;
     object-fit: cover;
     display: block;
+}
+
+
+.album-card-video {
+    aspect-ratio: 16 / 9;
+}
+
+.album-card-video iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+    display: block;
+}
+
+.album-card-thumb-link {
+    display: block;
+    width: 100%;
+    height: 100%;
+    border-bottom: none;
+}
+
+.album-card-thumb-link:hover {
+    background-color: transparent;
+}
+
+.album-card-no-art {
+    background: rgb(24, 24, 24);
 }
 
 .album-card-overlay {
