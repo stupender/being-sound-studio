@@ -120,10 +120,9 @@ div.button-container {
     margin-left: 5%;
     margin-right: 5%;
     padding-top: 15px;
-    padding-bottom: 15px;
+    padding-bottom: 5%;
     display: none;
     flex-direction: column;
-    border-top: 1px solid #0000001c;
 }
 
 .personal-container ul:not(.playlist),
@@ -135,24 +134,22 @@ div.button-container {
     margin-left: 5%;
     margin-right: 5%;
     padding-top: 15px;
-    padding-bottom: 25px;
+    padding-bottom: 5%;
     display: none;
     flex-direction: column;
-    border-top: 1px solid #0000001c;
 }
 
 .events-container {
     margin-left: 5%;
     margin-right: 5%;
-    padding-top: 15;
+    padding-top: 15px;
     padding-right: 5%;
-    padding-bottom: 25;
+    padding-bottom: 5%;
     display: none;
     flex-direction: column;
     justify-content: space-around;
     align-items: flex-start;
     /* align-items: center; */
-    border-top: 1px solid #0000001c;
 }
 
 .events-container .contact-title,
@@ -182,7 +179,6 @@ div.button-container {
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    border-top: 1px solid #0000001c;
 }
 
 .offers-container {
@@ -195,7 +191,6 @@ div.button-container {
     flex-direction: row;
     justify-content: space-between;
     align-items: left;
-    border-top: 1px solid #0000001c;
 }
 
 .text-section {
@@ -477,6 +472,14 @@ a:hover {
 
 .show {
     display: flex;
+}
+
+.collaboration-container.show,
+.personal-container.show,
+.events-container.show,
+.contact-container.show,
+.offers-container.show {
+    border-top: 1px solid #0000001c;
 }
 
 .showing {
@@ -823,6 +826,10 @@ ul.playlist.album-card-playlist {
 
 .events-container li {
     margin-bottom: 12px;
+}
+
+.events-container li:last-child {
+    margin-bottom: 0;
 }
 
 .event-date {
