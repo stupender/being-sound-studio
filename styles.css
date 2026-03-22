@@ -815,8 +815,8 @@ ul.playlist.album-card-playlist {
 /* Album cards on dark background (Bespoke Sonic Worlds) */
 .bespoke-sonic-worlds-container .album-grid {
     grid-template-columns: repeat(2, 1fr);
-    padding-left: 8px;
-    padding-right: 8px;
+    padding-left: 30px;
+    padding-right: 30px;
 }
 
 .bespoke-sonic-worlds-container .album-card {
