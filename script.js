@@ -498,6 +498,15 @@ function updateCardStates() {
   });
 }
 
+// Remove play button from cards that link externally (no local playlist)
+document.querySelectorAll('.album-card').forEach(card => {
+  if (!card.querySelector('ul.playlist')) {
+    const playBtn = card.querySelector('.album-card-play');
+    if (playBtn) playBtn.remove();
+    card.classList.add('album-card-external');
+  }
+});
+
 // Clicking album card triggers first track or toggles play/pause
 document.querySelectorAll('.album-card-image').forEach(img => {
   img.addEventListener('click', () => {

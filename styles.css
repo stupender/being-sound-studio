@@ -803,8 +803,50 @@ ul.playlist {
     padding-top: 2px;
 }
 
+.album-card-external:hover .album-card-title a {
+    background-color: rgb(24 24 24);
+    color: #e0e0e0;
+}
+
 ul.playlist.album-card-playlist {
     display: none;
+}
+
+/* Album cards on dark background (Bespoke Sonic Worlds) */
+.bespoke-sonic-worlds-container .album-grid {
+    grid-template-columns: repeat(2, 1fr);
+    padding-left: 8px;
+    padding-right: 8px;
+}
+
+.bespoke-sonic-worlds-container .album-card {
+    border-color: #e0e0e0;
+}
+
+.bespoke-sonic-worlds-container .album-card-image {
+    border-color: #e0e0e0;
+}
+
+.bespoke-sonic-worlds-container .album-card-play {
+    background: rgb(224 224 224 / 0.2);
+}
+
+.bespoke-sonic-worlds-container .album-card-title {
+    color: #e0e0e0;
+}
+
+.bespoke-sonic-worlds-container .album-card-title a {
+    color: #e0e0e0;
+    border-bottom-color: #e0e0e0;
+}
+
+.bespoke-sonic-worlds-container .album-card-title a:hover {
+    background-color: #e0e0e0;
+    color: rgb(24 24 24);
+}
+
+.bespoke-sonic-worlds-container .album-card-meta {
+    color: #e0e0e0;
 }
 
 .booking-container {
