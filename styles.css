@@ -8,6 +8,7 @@ body {
     padding: 0 0 0 0;
     margin: 0 0 0 0;
     background-color: #e0e0e0;
+    min-height: 100vh;
 }
 
 header {
@@ -770,15 +771,17 @@ ul.playlist {
     position: absolute;
     bottom: 8px;
     right: 8px;
+    transform: translateZ(0);
     z-index: 20;
     pointer-events: none;
     width: 40px;
     height: 40px;
-    background: rgb(24 24 24 / 0.75);
+    background: rgb(224 224 224 / 0.2);
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
+    transform: translateZ(0);
 }
 
 .album-card-info {
@@ -825,10 +828,6 @@ ul.playlist.album-card-playlist {
 
 .bespoke-sonic-worlds-container .album-card-image {
     border-color: #e0e0e0;
-}
-
-.bespoke-sonic-worlds-container .album-card-play {
-    background: rgb(224 224 224 / 0.2);
 }
 
 .bespoke-sonic-worlds-container .album-card-title {
