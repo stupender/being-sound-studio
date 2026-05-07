@@ -1,0 +1,35 @@
+{
+  "permissions": {
+    "allow": [
+      "WebFetch(domain:cybersangha.net)",
+      "WebFetch(domain:soundcloud.com)",
+      "WebSearch",
+      "WebFetch(domain:roughtradepublishing.bandcamp.com)",
+      "WebFetch(domain:cybersangha.podbean.com)",
+      "WebFetch(domain:www.podchaser.com)",
+      "WebFetch(domain:newfunkacademy.bandcamp.com)",
+      "WebFetch(domain:open.spotify.com)",
+      "WebFetch(domain:sadosan.bandcamp.com)",
+      "WebFetch(domain:poeticthrust.bandcamp.com)",
+      "WebFetch(domain:faug.bandcamp.com)",
+      "WebFetch(domain:elijahwolf.bandcamp.com)",
+      "WebFetch(domain:samob.bandcamp.com)",
+      "WebFetch(domain:haldeman.bandcamp.com)",
+      "WebFetch(domain:kareemali19.bandcamp.com)",
+      "WebFetch(domain:i-am-yoh.bandcamp.com)",
+      "WebFetch(domain:intlanthem.bandcamp.com)",
+      "WebFetch(domain:xpn.org)",
+      "WebFetch(domain:weareyoungbloods.com)",
+      "WebFetch(domain:app.creativeliving.world)",
+      "WebFetch(domain:www.buzzsprout.com)",
+      "WebFetch(domain:beloved.wtf)",
+      "WebFetch(domain:www.instagram.com)",
+      "WebFetch(domain:www.facebook.com)",
+      "WebFetch(domain:daito.ws)",
+      "WebFetch(domain:edm.com)",
+      "WebFetch(domain:www.mixcloud.com)",
+      "WebFetch(domain:api.mixcloud.com)",
+      "WebFetch(domain:www.youtube.com)"
+    ]
+  }
+}
