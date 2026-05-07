@@ -24,18 +24,50 @@ if (calendarEl) {
         events.forEach(function(event) {
           var li = document.createElement('li');
           var startRaw = event.start.dateTime || event.start.date;
-          var date;
+          var endRaw = event.end.dateTime || event.end.date;
+          var startDate, endDate;
           var allDay = event.start.date && !event.start.dateTime;
+          
           if (allDay) {
-            var parts = event.start.date.split('-');
-            date = new Date(parts[0], parts[1] - 1, parts[2]);
+            var startParts = event.start.date.split('-');
+            startDate = new Date(startParts[0], startParts[1] - 1, startParts[2]);
+            var endParts = event.end.date.split('-');
+            endDate = new Date(endParts[0], endParts[1] - 1, endParts[2]);
+            // For all-day events, end.date is exclusive, so subtract 1 day to get the actual end date
+            endDate.setDate(endDate.getDate() - 1);
           } else {
-            date = new Date(startRaw);
+            startDate = new Date(startRaw);
+            endDate = new Date(endRaw);
           }
-          var dateStr = date.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
-          if (!allDay) {
-            dateStr += ', ' + date.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' });
+          
+          var dateStr;
+          var isMultiDay = (allDay && startDate.getTime() !== endDate.getTime()) || 
+                           (!allDay && startDate.toDateString() !== endDate.toDateString());
+          
+          if (isMultiDay) {
+            // Multi-day event
+            var startStr = startDate.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+            var endStr = endDate.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+            
+            if (startDate.getFullYear() === endDate.getFullYear()) {
+              dateStr = startStr + ' - ' + endStr;
+            } else {
+              startStr = startDate.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+              dateStr = startStr + ' - ' + endStr;
+            }
+            
+            if (!allDay) {
+              dateStr += ', ' + startDate.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' }) + 
+                        ' - ' + endDate.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' });
+            }
+          } else {
+            // Single day event
+            dateStr = startDate.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+            if (!allDay) {
+              dateStr += ', ' + startDate.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' });
+            }
           }
+          
           var html = '<span style="font-size:.75em;font-weight:600;text-transform:uppercase">' + dateStr + '</span><br>';
           var eventUrl = null;
           if (event.description) {
