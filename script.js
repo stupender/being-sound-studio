@@ -120,6 +120,7 @@ if (calendarEl) {
 // DOM Bindings
 const aboutButton = document.querySelector(".about");
 const servicesButton = document.querySelector(".teaching");
+const projectsButton = document.querySelector(".projects");
 const personalButton = document.querySelector(".personal");
 const collaborationButton = document.querySelector(".collaboration");
 const eventsButton = document.querySelector(".events");
@@ -136,6 +137,7 @@ const personalCard = document.querySelector(".personal-container");
 const collaborationCard = document.querySelector(".collaboration-container");
 const bookingCard = document.querySelector(".booking-container");
 const eventsCard = document.querySelector(".events-container");
+const projectsCard = document.querySelector(".projects-container");
 
 const defaultPageKey = "services";
 
@@ -145,6 +147,12 @@ const pageRegistry = {
     path: "/services",
     sections: [offersCard, teachingCard],
     activeElements: [servicesButton],
+  },
+  projects: {
+    button: projectsButton,
+    path: "/projects",
+    sections: [projectsCard],
+    activeElements: [projectsButton],
   },
   events: {
     button: eventsButton,

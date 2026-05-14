@@ -450,6 +450,158 @@ a:hover {
     align-items: stretch;
 }
 
+/* PROJECTS */
+.projects-container {
+    margin-left: 5%;
+    margin-right: 5%;
+    display: none;
+    flex-direction: column;
+    padding-top: 15px;
+    padding-bottom: 5%;
+}
+
+.projects-container.show {
+    display: flex;
+    border-top: 1px solid #0000001c;
+}
+
+.projects-intro {
+    max-width: 720px;
+    margin-bottom: 25px;
+}
+
+.projects-intro-text {
+    font-family: 'Chivo', sans-serif;
+    font-weight: 100;
+    font-size: 0.9em;
+    line-height: 1.5em;
+    margin: 8px 0 0 0;
+    text-align: justify;
+}
+
+.project-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+    margin-bottom: 25px;
+}
+
+/* Album-card overrides scoped to the projects page */
+.projects-container .album-card {
+    padding: 10px;
+    padding-bottom: 16px;
+    cursor: pointer;
+}
+
+.projects-container .album-card-info {
+    padding: 12px 0 4px 0;
+}
+
+.projects-container .album-card-type {
+    font-family: 'Chivo', sans-serif;
+    font-size: 0.65em;
+    font-weight: 400;
+    color: rgb(228 107 108);
+    margin: 0 0 6px 0;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+}
+
+.projects-container .album-card-title {
+    font-size: 0.85em;
+    margin-bottom: 4px;
+    text-transform: none;
+}
+
+.projects-container .album-card-title a {
+    border-bottom-color: transparent;
+    font-weight: 300;
+}
+
+.projects-container .album-card-thumb-link {
+    display: block;
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    border-bottom: none;
+}
+
+.projects-container .album-card-thumb-link:hover {
+    background: transparent;
+}
+
+/* Hatch-pattern placeholder for projects without screenshots yet */
+.album-card-placeholder {
+    position: relative;
+    background-color: #e0e0e0;
+    background-image:
+        linear-gradient(45deg, rgba(24, 24, 24, 0.06) 25%, transparent 25%),
+        linear-gradient(-45deg, rgba(24, 24, 24, 0.06) 25%, transparent 25%);
+    background-size: 14px 14px;
+}
+
+.album-card-placeholder::before {
+    content: attr(data-label);
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Chivo', sans-serif;
+    font-size: 0.7em;
+    font-weight: 300;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: rgba(24, 24, 24, 0.45);
+    text-align: center;
+    padding: 0 12px;
+    z-index: 1;
+    pointer-events: none;
+}
+
+.skills-section {
+    margin-bottom: 25px;
+}
+
+.skills-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 30px;
+    margin-top: 15px;
+}
+
+.skills-column {
+    display: flex;
+    flex-direction: column;
+}
+
+.skills-heading {
+    font-family: 'Chivo', sans-serif;
+    font-size: 0.75em;
+    font-weight: 400;
+    color: rgb(228 107 108);
+    margin: 0 0 12px 0;
+    letter-spacing: 0.02em;
+}
+
+.skills-list {
+    font-family: 'Chivo', sans-serif;
+    font-weight: 100;
+    font-size: 0.9em;
+    line-height: 1.6em;
+    list-style-type: "𖦹 ";
+    padding-left: 1.1em;
+    margin: 0;
+}
+
+.skills-list li {
+    margin: 0 0 4px 0;
+}
+
+.projects-footer {
+    max-width: 720px;
+    margin-top: 15px;
+}
+
 .text-section,
 .about-container .text-block,
 .bespoke-sonic-worlds-container .text-block,
@@ -991,5 +1143,14 @@ ul.playlist.album-card-playlist {
 
     .personal-container {
         padding-right: 0;
+    }
+
+    .project-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .skills-grid {
+        grid-template-columns: 1fr;
+        gap: 24px;
     }
 }
