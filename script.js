@@ -139,6 +139,7 @@ const collaborationCard = document.querySelector(".collaboration-container");
 const bookingCard = document.querySelector(".booking-container");
 const eventsCard = document.querySelector(".events-container");
 const projectsCard = document.querySelector(".projects-container");
+const pageSections = Array.from(document.querySelectorAll(".page-section"));
 
 const defaultPageKey = "services";
 
@@ -233,13 +234,7 @@ function navigateToPage(pageKey, options = {}) {
   const sectionsToShow = new Set(
     (pageRegistry[targetKey].sections || []).filter(Boolean)
   );
-  const allSections = new Set();
-  Object.values(pageRegistry).forEach((config) => {
-    (config.sections || []).forEach((section) => {
-      if (section) allSections.add(section);
-    });
-  });
-  allSections.forEach((section) => {
+  pageSections.forEach((section) => {
     section.classList.toggle("show", sectionsToShow.has(section));
   });
 
