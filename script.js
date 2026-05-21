@@ -124,6 +124,7 @@ const projectsButton = document.querySelector(".projects");
 const personalButton = document.querySelector(".personal");
 const collaborationButton = document.querySelector(".collaboration");
 const eventsButton = document.querySelector(".events");
+const aboutLinks = Array.from(document.querySelectorAll(".about"));
 const bespokeSonicWorldsLinks = Array.from(document.querySelectorAll(".bespoke-sonic-worlds"));
 const musicLessonsLinks = Array.from(document.querySelectorAll(".music-lessons"));
 
@@ -145,6 +146,7 @@ const pageRegistry = {
   services: {
     button: servicesButton,
     path: "/services",
+    title: "Stu Pender — Being Sound",
     sections: [offersCard, teachingCard],
     activeElements: [servicesButton],
   },
@@ -164,7 +166,8 @@ const pageRegistry = {
     button: aboutButton,
     path: "/about",
     sections: [aboutCard, contactCard],
-    activeElements: [aboutButton],
+    activeElements: aboutLinks,
+    triggerElements: aboutLinks,
   },
   personal: {
     button: personalButton,
@@ -180,6 +183,7 @@ const pageRegistry = {
   },
   "bespoke-sonic-worlds": {
     path: "/bespoke-sonic-worlds",
+    title: "Bespoke Sound | Being Sound Studio",
     sections: [offersCard, bespokeSonicWorldsCard],
     activeElements: bespokeSonicWorldsLinks,
     triggerElements: bespokeSonicWorldsLinks,
@@ -238,6 +242,8 @@ function navigateToPage(pageKey, options = {}) {
   allSections.forEach((section) => {
     section.classList.toggle("show", sectionsToShow.has(section));
   });
+
+  document.title = pageRegistry[targetKey].title || "Stu Pender — Being Sound";
 
   if (contactCard) {
     contactCard.classList.toggle("show", targetKey === "about");
