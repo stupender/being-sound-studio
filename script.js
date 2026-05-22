@@ -183,7 +183,7 @@ const pageRegistry = {
     activeElements: [collaborationButton],
   },
   "bespoke-sonic-worlds": {
-    path: "/bespoke-sonic-worlds",
+    path: "/bespoke-sound",
     title: "Bespoke Sound | Being Sound Studio",
     sections: [offersCard, bespokeSonicWorldsCard],
     activeElements: bespokeSonicWorldsLinks,
