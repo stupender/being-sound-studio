@@ -356,8 +356,12 @@ ul.offer-items {
 }
 
 li.offer-items {
-    margin: 15px 0 0 0; 
+    margin: 12px 0 0 0;
     text-indent: 0;
+}
+
+li.offer-items:first-child {
+    margin-top: 0;
 }
 
 .contact-link {
@@ -379,7 +383,7 @@ li.offer-items {
 }
 
 #about-text.list-intro {
-    margin-bottom: 8px;
+    margin-bottom: 10px;
 }
 
 #offer-text {
