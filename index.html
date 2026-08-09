@@ -1,4 +1,4 @@
-<HTML>
+<!DOCTYPE html>
     <html lang="en">
         <head>
             <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
@@ -6,10 +6,17 @@
             <base href="/">
             <link rel="stylesheet" href="styles.css">
             <script src="script.js" defer></script>
+            <script src="forms.js" defer></script>
             <title>Stu Pender — Being Sound</title>
             <link rel="icon" href="images/favicon.jpg"/>
-            <meta property="og:title" content="Stu Pender"/>
-            <meta property="og:image" content="images/chicago.jpeg"/>
+            <!-- The one line search engines show under the site's name. -->
+            <meta name="description" content="Being Sound is a sonic arts studio by Stu Pender — bespoke soundscapes for practitioners, creators, and spaces; music lessons; and free soundscapes for deep listening.">
+            <!-- og: tags control link previews in texts and social apps.
+                 og:image must be an absolute URL or previews show no image. -->
+            <meta property="og:title" content="Stu Pender — Being Sound"/>
+            <meta property="og:description" content="A sonic arts studio: bespoke soundscapes, music lessons, and free soundscapes for deep listening."/>
+            <meta property="og:image" content="https://beingsound.studio/images/chicago.jpeg"/>
+            <meta property="og:url" content="https://beingsound.studio/"/>
             <link rel="preconnect" href="https://fonts.googleapis.com">
             <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
             <link href="https://fonts.googleapis.com/css2?family=Chivo:ital,wght@0,100..900;1,100..900&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
@@ -17,18 +24,40 @@
         <body>
             <div class="transport-bar" id="transport-bar">
                 <div class="transport-left" id="transport-left">
-                    <button class="transport-play-pause" id="transport-play-pause">
+                    <button class="transport-step" id="transport-prev" aria-label="Previous track" title="Previous">
+                        <svg width="14" height="14" viewBox="0 0 16 16" fill="white"><rect x="2" y="2" width="2" height="12" rx="1"/><polygon points="13,2 5,8 13,14"/></svg>
+                    </button>
+                    <button class="transport-play-pause" id="transport-play-pause" aria-label="Play or pause">
                         <svg width="16" height="16" viewBox="0 0 16 16" fill="white"><rect x="3" y="2" width="4" height="12" rx="1"/><rect x="9" y="2" width="4" height="12" rx="1"/></svg>
                     </button>
+                    <button class="transport-step" id="transport-next" aria-label="Next track" title="Next">
+                        <svg width="14" height="14" viewBox="0 0 16 16" fill="white"><polygon points="3,2 11,8 3,14"/><rect x="12" y="2" width="2" height="12" rx="1"/></svg>
+                    </button>
+                    <!-- Artwork for whatever is playing, so the bar reads the
+                         same way as a list row: picture, then title. -->
+                    <img class="transport-art" id="transport-art" alt="" aria-hidden="true">
                     <span class="transport-track-name" id="transport-track-name"></span>
                 </div>
                 <div class="transport-right" id="transport-right">
-                    <button class="transport-queue-toggle" id="transport-queue-toggle">
+                    <label class="transport-volume-wrap" title="Volume">
+                        <span class="visually-hidden">Volume</span>
+                        <svg class="transport-volume-icon" width="14" height="14" viewBox="0 0 16 16" fill="white" aria-hidden="true"><polygon points="2,6 5,6 9,2 9,14 5,10 2,10"/></svg>
+                        <input type="range" class="transport-volume" id="transport-volume" min="0" max="1" step="0.01" value="1">
+                    </label>
+                    <button class="transport-queue-toggle" id="transport-queue-toggle" aria-label="Show queue">
                         <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="4,6 8,10 12,6"/></svg>
                     </button>
                 </div>
-                <ul class="transport-queue" id="transport-queue"></ul>
+                <!-- How far through the track we are: a hairline along the very
+                     bottom of the bar that fills as it plays. No handle — it
+                     reports position, it isn't a control. -->
+                <div class="transport-progress" aria-hidden="true"><span id="transport-progress-played"></span></div>
             </div>
+            <!-- The queue sits outside the bar on purpose: an element with a
+                 backdrop blur becomes a "backdrop root", and anything inside
+                 it can only blur that element's own content — not the page.
+                 As a sibling it gets its own blur of the page behind. -->
+            <ul class="transport-queue" id="transport-queue"></ul>
             <header>
                 <!-- <img src="images/spiral.png" id="spiral"> -->
                 <h1>Being Sound Studio</h1>
@@ -73,6 +102,9 @@
             </div>
 
             <div class="personal-container page-section">
+                <video class="section-video" autoplay loop muted playsinline aria-hidden="true">
+                    <source src="video/water.mp4" type="video/mp4">
+                </video>
                 <div>
                     <p class="contact-title">DISCOGRAPHY</p>
                     <div class="album-grid">
@@ -88,15 +120,15 @@
                                 <div class="album-card-meta">Stu Pender, Youngbloods, 2025</div>
                             </div>
                             <ul class="playlist album-card-playlist">
-                                <li class="playlist-item" data-transport-name="Feels Like — Being With — Stu Pender"><button class="playlist-play-btn" data-src="Samples/Playlist/Stu Pender - Being With/01-Stu Pender-Being With-Feels Like_MP3.mp3"><svg width="14" height="14" viewBox="0 0 14 14" fill="white"><polygon points="3,1 12,7 3,13"/></svg></button><span class="playlist-track-name">Feels Like</span></li>
-                                <li class="playlist-item queue-only" data-transport-name="Feet Flurrying — Being With — Stu Pender"><button class="playlist-play-btn" data-src="Samples/Playlist/Stu Pender - Being With/02-Stu Pender-Being With-Feet Flurrying_MP3.mp3"><svg width="14" height="14" viewBox="0 0 14 14" fill="white"><polygon points="3,1 12,7 3,13"/></svg></button><span class="playlist-track-name">Feet Flurrying</span></li>
-                                <li class="playlist-item queue-only" data-transport-name="Warmest Tones — Being With — Stu Pender"><button class="playlist-play-btn" data-src="Samples/Playlist/Stu Pender - Being With/03-Stu Pender-Being With-Warmest Tones_MP3.mp3"><svg width="14" height="14" viewBox="0 0 14 14" fill="white"><polygon points="3,1 12,7 3,13"/></svg></button><span class="playlist-track-name">Warmest Tones</span></li>
-                                <li class="playlist-item queue-only" data-transport-name="Rewind — Being With — Stu Pender"><button class="playlist-play-btn" data-src="Samples/Playlist/Stu Pender - Being With/04-Stu Pender-Being With-Rewind_MP3.mp3"><svg width="14" height="14" viewBox="0 0 14 14" fill="white"><polygon points="3,1 12,7 3,13"/></svg></button><span class="playlist-track-name">Rewind</span></li>
-                                <li class="playlist-item queue-only" data-transport-name="Awe — Being With — Stu Pender"><button class="playlist-play-btn" data-src="Samples/Playlist/Stu Pender - Being With/05-Stu Pender-Being With-Awe_MP3.mp3"><svg width="14" height="14" viewBox="0 0 14 14" fill="white"><polygon points="3,1 12,7 3,13"/></svg></button><span class="playlist-track-name">Awe</span></li>
-                                <li class="playlist-item queue-only" data-transport-name="Metamorphosis — Being With — Stu Pender"><button class="playlist-play-btn" data-src="Samples/Playlist/Stu Pender - Being With/06-Stu Pender-Being With-Metamorphosis_MP3.mp3"><svg width="14" height="14" viewBox="0 0 14 14" fill="white"><polygon points="3,1 12,7 3,13"/></svg></button><span class="playlist-track-name">Metamorphosis</span></li>
-                                <li class="playlist-item queue-only" data-transport-name="Flora — Being With — Stu Pender"><button class="playlist-play-btn" data-src="Samples/Playlist/Stu Pender - Being With/07-Stu Pender-Being With-Flora_MP3.mp3"><svg width="14" height="14" viewBox="0 0 14 14" fill="white"><polygon points="3,1 12,7 3,13"/></svg></button><span class="playlist-track-name">Flora</span></li>
-                                <li class="playlist-item queue-only" data-transport-name="Flow On — Being With — Stu Pender"><button class="playlist-play-btn" data-src="Samples/Playlist/Stu Pender - Being With/08-Stu Pender-Being With-Flow On_MP3.mp3"><svg width="14" height="14" viewBox="0 0 14 14" fill="white"><polygon points="3,1 12,7 3,13"/></svg></button><span class="playlist-track-name">Flow On</span></li>
-                                <li class="playlist-item queue-only" data-transport-name="Held — Being With — Stu Pender"><button class="playlist-play-btn" data-src="Samples/Playlist/Stu Pender - Being With/09-Stu Pender-Being With-Held_MP3.mp3"><svg width="14" height="14" viewBox="0 0 14 14" fill="white"><polygon points="3,1 12,7 3,13"/></svg></button><span class="playlist-track-name">Held</span></li>
+                                <li class="playlist-item" data-transport-name="Feels Like — Stu Pender — Being With"><button class="playlist-play-btn" data-src="Samples/Playlist/Stu Pender - Being With/01-Stu Pender-Being With-Feels Like_MP3.mp3"><svg width="14" height="14" viewBox="0 0 14 14" fill="white"><polygon points="3,1 12,7 3,13"/></svg></button><span class="playlist-track-name">Feels Like</span></li>
+                                <li class="playlist-item queue-only" data-transport-name="Feet Flurrying — Stu Pender — Being With"><button class="playlist-play-btn" data-src="Samples/Playlist/Stu Pender - Being With/02-Stu Pender-Being With-Feet Flurrying_MP3.mp3"><svg width="14" height="14" viewBox="0 0 14 14" fill="white"><polygon points="3,1 12,7 3,13"/></svg></button><span class="playlist-track-name">Feet Flurrying</span></li>
+                                <li class="playlist-item queue-only" data-transport-name="Warmest Tones — Stu Pender — Being With"><button class="playlist-play-btn" data-src="Samples/Playlist/Stu Pender - Being With/03-Stu Pender-Being With-Warmest Tones_MP3.mp3"><svg width="14" height="14" viewBox="0 0 14 14" fill="white"><polygon points="3,1 12,7 3,13"/></svg></button><span class="playlist-track-name">Warmest Tones</span></li>
+                                <li class="playlist-item queue-only" data-transport-name="Rewind — Stu Pender — Being With"><button class="playlist-play-btn" data-src="Samples/Playlist/Stu Pender - Being With/04-Stu Pender-Being With-Rewind_MP3.mp3"><svg width="14" height="14" viewBox="0 0 14 14" fill="white"><polygon points="3,1 12,7 3,13"/></svg></button><span class="playlist-track-name">Rewind</span></li>
+                                <li class="playlist-item queue-only" data-transport-name="Awe — Stu Pender — Being With"><button class="playlist-play-btn" data-src="Samples/Playlist/Stu Pender - Being With/05-Stu Pender-Being With-Awe_MP3.mp3"><svg width="14" height="14" viewBox="0 0 14 14" fill="white"><polygon points="3,1 12,7 3,13"/></svg></button><span class="playlist-track-name">Awe</span></li>
+                                <li class="playlist-item queue-only" data-transport-name="Metamorphosis — Stu Pender — Being With"><button class="playlist-play-btn" data-src="Samples/Playlist/Stu Pender - Being With/06-Stu Pender-Being With-Metamorphosis_MP3.mp3"><svg width="14" height="14" viewBox="0 0 14 14" fill="white"><polygon points="3,1 12,7 3,13"/></svg></button><span class="playlist-track-name">Metamorphosis</span></li>
+                                <li class="playlist-item queue-only" data-transport-name="Flora — Stu Pender — Being With"><button class="playlist-play-btn" data-src="Samples/Playlist/Stu Pender - Being With/07-Stu Pender-Being With-Flora_MP3.mp3"><svg width="14" height="14" viewBox="0 0 14 14" fill="white"><polygon points="3,1 12,7 3,13"/></svg></button><span class="playlist-track-name">Flora</span></li>
+                                <li class="playlist-item queue-only" data-transport-name="Flow On — Stu Pender — Being With"><button class="playlist-play-btn" data-src="Samples/Playlist/Stu Pender - Being With/08-Stu Pender-Being With-Flow On_MP3.mp3"><svg width="14" height="14" viewBox="0 0 14 14" fill="white"><polygon points="3,1 12,7 3,13"/></svg></button><span class="playlist-track-name">Flow On</span></li>
+                                <li class="playlist-item queue-only" data-transport-name="Held — Stu Pender — Being With"><button class="playlist-play-btn" data-src="Samples/Playlist/Stu Pender - Being With/09-Stu Pender-Being With-Held_MP3.mp3"><svg width="14" height="14" viewBox="0 0 14 14" fill="white"><polygon points="3,1 12,7 3,13"/></svg></button><span class="playlist-track-name">Held</span></li>
                             </ul>
                         </div>
 
@@ -111,18 +143,18 @@
                                 <div class="album-card-meta">Stu Pender, Youngbloods, 2021</div>
                             </div>
                             <ul class="playlist album-card-playlist">
-                                <li class="playlist-item" data-transport-name="Desertbloom — Stillness In Motion — Stu Pender"><button class="playlist-play-btn" data-src="Samples/Playlist/Stu Pender - Stillness In Motion/01-Stu Pender-Stillness in Motion-Desertbloom_1644_SK_Master.mp3"><svg width="14" height="14" viewBox="0 0 14 14" fill="white"><polygon points="3,1 12,7 3,13"/></svg></button><span class="playlist-track-name">Desertbloom</span></li>
-                                <li class="playlist-item queue-only" data-transport-name="Peaks — Stillness In Motion — Stu Pender"><button class="playlist-play-btn" data-src="Samples/Playlist/Stu Pender - Stillness In Motion/02-Stu Pender-Stillness in Motion-Peaks_1644_SK_Master.mp3"><svg width="14" height="14" viewBox="0 0 14 14" fill="white"><polygon points="3,1 12,7 3,13"/></svg></button><span class="playlist-track-name">Peaks</span></li>
-                                <li class="playlist-item queue-only" data-transport-name="Electric Petals — Stillness In Motion — Stu Pender"><button class="playlist-play-btn" data-src="Samples/Playlist/Stu Pender - Stillness In Motion/03-Stu Pender-Stillness in Motion-Electric Petals_1644_SK_Master.mp3"><svg width="14" height="14" viewBox="0 0 14 14" fill="white"><polygon points="3,1 12,7 3,13"/></svg></button><span class="playlist-track-name">Electric Petals</span></li>
-                                <li class="playlist-item queue-only" data-transport-name="Palms — Stillness In Motion — Stu Pender"><button class="playlist-play-btn" data-src="Samples/Playlist/Stu Pender - Stillness In Motion/04-Stu Pender-Stillness in Motion-Palms_1644_SK_Master.mp3"><svg width="14" height="14" viewBox="0 0 14 14" fill="white"><polygon points="3,1 12,7 3,13"/></svg></button><span class="playlist-track-name">Palms</span></li>
-                                <li class="playlist-item queue-only" data-transport-name="Tributary — Stillness In Motion — Stu Pender"><button class="playlist-play-btn" data-src="Samples/Playlist/Stu Pender - Stillness In Motion/05-Stu Pender-Stillness in Motion-Tributary_1644_SK_Master.mp3"><svg width="14" height="14" viewBox="0 0 14 14" fill="white"><polygon points="3,1 12,7 3,13"/></svg></button><span class="playlist-track-name">Tributary</span></li>
-                                <li class="playlist-item queue-only" data-transport-name="Duet — Stillness In Motion — Stu Pender"><button class="playlist-play-btn" data-src="Samples/Playlist/Stu Pender - Stillness In Motion/06-Stu Pender-Stillness in Motion-Duet_1644_SK_Master.mp3"><svg width="14" height="14" viewBox="0 0 14 14" fill="white"><polygon points="3,1 12,7 3,13"/></svg></button><span class="playlist-track-name">Duet</span></li>
-                                <li class="playlist-item queue-only" data-transport-name="Birds of Peace — Stillness In Motion — Stu Pender"><button class="playlist-play-btn" data-src="Samples/Playlist/Stu Pender - Stillness In Motion/07-Stu Pender-Stillness in Motion-Birds of Peace_1644_SK_Master.mp3"><svg width="14" height="14" viewBox="0 0 14 14" fill="white"><polygon points="3,1 12,7 3,13"/></svg></button><span class="playlist-track-name">Birds of Peace</span></li>
-                                <li class="playlist-item queue-only" data-transport-name="Ravine Dream — Stillness In Motion — Stu Pender"><button class="playlist-play-btn" data-src="Samples/Playlist/Stu Pender - Stillness In Motion/08-Stu Pender-Stillness in Motion-Ravine Dream_1644_SK_Master.mp3"><svg width="14" height="14" viewBox="0 0 14 14" fill="white"><polygon points="3,1 12,7 3,13"/></svg></button><span class="playlist-track-name">Ravine Dream</span></li>
-                                <li class="playlist-item queue-only" data-transport-name="Shared Space — Stillness In Motion — Stu Pender"><button class="playlist-play-btn" data-src="Samples/Playlist/Stu Pender - Stillness In Motion/09-Stu Pender-Stillness in Motion-Shared Space_1644_SK_Master.mp3"><svg width="14" height="14" viewBox="0 0 14 14" fill="white"><polygon points="3,1 12,7 3,13"/></svg></button><span class="playlist-track-name">Shared Space</span></li>
-                                <li class="playlist-item queue-only" data-transport-name="Palms (Instrumental) — Stillness In Motion — Stu Pender"><button class="playlist-play-btn" data-src="Samples/Playlist/Stu Pender - Stillness In Motion/10-Stu Pender-Stillness in Motion-Palms (Instrumental)_1644_SK_Master.mp3"><svg width="14" height="14" viewBox="0 0 14 14" fill="white"><polygon points="3,1 12,7 3,13"/></svg></button><span class="playlist-track-name">Palms (Instrumental)</span></li>
-                                <li class="playlist-item queue-only" data-transport-name="Birds of Peace (Instrumental) — Stillness In Motion — Stu Pender"><button class="playlist-play-btn" data-src="Samples/Playlist/Stu Pender - Stillness In Motion/11-Stu Pender-Stillness in Motion-Birds of Peace (Instrumental)_1644_SK_Master.mp3"><svg width="14" height="14" viewBox="0 0 14 14" fill="white"><polygon points="3,1 12,7 3,13"/></svg></button><span class="playlist-track-name">Birds of Peace (Instrumental)</span></li>
-                                <li class="playlist-item queue-only" data-transport-name="Shared Space (Instrumental) — Stillness In Motion — Stu Pender"><button class="playlist-play-btn" data-src="Samples/Playlist/Stu Pender - Stillness In Motion/12-Stu Pender-Stillness in Motion-Shared Space (Instrumental)_1644_SK_Master.mp3"><svg width="14" height="14" viewBox="0 0 14 14" fill="white"><polygon points="3,1 12,7 3,13"/></svg></button><span class="playlist-track-name">Shared Space (Instrumental)</span></li>
+                                <li class="playlist-item" data-transport-name="Desertbloom — Stu Pender — Stillness In Motion"><button class="playlist-play-btn" data-src="Samples/Playlist/Stu Pender - Stillness In Motion/01-Stu Pender-Stillness in Motion-Desertbloom_1644_SK_Master.mp3"><svg width="14" height="14" viewBox="0 0 14 14" fill="white"><polygon points="3,1 12,7 3,13"/></svg></button><span class="playlist-track-name">Desertbloom</span></li>
+                                <li class="playlist-item queue-only" data-transport-name="Peaks — Stu Pender — Stillness In Motion"><button class="playlist-play-btn" data-src="Samples/Playlist/Stu Pender - Stillness In Motion/02-Stu Pender-Stillness in Motion-Peaks_1644_SK_Master.mp3"><svg width="14" height="14" viewBox="0 0 14 14" fill="white"><polygon points="3,1 12,7 3,13"/></svg></button><span class="playlist-track-name">Peaks</span></li>
+                                <li class="playlist-item queue-only" data-transport-name="Electric Petals — Stu Pender — Stillness In Motion"><button class="playlist-play-btn" data-src="Samples/Playlist/Stu Pender - Stillness In Motion/03-Stu Pender-Stillness in Motion-Electric Petals_1644_SK_Master.mp3"><svg width="14" height="14" viewBox="0 0 14 14" fill="white"><polygon points="3,1 12,7 3,13"/></svg></button><span class="playlist-track-name">Electric Petals</span></li>
+                                <li class="playlist-item queue-only" data-transport-name="Palms — Stu Pender — Stillness In Motion"><button class="playlist-play-btn" data-src="Samples/Playlist/Stu Pender - Stillness In Motion/04-Stu Pender-Stillness in Motion-Palms_1644_SK_Master.mp3"><svg width="14" height="14" viewBox="0 0 14 14" fill="white"><polygon points="3,1 12,7 3,13"/></svg></button><span class="playlist-track-name">Palms</span></li>
+                                <li class="playlist-item queue-only" data-transport-name="Tributary — Stu Pender — Stillness In Motion"><button class="playlist-play-btn" data-src="Samples/Playlist/Stu Pender - Stillness In Motion/05-Stu Pender-Stillness in Motion-Tributary_1644_SK_Master.mp3"><svg width="14" height="14" viewBox="0 0 14 14" fill="white"><polygon points="3,1 12,7 3,13"/></svg></button><span class="playlist-track-name">Tributary</span></li>
+                                <li class="playlist-item queue-only" data-transport-name="Duet — Stu Pender — Stillness In Motion"><button class="playlist-play-btn" data-src="Samples/Playlist/Stu Pender - Stillness In Motion/06-Stu Pender-Stillness in Motion-Duet_1644_SK_Master.mp3"><svg width="14" height="14" viewBox="0 0 14 14" fill="white"><polygon points="3,1 12,7 3,13"/></svg></button><span class="playlist-track-name">Duet</span></li>
+                                <li class="playlist-item queue-only" data-transport-name="Birds of Peace — Stu Pender — Stillness In Motion"><button class="playlist-play-btn" data-src="Samples/Playlist/Stu Pender - Stillness In Motion/07-Stu Pender-Stillness in Motion-Birds of Peace_1644_SK_Master.mp3"><svg width="14" height="14" viewBox="0 0 14 14" fill="white"><polygon points="3,1 12,7 3,13"/></svg></button><span class="playlist-track-name">Birds of Peace</span></li>
+                                <li class="playlist-item queue-only" data-transport-name="Ravine Dream — Stu Pender — Stillness In Motion"><button class="playlist-play-btn" data-src="Samples/Playlist/Stu Pender - Stillness In Motion/08-Stu Pender-Stillness in Motion-Ravine Dream_1644_SK_Master.mp3"><svg width="14" height="14" viewBox="0 0 14 14" fill="white"><polygon points="3,1 12,7 3,13"/></svg></button><span class="playlist-track-name">Ravine Dream</span></li>
+                                <li class="playlist-item queue-only" data-transport-name="Shared Space — Stu Pender — Stillness In Motion"><button class="playlist-play-btn" data-src="Samples/Playlist/Stu Pender - Stillness In Motion/09-Stu Pender-Stillness in Motion-Shared Space_1644_SK_Master.mp3"><svg width="14" height="14" viewBox="0 0 14 14" fill="white"><polygon points="3,1 12,7 3,13"/></svg></button><span class="playlist-track-name">Shared Space</span></li>
+                                <li class="playlist-item queue-only" data-transport-name="Palms (Instrumental) — Stu Pender — Stillness In Motion"><button class="playlist-play-btn" data-src="Samples/Playlist/Stu Pender - Stillness In Motion/10-Stu Pender-Stillness in Motion-Palms (Instrumental)_1644_SK_Master.mp3"><svg width="14" height="14" viewBox="0 0 14 14" fill="white"><polygon points="3,1 12,7 3,13"/></svg></button><span class="playlist-track-name">Palms (Instrumental)</span></li>
+                                <li class="playlist-item queue-only" data-transport-name="Birds of Peace (Instrumental) — Stu Pender — Stillness In Motion"><button class="playlist-play-btn" data-src="Samples/Playlist/Stu Pender - Stillness In Motion/11-Stu Pender-Stillness in Motion-Birds of Peace (Instrumental)_1644_SK_Master.mp3"><svg width="14" height="14" viewBox="0 0 14 14" fill="white"><polygon points="3,1 12,7 3,13"/></svg></button><span class="playlist-track-name">Birds of Peace (Instrumental)</span></li>
+                                <li class="playlist-item queue-only" data-transport-name="Shared Space (Instrumental) — Stu Pender — Stillness In Motion"><button class="playlist-play-btn" data-src="Samples/Playlist/Stu Pender - Stillness In Motion/12-Stu Pender-Stillness in Motion-Shared Space (Instrumental)_1644_SK_Master.mp3"><svg width="14" height="14" viewBox="0 0 14 14" fill="white"><polygon points="3,1 12,7 3,13"/></svg></button><span class="playlist-track-name">Shared Space (Instrumental)</span></li>
                             </ul>
                         </div>
 
@@ -137,12 +169,12 @@
                                 <div class="album-card-meta">Stu Pender, Self-Released, 2018</div>
                             </div>
                             <ul class="playlist album-card-playlist">
-                                <li class="playlist-item" data-transport-name="Golden Hue — stillnessbubbles — Stu Pender"><button class="playlist-play-btn" data-src="Samples/Playlist/Stu Pender - stillnessbubbles/Stu Pender - stillnessbubbles - 01 Golden Hue.mp3"><svg width="14" height="14" viewBox="0 0 14 14" fill="white"><polygon points="3,1 12,7 3,13"/></svg></button><span class="playlist-track-name">Golden Hue</span></li>
-                                <li class="playlist-item queue-only" data-transport-name="Dancing Particles — stillnessbubbles — Stu Pender"><button class="playlist-play-btn" data-src="Samples/Playlist/Stu Pender - stillnessbubbles/Stu Pender - stillnessbubbles - 02 Dancing Particles.mp3"><svg width="14" height="14" viewBox="0 0 14 14" fill="white"><polygon points="3,1 12,7 3,13"/></svg></button><span class="playlist-track-name">Dancing Particles</span></li>
-                                <li class="playlist-item queue-only" data-transport-name="Out of Focus, Sunset — stillnessbubbles — Stu Pender"><button class="playlist-play-btn" data-src="Samples/Playlist/Stu Pender - stillnessbubbles/Stu Pender - stillnessbubbles - 03 Out of Focus, Sunset.mp3"><svg width="14" height="14" viewBox="0 0 14 14" fill="white"><polygon points="3,1 12,7 3,13"/></svg></button><span class="playlist-track-name">Out of Focus, Sunset</span></li>
-                                <li class="playlist-item queue-only" data-transport-name="Ghost Frequency — stillnessbubbles — Stu Pender"><button class="playlist-play-btn" data-src="Samples/Playlist/Stu Pender - stillnessbubbles/Stu Pender - stillnessbubbles - 04 Ghost Frequency.mp3"><svg width="14" height="14" viewBox="0 0 14 14" fill="white"><polygon points="3,1 12,7 3,13"/></svg></button><span class="playlist-track-name">Ghost Frequency</span></li>
-                                <li class="playlist-item queue-only" data-transport-name="Colibri — stillnessbubbles — Stu Pender"><button class="playlist-play-btn" data-src="Samples/Playlist/Stu Pender - stillnessbubbles/Stu Pender - stillnessbubbles - 05 Colibri.mp3"><svg width="14" height="14" viewBox="0 0 14 14" fill="white"><polygon points="3,1 12,7 3,13"/></svg></button><span class="playlist-track-name">Colibri</span></li>
-                                <li class="playlist-item queue-only" data-transport-name="Wind-Up Bird (Electric) — stillnessbubbles — Stu Pender"><button class="playlist-play-btn" data-src="Samples/Playlist/Stu Pender - stillnessbubbles/Stu Pender - stillnessbubbles - 06 Wind-Up Bird (Electric).mp3"><svg width="14" height="14" viewBox="0 0 14 14" fill="white"><polygon points="3,1 12,7 3,13"/></svg></button><span class="playlist-track-name">Wind-Up Bird (Electric)</span></li>
+                                <li class="playlist-item" data-transport-name="Golden Hue — Stu Pender — stillnessbubbles"><button class="playlist-play-btn" data-src="Samples/Playlist/Stu Pender - stillnessbubbles/Stu Pender - stillnessbubbles - 01 Golden Hue.mp3"><svg width="14" height="14" viewBox="0 0 14 14" fill="white"><polygon points="3,1 12,7 3,13"/></svg></button><span class="playlist-track-name">Golden Hue</span></li>
+                                <li class="playlist-item queue-only" data-transport-name="Dancing Particles — Stu Pender — stillnessbubbles"><button class="playlist-play-btn" data-src="Samples/Playlist/Stu Pender - stillnessbubbles/Stu Pender - stillnessbubbles - 02 Dancing Particles.mp3"><svg width="14" height="14" viewBox="0 0 14 14" fill="white"><polygon points="3,1 12,7 3,13"/></svg></button><span class="playlist-track-name">Dancing Particles</span></li>
+                                <li class="playlist-item queue-only" data-transport-name="Out of Focus, Sunset — Stu Pender — stillnessbubbles"><button class="playlist-play-btn" data-src="Samples/Playlist/Stu Pender - stillnessbubbles/Stu Pender - stillnessbubbles - 03 Out of Focus, Sunset.mp3"><svg width="14" height="14" viewBox="0 0 14 14" fill="white"><polygon points="3,1 12,7 3,13"/></svg></button><span class="playlist-track-name">Out of Focus, Sunset</span></li>
+                                <li class="playlist-item queue-only" data-transport-name="Ghost Frequency — Stu Pender — stillnessbubbles"><button class="playlist-play-btn" data-src="Samples/Playlist/Stu Pender - stillnessbubbles/Stu Pender - stillnessbubbles - 04 Ghost Frequency.mp3"><svg width="14" height="14" viewBox="0 0 14 14" fill="white"><polygon points="3,1 12,7 3,13"/></svg></button><span class="playlist-track-name">Ghost Frequency</span></li>
+                                <li class="playlist-item queue-only" data-transport-name="Colibri — Stu Pender — stillnessbubbles"><button class="playlist-play-btn" data-src="Samples/Playlist/Stu Pender - stillnessbubbles/Stu Pender - stillnessbubbles - 05 Colibri.mp3"><svg width="14" height="14" viewBox="0 0 14 14" fill="white"><polygon points="3,1 12,7 3,13"/></svg></button><span class="playlist-track-name">Colibri</span></li>
+                                <li class="playlist-item queue-only" data-transport-name="Wind-Up Bird (Electric) — Stu Pender — stillnessbubbles"><button class="playlist-play-btn" data-src="Samples/Playlist/Stu Pender - stillnessbubbles/Stu Pender - stillnessbubbles - 06 Wind-Up Bird (Electric).mp3"><svg width="14" height="14" viewBox="0 0 14 14" fill="white"><polygon points="3,1 12,7 3,13"/></svg></button><span class="playlist-track-name">Wind-Up Bird (Electric)</span></li>
                             </ul>
                         </div>
 
@@ -151,16 +183,16 @@
                 <div>
                     <p class="contact-title">PRESS</p>
                     <ul>
-                        <li><a href="https://www.kexp.org/shows/pacific-notions/?stream_time=1754226021">KEXP: Pacific Notions</a> — <span class="event-desc">radio feature</span></li>
-                        <li><a href="https://www.melodicdistraction.com/articles/midweek-movers-034-selected-by-stu-pender?id=50478">Melodic Distractions: Mid-Week Movers</a> — <span class="event-desc">guest dj mix</span></li>
-                        <li><a href="https://open.spotify.com/playlist/50oEA9Y27ATxuTqegpC69M?si=rlgAb8PUQ6GlGLLkkfLIbA">WYEP: Stillness In Motion Influences Mix</a> — <span class="event-desc">guest dj mix</span></li>
-                        <li><a href="https://15questions.net/interview/fifteen-questions-interview-stu-pender/page-1/">Fifteen Questions with Stu Pender</a> — <span class="event-desc">interview</span></li>
-                        <li><a href="https://www.ninaprotocol.com/articles/label-mix-interview-youngbloods">Nina: Label Mix Interview - Youngbloods</a> — <span class="event-desc">feature</span></li>
-                        <li><a href="https://music.apple.com/us/playlist/headspace/pl.49fa4124be174a3da9e5ec43b0d07e65">Apple Music: Headspace</a> — <span class="event-desc">playlist feature</span></li>
-                        <li><a href="https://open.spotify.com/playlist/2udv9AERTo3Um2WIPZpwBi?si=0ae2cd526baf4b5c">KCRW's 5 Songs To Hear This Week</a> — <span class="event-desc">playlist feature</span></li>
-                        <li><a href="https://www.kcrw.com/music/shows/john-moses/john-mosess-playlist-december-27-2021">KCRW: Electric Petals Sonic Walkthrough</a> — <span class="event-desc">radio feature</span></li>
-                        <li><a href="https://www.youtube.com/watch?v=XluffkJSJPc">Live on the Lot Radio</a> — <span class="event-desc">live video session</span></li>
-                        <li><a href="https://vimeo.com/411433989">The Mainers: Tim Jackson of Jack Traps</a> — <span class="event-desc">music for ad</span></li>
+                        <li><a href="https://www.kexp.org/shows/pacific-notions/?stream_time=1754226021">KEXP: Pacific Notions</a><span class="press-desc">radio feature</span></li>
+                        <li><a href="https://www.melodicdistraction.com/articles/midweek-movers-034-selected-by-stu-pender?id=50478">Melodic Distractions: Mid-Week Movers</a><span class="press-desc">guest dj mix</span></li>
+                        <li><a href="https://open.spotify.com/playlist/50oEA9Y27ATxuTqegpC69M?si=rlgAb8PUQ6GlGLLkkfLIbA">WYEP: Stillness In Motion Influences Mix</a><span class="press-desc">guest dj mix</span></li>
+                        <li><a href="https://15questions.net/interview/fifteen-questions-interview-stu-pender/page-1/">Fifteen Questions with Stu Pender</a><span class="press-desc">interview</span></li>
+                        <li><a href="https://www.ninaprotocol.com/articles/label-mix-interview-youngbloods">Nina: Label Mix Interview - Youngbloods</a><span class="press-desc">feature</span></li>
+                        <li><a href="https://music.apple.com/us/playlist/headspace/pl.49fa4124be174a3da9e5ec43b0d07e65">Apple Music: Headspace</a><span class="press-desc">playlist feature</span></li>
+                        <li><a href="https://open.spotify.com/playlist/2udv9AERTo3Um2WIPZpwBi?si=0ae2cd526baf4b5c">KCRW's 5 Songs To Hear This Week</a><span class="press-desc">playlist feature</span></li>
+                        <li><a href="https://www.kcrw.com/music/shows/john-moses/john-mosess-playlist-december-27-2021">KCRW: Electric Petals Sonic Walkthrough</a><span class="press-desc">radio feature</span></li>
+                        <li><a href="https://www.youtube.com/watch?v=XluffkJSJPc">Live on the Lot Radio</a><span class="press-desc">live video session</span></li>
+                        <li><a href="https://vimeo.com/411433989">The Mainers: Tim Jackson of Jack Traps</a><span class="press-desc">music for ad</span></li>
                     </ul>   
                 </div>
             </div>
@@ -168,6 +200,9 @@
     
     
             <div class="collaboration-container page-section">
+                <video class="section-video" autoplay loop muted playsinline aria-hidden="true">
+                    <source src="video/water.mp4" type="video/mp4">
+                </video>
                 <div>
                     <p class="contact-title">RECORDINGS</p>
                     <div class="album-grid">
@@ -725,16 +760,16 @@
                 <div>
                     <p class="contact-title">PRESS</p>
                     <ul>
-                        <li><a href="https://www.nytimes.com/video/opinion/100000007937674/dont-go-tellin-your-momma.html" target="_blank">New York Times & Sundance Film Festival: Don't Go Tellin' Your Mama</a> — <span class="event-desc">guitar</span></li>
-                        <li><a href="https://pitchfork.com/reviews/albums/topaz-jones-dont-go-tellin-your-momma/" target="_blank">Pitchfork: Don't Go Tellin' Your Mama</a> — <span class="event-desc">guitar</span></li>
-                        <li><a href="https://www.rollingstone.com/music/music-news/talk-action-zero-compilation-bandcamp-1010271/" target="_blank">Rolling Stone: Talk - Action = Zero</a> — <span class="event-desc">guitar</span></li>
-                        <li><a href="https://indiecurrent.com/poetic-thrust-on-deck-premiere/?fbclid=IwAR3rY4gzh1qB-6Ua37EW_qTcU7Mw8TJKmb6Lmbml25mgYpXuwDeaMARimF8" target="_blank">Indie Current: Poetic Thrust</a> — <span class="event-desc">guitar, writing</span></li>
-                        <li><a href="https://www.youtube.com/watch?v=Mc7QaX3DiVQ" target="_blank">Noisey: Yoh</a> — <span class="event-desc">guitar</span></li>
-                        <li><a href="https://www.instagram.com/p/B-F0cu2nt09/" target="_blank">Kodak: Poetic Thrust</a> — <span class="event-desc">guitar</span></li>
-                        <li><a href="https://www.instagram.com/p/BfrY2llhCzv/?taken-by=noisey" target="_blank">Noisey: Poetic Thrust</a> — <span class="event-desc">guitar, writing</span></li>
-                        <li><a href="https://musicmap.global/article/poetic-thrust-interview-documentary" target="_blank">Music Map Global: Poetic Thrust</a> — <span class="event-desc">guitar, writing</span></li>
-                        <li><a href="https://www.billboard.com/articles/news/pride/8461624/raphaelle-new-song-scream-for-the-light-video" target="_blank">Billboard: Raphaelle</a> — <span class="event-desc">guitar</span></li>
-                        <li><a href="https://milk.xyz/articles/premiere-watch-yohs-new-latin-lover-video/" target="_blank">Milk.xyz: Yoh</a> — <span class="event-desc">guitar</span></li>
+                        <li><a href="https://www.nytimes.com/video/opinion/100000007937674/dont-go-tellin-your-momma.html" target="_blank">New York Times & Sundance Film Festival: Don't Go Tellin' Your Mama</a><span class="press-desc">guitar</span></li>
+                        <li><a href="https://pitchfork.com/reviews/albums/topaz-jones-dont-go-tellin-your-momma/" target="_blank">Pitchfork: Don't Go Tellin' Your Mama</a><span class="press-desc">guitar</span></li>
+                        <li><a href="https://www.rollingstone.com/music/music-news/talk-action-zero-compilation-bandcamp-1010271/" target="_blank">Rolling Stone: Talk - Action = Zero</a><span class="press-desc">guitar</span></li>
+                        <li><a href="https://indiecurrent.com/poetic-thrust-on-deck-premiere/?fbclid=IwAR3rY4gzh1qB-6Ua37EW_qTcU7Mw8TJKmb6Lmbml25mgYpXuwDeaMARimF8" target="_blank">Indie Current: Poetic Thrust</a><span class="press-desc">guitar, writing</span></li>
+                        <li><a href="https://www.youtube.com/watch?v=Mc7QaX3DiVQ" target="_blank">Noisey: Yoh</a><span class="press-desc">guitar</span></li>
+                        <li><a href="https://www.instagram.com/p/B-F0cu2nt09/" target="_blank">Kodak: Poetic Thrust</a><span class="press-desc">guitar</span></li>
+                        <li><a href="https://www.instagram.com/p/BfrY2llhCzv/?taken-by=noisey" target="_blank">Noisey: Poetic Thrust</a><span class="press-desc">guitar, writing</span></li>
+                        <li><a href="https://musicmap.global/article/poetic-thrust-interview-documentary" target="_blank">Music Map Global: Poetic Thrust</a><span class="press-desc">guitar, writing</span></li>
+                        <li><a href="https://www.billboard.com/articles/news/pride/8461624/raphaelle-new-song-scream-for-the-light-video" target="_blank">Billboard: Raphaelle</a><span class="press-desc">guitar</span></li>
+                        <li><a href="https://milk.xyz/articles/premiere-watch-yohs-new-latin-lover-video/" target="_blank">Milk.xyz: Yoh</a><span class="press-desc">guitar</span></li>
                     </ul>
                 </div>
             </div>
@@ -748,23 +783,48 @@
             </div> -->
 
             <div class="events-container page-section">
+                <img src="images/live-festival.jpeg" class="section-pic" alt="">
+                <div class="text-block">
+                <!-- The ask comes first here: someone on this page is asking
+                     "when can I see you next?", and this answers it even when
+                     nothing is scheduled. Inline success — no page change. -->
+                <div class="events-loop">
+                    <p class="contact-title">NEVER MISS A SHOW</p>
+                    <p class="events-loop-text">Leave your email and I'll let you know when something's coming up.</p>
+                    <form class="capture-form" data-source="loop" data-success-message="You're in." novalidate>
+                        <input type="text" class="capture-hp" name="website" tabindex="-1" autocomplete="off" aria-hidden="true">
+                        <label class="capture-label" for="events-email">Email address</label>
+                        <input type="email" id="events-email" name="email_address" class="capture-input" placeholder="you@example.com" required autocomplete="email">
+                        <button type="submit" class="button-link capture-button">Keep me in the loop</button>
+                        <p class="capture-message" role="status" aria-live="polite"></p>
+                    </form>
+                </div>
+
                 <div>
                     <p class="contact-title">UPCOMING EVENTS</p>
                     <div id="fullcalendar" style="margin-bottom: 25px;"></div>
                 </div>
                 <div>
-                    <p class="contact-title">PAST EVENTS</p>
+                    <p class="contact-title">SELECTED PERFORMANCES</p>
                     <ul>
                         <li><span class="event-date">Sep 5 - Oct 19, 2024</span><br><a href="https://www.instagram.com/p/C68yVFTxILY/" target="_blank">NIKI Buzz World Tour</a><br><span class="event-desc">Guitarist with August Ponthier</span></li>
                         <li><span class="event-date">Mar 15 - Jun 2, 2023</span><br><a href="https://www.instagram.com/p/CsHp7d2Pdza/?img_index=1" target="_blank">Hayley Kiyoko Panorama Tour</a><br><span class="event-desc">Guitarist with August Ponthier</span></li>
                         <li><span class="event-date">Dec 13, 2022</span><br><a href="https://www.facebook.com/100031858042022/videos/809651530098655" target="_blank">Songwriting Session: III</a><br><span class="event-desc">Filmed masterclass for Tunelark (watch)</span></li>
                         <li><span class="event-date">Nov 1 - Nov 10, 2022</span><br><a href="https://www.instagram.com/Augustponthier/p/CjqYALMrxkG/" target="_blank">Holly Humberstone Sleep Tight Tour</a><br><span class="event-desc">Guitarist with August Ponthier</span></li>
                         <li><span class="event-date">Aug 14 - Sep 13, 2015</span><br><a href="https://www.instagram.com/p/7lczKPRPgs/" target="_blank">The Gipsy Kings Tour</a><br><span class="event-desc">Guitarist with Elijah Wolf</span></li>
-                    </ul>  
+                    </ul>
+                </div>
                 </div>
             </div>
 
             <div class="offers-container page-section">
+
+                <!-- The gift leads: it's the opening into everything else, and
+                     the lowest-friction way into the work. -->
+                <div class="offers-group">
+                    <p class="contact-title">A GIFT</p>
+                    <a href="/listen" class="contact-link listen-link">Twelve Soundscapes</a>
+                </div>
 
                 <div class="offers-group">
                     <p class="contact-title">COMMISSION</p>
@@ -792,15 +852,29 @@
             <div class="teaching-container page-section">
                 <div class="text-section">
 
+                    <!-- The gift leads: the first opening into everything else.
+                         (The first heading uses .body-title for its top margin;
+                         the rest use .body-title-alt.) -->
                     <div>
-                        <p class="body-title">COMMISSION</p>
+                        <p class="body-title">A GIFT</p>
+                        <a href="/listen" class="body-link p-link listen-link">Twelve Soundscapes</a>
+                        <p class="about-text">
+                            <b>Twelve soundscapes, one for each key.</b> Unmetered sound to practice with — enter through listening, the voice, or an instrument. Yours to download and keep.
+                        </p>
+                    </div>
+
+                    <div>
+                        <p class="body-title-alt">COMMISSION</p>
                         <a href="/bespoke-sound" class="body-link p-link bespoke-sonic-worlds">Bespoke Sound</a>
-                        <p id="about-text">
+                        <p class="about-text">
                             <b>Imagine your sonic world.</b> Bespoke auditory environments and compositions for practitioners, creators, and spaces whose work demands the same level of mastery in its sound as its craft.
                         </p>
 
+                        <!-- One line of proof beside the ask (full testimonial lives on the Bespoke page). -->
+                        <p class="cta-proof">"He gave both my podcast and my membership a sonic world that people actually remember." <span class="cta-proof-name">— Maia Benaim</span></p>
+
                         <div class="button-container">
-                            <a href="https://cal.com/stu-pender/discovery" class="button-link flex-button" target="_blank">Book a Discovery Call</a>    
+                            <a href="https://cal.com/stu-pender/discovery" class="button-link flex-button" target="_blank">Book a Discovery Call</a>
                         </div>
 
                         <!-- <div class="button-container">
@@ -811,18 +885,20 @@
                     <div>
                         <p class="body-title-alt">DEVELOP</p>
                         <a href="/music-lessons" class="body-link p-link music-lessons">Music Lessons</a>
-                        <p id="about-text">
-                            <b>Develop your musical craft.</b> Music Lessons are a 1:1 space for people who want to grow their musicianship while staying connected to intuition, integrity, and expression.
+                        <p class="about-text">
+                            <b>Develop your musical craft.</b> Music Lessons are a 1:1 space for people who want to grow their musicianship while staying connected to intuition, integrity, and expression. Lessons begin with the songs and sounds that already inspire you, using them as the doorway into embodied craft.
                         </p>
+                        <!-- One line of proof beside the ask (full testimonials live on the Lessons page). -->
+                        <p class="cta-proof">"I felt way more confident about my playing after we worked together." <span class="cta-proof-name">— Sam B.</span></p>
                         <div class="button-container">
-                            <a href="https://cal.com/stu-pender/music-lesson" class="button-link flex-button" target="_blank">Book a Music Lesson</a>    
+                            <a href="https://cal.com/stu-pender/music-lesson" class="button-link flex-button" target="_blank">Book a Music Lesson</a>
                         </div>
                     </div>
 
                     <div>
                         <p class="body-title-alt">SUBSCRIBE</p>
                         <a href="https://beingsound.substack.com" class="body-link p-link" target="_blank">Being Sound on Substack</a>
-                        <p id="about-text">
+                        <p class="about-text">
                             Subscribe to Being Sound on Substack for free writing, resources and inspiration on sound, music and creativity. 
                         </p>
                     </div>
@@ -831,7 +907,7 @@
                         <p class="body-title-alt">CONNECT</p>
                         <a href="https://cal.com/stu-pender" class="body-link p-link" target="_blank">Sound Sessions</a>
                         <br><br>
-                        <p id="about-text">
+                        <p class="about-text">
                             <b>Connect with your inner sound.</b> Sound Sessions are a 1:1 space for embodied listening and creative expression. When we practice embodied listening—listening beyond preferences—sound becomes an architecture to support being with experience, as it is. From this attuned listening, we open into sounding with: resposive, spontaneous creativity.<br>
                         </p>
                         <div class="button-container">
@@ -841,15 +917,15 @@
 
                 </div>
                 <!-- <div id="lesson-pic"></div> -->
-                <img src="images/window.jpg" class="section-pic">
+                <img src="images/window.jpg" class="section-pic" alt="">
             </div>
 
             <div class="bespoke-sonic-worlds-container page-section">
-                <img src="images/listening.jpg" class="section-pic">
+                <img src="images/listening.jpg" class="section-pic" alt="">
                 <div class="text-block">
                     <p class="body-subtitle">BESPOKE SOUND</p>
-                    <p id="about-text" class="about-text-tight"><b>Imagine your sonic world.</b></p>
-                    <p id="about-text">
+                    <p class="about-text about-text-tight"><b>Imagine your sonic world.</b></p>
+                    <p class="about-text">
                         You've poured intention into every detail of your work — the words, the visuals, the physical space. But an immersive experience is instantly broken by auditory dissonance.
                         <br><br>
                         I create bespoke soundscapes for people whose work demands the same level of mastery in its audio as they bring to their craft. Sound that doesn't just accompany your work, but holds it.
@@ -864,11 +940,11 @@
                         <li class="offer-items">Brands, platforms, and creative projects that need a coherent sonic identity</li>
                         <li class="offer-items">Physical spaces, retreats, and installations where sound acts as sonic architecture, shaping the movement and mood of the room</li>
                     </ul>
-                    <p id="about-text">Each project is shaped to fit its specific use, audience, and context.</p>
+                    <p class="about-text">Each project is shaped to fit its specific use, audience, and context.</p>
 
                     <p class="body-subtitle">HOW WE WORK TOGETHER</p>
-                    <p id="about-text">Every project begins with a conversation about your work, your audience, and the kind of attention the sound needs to hold.</p>
-                    <p id="about-text" class="list-intro">From there, projects take different shapes:</p>
+                    <p class="about-text">Every project begins with a conversation about your work, your audience, and the kind of attention the sound needs to hold.</p>
+                    <p class="about-text list-intro">From there, projects take different shapes:</p>
                     <ul class="offer-items" id="offer-text">
                         <li class="offer-items">A single soundscape for a class, meditation, podcast, or specific moment</li>
                         <li class="offer-items">A series of pieces for a course, program, or body of recordings</li>
@@ -878,7 +954,7 @@
                     </ul>
 
                     <p class="body-subtitle">WHAT YOU RECEIVE</p>
-                    <p id="about-text" class="list-intro">Every collaboration is tailored, but may include:</p>
+                    <p class="about-text list-intro">Every collaboration is tailored, but may include:</p>
                     <ul class="offer-items" id="offer-text">
                         <li class="offer-items">One or more original compositions</li>
                         <li class="offer-items">Variations or extensions for different contexts and durations</li>
@@ -889,7 +965,7 @@
                     </ul>
 
                     <p class="body-subtitle">PRICING</p>
-                    <p id="about-text">
+                    <p class="about-text">
                         What a project costs depends on the kind of sound it asks for.
                         <br><br>
                         <b>Environmental &amp; Atmospheric ($400+)</b>
@@ -906,7 +982,7 @@
                     </p>
 
                     <p class="body-subtitle">IS THIS FOR YOU?</p>
-                    <p id="about-text" class="list-intro">This work is most aligned with people who:</p>
+                    <p class="about-text list-intro">This work is most aligned with people who:</p>
                     <ul class="offer-items" id="offer-text">
                         <li class="offer-items">Have a clear sense of what you're making — even if not what it sounds like yet</li>
                         <li class="offer-items">Have invested in their craft, and understand the difference between curated stock audio and a bespoke sonic identity</li>
@@ -916,7 +992,7 @@
                     </ul>
 
                     <p class="body-subtitle">LISTEN</p>
-                    <div class="album-grid">
+                    <div class="album-grid album-list">
 
                         <div class="album-card">
                             <div class="album-card-image">
@@ -955,7 +1031,7 @@
                     </ul>
 
                     <p class="body-subtitle">NEXT STEP</p>
-                    <p id="about-text">If this resonates, you're invited to schedule a discovery call.</p>
+                    <p class="about-text">If this resonates, you're invited to schedule a discovery call.</p>
                     <div class="button-container">
                         <a href="https://cal.com/stu-pender/discovery" class="button-link flex-button" target="_blank">Schedule a Discovery Call</a>
                     </div>
@@ -963,6 +1039,9 @@
             </div>
 
             <div class="projects-container page-section">
+                <video class="section-video" autoplay loop muted playsinline aria-hidden="true">
+                    <source src="video/water.mp4" type="video/mp4">
+                </video>
                 <div class="projects-intro">
                     <p class="contact-title">APPS</p>
                     <!--
@@ -990,17 +1069,20 @@
 
                     <div class="album-card">
                         <div class="album-card-image">
-                            <a class="album-card-thumb-link" href="#" data-project="audio-archive">
-                                <img src="images/projects/Audio%20Archive.png" alt="Audio Archive">
+                            <span class="album-card-thumb-link album-card-pending" data-project="audio-archive">
+                                <img src="images/projects/Audio%20Archive.png" alt="Archive">
                                 <div class="album-card-overlay"></div>
-                            </a>
+                            </span>
                         </div>
                         <div class="album-card-info">
                             <p class="album-card-type">IOS APP</p>
-                            <div class="album-card-title"><a href="#" data-project="audio-archive">Audio Archive</a></div>
+                            <div class="album-card-title"><span class="album-card-pending" data-project="audio-archive">Archive</span></div>
                             <div class="album-card-meta">Sonic Catalog &amp; Creative Process Tool · 2026</div>
                         </div>
                     </div>
+
+                    <!-- Hidden for now — delete these comment markers to show
+                         either card again.
 
                     <div class="album-card">
                         <div class="album-card-image">
@@ -1018,17 +1100,19 @@
 
                     <div class="album-card">
                         <div class="album-card-image">
-                            <a class="album-card-thumb-link" href="#" data-project="being-sound">
+                            <span class="album-card-thumb-link album-card-pending" data-project="being-sound">
                                 <img src="images/projects/Being%20Sound%20Studio.png" alt="Being Sound Studio">
                                 <div class="album-card-overlay"></div>
-                            </a>
+                            </span>
                         </div>
                         <div class="album-card-info">
                             <p class="album-card-type">WEBSITE &amp; BRAND IDENTITY</p>
-                            <div class="album-card-title"><a href="#" data-project="being-sound">Being Sound</a></div>
+                            <div class="album-card-title"><span class="album-card-pending" data-project="being-sound">Being Sound</span></div>
                             <div class="album-card-meta">beingsound.studio · 2024</div>
                         </div>
                     </div>
+
+                    -->
 
                     <div class="album-card">
                         <div class="album-card-image">
@@ -1046,24 +1130,24 @@
 
                     <div class="album-card">
                         <div class="album-card-image">
-                            <a class="album-card-thumb-link" href="#" data-project="sound-station">
+                            <span class="album-card-thumb-link album-card-pending" data-project="sound-station">
                                 <img src="images/projects/Sound%20Station.png" alt="Sound Station">
                                 <div class="album-card-overlay"></div>
-                            </a>
+                            </span>
                         </div>
                         <div class="album-card-info">
                             <p class="album-card-type">ABLETON TEMPLATE</p>
-                            <div class="album-card-title"><a href="#" data-project="sound-station">Sound Station</a></div>
+                            <div class="album-card-title"><span class="album-card-pending" data-project="sound-station">Sound Station</span></div>
                             <div class="album-card-meta">Performance template · ongoing</div>
                         </div>
                     </div>
 
                     <!-- <div class="album-card">
                         <div class="album-card-image">
-                            <a class="album-card-thumb-link" href="#" data-project="ground-beneath-our-feet">
+                            <span class="album-card-thumb-link album-card-pending" data-project="ground-beneath-our-feet">
                                 <img src="images/projects/Ground%20Beneath%20Our%20Feet.png" alt="Ground Beneath Our Feet">
                                 <div class="album-card-overlay"></div>
-                            </a>
+                            </span>
                         </div>
                         <div class="album-card-info">
                             <p class="album-card-type">WEBSITE &amp; BRAND IDENTITY</p>
@@ -1074,10 +1158,10 @@
 
                     <div class="album-card">
                         <div class="album-card-image">
-                            <a class="album-card-thumb-link" href="#" data-project="bloc-projects">
+                            <span class="album-card-thumb-link album-card-pending" data-project="bloc-projects">
                                 <img src="images/projects/Bloc.png" alt="Bloc Projects">
                                 <div class="album-card-overlay"></div>
-                            </a>
+                            </span>
                         </div>
                         <div class="album-card-info">
                             <p class="album-card-type">FOUNDATIONS</p>
@@ -1134,13 +1218,12 @@
             </div>
 
             <div class="music-lessons-container page-section">
-                <img src="images/studio.jpg" class="section-pic">
+                <img src="images/studio.jpg" class="section-pic" alt="">
                 <div class="text-block">
                     <p class="body-subtitle">MUSIC LESSONS</p>
-                    <p id="about-text" class="about-text-tight"><b>Develop your musical craft.</b></p>
-                    <p id="about-text">
-                        Music Lessons are a 1:1 space for people who want to grow their musicianship while staying connected to intuition, integrity, and expression. <br><br>
-                        Whether you're picking up an instrument for the first time, or returning to one you've played for years, we begin with the songs and sounds that already inspire you, using them as the doorway into embodied craft.
+                    <p class="about-text about-text-tight"><b>Develop your musical craft.</b></p>
+                    <p class="about-text">
+                        Music Lessons are a 1:1 space for people who want to grow their musicianship while staying connected to intuition, integrity, and expression. Lessons begin with the songs and sounds that already inspire you, using them as the doorway into embodied craft.
                     </p>
                     <p class="body-subtitle">AREAS OF FOCUS</p>
                     <ul class="offer-items" id="offer-text">
@@ -1152,12 +1235,12 @@
                         <li class="offer-items">Music technology, recording, and production tools</li>
                     </ul>
                     <p class="body-subtitle">WHO THIS IS FOR</p>
-                    <p id="about-text">
+                    <p class="about-text">
                         Students of all ages and skill levels, from complete beginners to working musicians refining their craft.
                         My primary instrument is the guitar. I also teach ukulele, voice, and music technology.
                     </p>
                     <p class="body-subtitle">PRICING</p>
-                    <p id="about-text">
+                    <p class="about-text">
                         $100 per hour. Packages, sliding scale, and alternate payment options available upon request.
                     </p>
                     <p class="body-subtitle">WHAT PEOPLE SAY</p>
@@ -1168,7 +1251,7 @@
                         <li class="offer-items"><span class="testimonial-text">"Stu is a such a wonderful guitar teacher! His flexible approach to lessons have made it easy to stay passionate about learning new things on the guitar. My lessons with him have taught me more than just how to play chords and scales-he's helped me truly understand the music I love on a deeper level."</span><span class="testimonial-title">— SCOTT H.</span></li>
                     </ul>
                     <p class="body-subtitle">NEXT STEP</p>
-                    <p id="about-text">If this resonates, you're invited to book a free 15-minute clarity call, or go straight to a first lesson.</p>
+                    <p class="about-text">If this resonates, you're invited to book a free 15-minute clarity call, or go straight to a first lesson.</p>
                     <div class="button-container">
                         <a href="https://cal.com/stu-pender/clarity" class="button-link flex-button" target="_blank">Book a clarity call</a>
                         <a href="https://cal.com/stu-pender/music-lesson" class="button-link flex-button" target="_blank">Book a Music Lesson</a>
@@ -1178,14 +1261,18 @@
     
 
             <div class="about-container page-section">
-                <img src="images/chicago.jpeg" class="section-pic">
+                <img src="images/chicago.jpeg" class="section-pic" alt="Stu Pender playing guitar by the lake" data-under="images/just-clouds.jpeg">
                 <div class="text-block">
                     <p class="body-subtitle">ABOUT BEING SOUND</p>
-                    <p id="about-text">
+                    <p class="about-text">
                         <b>Being Sound</b> is a sonic arts studio by Stu Pender. Creating bespoke sound for practitioners, creators, and spaces, and offering sound-as-practice through guitar, voice, music technology, and embodied listening.
                     </p>
+                    <!-- The "door": every page ends with one clear next step. -->
+                    <p class="about-text">
+                        <a href="/bespoke-sound" class="p-link bespoke-sonic-worlds">Commission bespoke sound</a>, <a href="/music-lessons" class="p-link music-lessons">take a lesson</a>, or <a href="/listen" class="p-link listen-link">receive a gift</a>.
+                    </p>
                     <p class="body-subtitle">ABOUT STU PENDER</p>
-                    <p id="about-text">
+                    <p class="about-text">
                         Stu Pender is a Chicago-based guitarist, composer, and sonic artist whose work is rooted in deep listening and sounding with.<br><br>
                         A founding member of the hip-hop collective <a href="https://www.youtube.com/watch?v=5WdOhqSqBK0&ab_channel=PoeticThrust" class="p-link" target="_blank">Poetic Thrust</a>, Stu has performed and recorded with artists including <a href="https://www.instagram.com/p/CNIQKFjjAWG/?hl=en" class="p-link" target="_blank">Photay</a>, <a href="https://intlanthem.bandcamp.com/album/im-just-chillin-on-fire" class="p-link" target="_blank">Carlos Niño and Laraaji</a>, <a href="https://www.topazjones.com/" class="p-link" target="_blank">Topaz Jones</a>, Elijah Wolf, and Maggie Rogers — touring internationally and performing at the Greek Theatre, MoMA PS1, Central Park Summerstage, and the Beacon Theatre. His solo recordings have been featured on KCRW, KEXP, and Apple Music's Headspace playlist.<br><br>
                         Stu's practice is shaped by years of study across traditions — from jazz (John Abercrombie, Barry Harris, SUNY Purchase) to West African kora music (Derek Gripper) to North Indian raga (Silvia Nakkach) — alongside contemplative training in the Zen and Tibetan Bön traditions. He holds a certificate in sound and the healing arts from the New York Open Center.<br><br>
@@ -1194,12 +1281,147 @@
                 </div>
             </div>
 
-    
+            <!-- ============================================================
+                 /listen — the freebie landing page ("the front door")
+                 A calm invitation + one email field + one button. On submit,
+                 forms.js sends the email to Kit, then shows the hidden welcome
+                 page (/listen/welcome) where the soundscape streams instantly.
+                 ============================================================ -->
+            <div class="listen-container page-section">
+                <img src="images/listening-in-studio.jpg" class="section-pic" alt="">
+                <div class="text-block">
+                    <p class="body-subtitle">A GIFT</p>
+                    <p class="about-text about-text-tight"><b>Twelve soundscapes. One for each key.</b></p>
+                    <p class="about-text">
+                        Unmetered sound to practice with. Enter through listening, the voice,
+                        or an instrument — there's no tempo to keep up with, leaving room for
+                        a slower, more embodied way to listen and make music.
+                        <br><br>
+                        Recorded in June 2026 during a month-long residency with Silvia Nakkach.
+                        Yours to download and keep.
+                    </p>
+
+                    <!-- The email capture form.
+                         data-source   -> tag saved in Kit so we know they came from /listen
+                         data-success  -> "redirect" means show another page on success
+                         data-redirect -> which page: the hidden welcome page
+                         novalidate    -> we run our own friendly validation in forms.js -->
+                    <form class="capture-form" data-source="listen" data-success="redirect" data-redirect="listen-welcome" novalidate>
+                        <!-- Honeypot: hidden from people by CSS, tempting to bots. If it
+                             gets filled, forms.js discards the submission. Leave it empty. -->
+                        <input type="text" class="capture-hp" name="website" tabindex="-1" autocomplete="off" aria-hidden="true">
+
+                        <label class="capture-label" for="listen-email">Email address</label>
+                        <input type="email" id="listen-email" name="email_address" class="capture-input" placeholder="you@example.com" required autocomplete="email">
+                        <button type="submit" class="button-link capture-button">Send me the soundscapes</button>
+                        <p class="capture-message" role="status" aria-live="polite"></p>
+                    </form>
+                </div>
+            </div>
+
+            <!-- ============================================================
+                 /listen/welcome — hidden thank-you page (unlisted, noindex)
+                 Reached only after a successful signup. The freebie streams
+                 here and can be downloaded on the spot, so v1 needs no welcome
+                 email at all. Not in the nav; kept out of search by a robots
+                 meta tag that script.js flips on for this page only.
+                 ============================================================ -->
+            <div class="listen-welcome-container page-section">
+                <img src="images/twelve-soundscapes.jpg" class="section-pic" alt="">
+                <div class="text-block">
+                    <p class="body-subtitle">YOU'RE IN</p>
+                    <p class="about-text about-text-tight"><b>Here are your twelve soundscapes.</b></p>
+                    <p class="about-text">
+                        Each one runs a full hour, unmetered. Listen to an excerpt below,
+                        then take the whole set with you — there's no right order and no
+                        tempo to keep.
+                    </p>
+
+                    <!-- The list-view player, same as the Bespoke Sound page: artwork on
+                         the left, play control over it, title beside it.
+
+                         Only an excerpt is hosted here. The full hour-long files are
+                         144MB each — far too large for a website — so the complete set
+                         is handed over by the download link below. -->
+                    <div class="album-grid album-list">
+
+                        <div class="album-card">
+                            <div class="album-card-image">
+                                <img src="images/twelve-soundscapes.jpg" alt="Twelve Soundscapes">
+                                <div class="album-card-overlay"></div>
+                                <div class="album-card-play"><svg width="16" height="16" viewBox="0 0 16 16" fill="white"><polygon points="3,1 14,8 3,15"/></svg></div>
+                            </div>
+                            <div class="album-card-info">
+                                <div class="album-card-title">Soundscape in C</div>
+                                <div class="album-card-meta">Excerpt &middot; the full piece runs one hour</div>
+                            </div>
+                            <ul class="playlist album-card-playlist" data-art="images/twelve-soundscapes.jpg">
+                                <li class="playlist-item" data-transport-name="Soundscape in C — Being Sound — Twelve Soundscapes"><button class="playlist-play-btn" data-src="audio/soundscape-in-c-preview.mp3"><svg width="14" height="14" viewBox="0 0 14 14" fill="white"><polygon points="3,1 12,7 3,13"/></svg></button><span class="playlist-track-name">Soundscape in C</span></li>
+                            </ul>
+                        </div>
+
+                    </div>
+
+                    <!-- >>> PUT THE DOWNLOAD LINK HERE <<<
+                         Upload the twelve mp3s to Google Drive (or Dropbox), set the
+                         folder to "anyone with the link", and paste that link below in
+                         place of the # — that's the only edit needed. -->
+                    <div class="button-container">
+                        <a class="button-link flex-button" href="#" target="_blank" rel="noopener">Download all twelve</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ============================================================
+                 /loop — the QR-code target for shows, workshops, and events.
+                 Printed on cards, so this URL must never change. On success
+                 it shares the /listen/welcome page: the freebie doubles as
+                 the instant thank-you gift.
+                 ============================================================ -->
+            <div class="loop-container page-section">
+                <img src="images/chicago.jpeg" class="section-pic" alt="Stu Pender playing guitar by the lake">
+                <div class="text-block">
+                    <p class="body-subtitle">STAY IN THE LOOP</p>
+                    <p class="about-text about-text-tight"><b>Good to meet you.</b></p>
+                    <p class="about-text">
+                        [PLACEHOLDER — one warm sentence for someone who just met you at a
+                        show, workshop, or event. Edit freely; the wiring stays the same.]
+                    </p>
+                    <form class="capture-form" data-source="loop" data-success="redirect" data-redirect="listen-welcome" novalidate>
+                        <input type="text" class="capture-hp" name="website" tabindex="-1" autocomplete="off" aria-hidden="true">
+                        <label class="capture-label" for="loop-email">Email address</label>
+                        <input type="email" id="loop-email" name="email_address" class="capture-input" placeholder="you@example.com" required autocomplete="email">
+                        <button type="submit" class="button-link capture-button">Keep me in the loop</button>
+                        <p class="capture-message" role="status" aria-live="polite"></p>
+                    </form>
+                </div>
+            </div>
+
+
             <!-- <div class="content-grid-container">
                 <div class="grid-item">
-    
+
                 </div>
             </div> -->
-    
+
+            <!-- ============================================================
+                 SITE FOOTER — on every page, so every page is a door.
+                 One line: label, field, button. Success is inline ("You're
+                 in.") so the visitor never leaves the page they're reading.
+                 ============================================================ -->
+            <footer class="site-footer">
+                <div class="footer-capture">
+                    <p class="contact-title">STAY CONNECTED</p>
+                    <form class="capture-form capture-form-inline capture-form-light" data-source="footer" data-success-message="You're in." novalidate>
+                        <input type="text" class="capture-hp" name="website" tabindex="-1" autocomplete="off" aria-hidden="true">
+                        <label class="capture-label" for="footer-email">Email address</label>
+                        <input type="email" id="footer-email" name="email_address" class="capture-input" placeholder="you@example.com" required autocomplete="email">
+                        <button type="submit" class="button-link capture-button">Subscribe</button>
+                        <p class="capture-message" role="status" aria-live="polite"></p>
+                    </form>
+                </div>
+                <p class="footer-note">© Being Sound Studio · <a href="mailto:stu_pender@me.com" class="footer-link">stu_pender@me.com</a></p>
+            </footer>
+
         </body>
-    </HTML>
+    </html>
