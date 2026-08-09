@@ -16,10 +16,10 @@ if (calendarEl) {
       var events = data.items || [];
       var ul = document.createElement('ul');
       if (events.length === 0) {
-        var li = document.createElement('li');
-        li.textContent = 'No Upcoming Events';
-        li.style.opacity = '0.6';
-        ul.appendChild(li);
+        // Nothing coming up: hide the whole "Upcoming" block rather than
+        // announce an absence, so the page leads with the work instead.
+        hideUpcomingBlock();
+        return;
       } else {
         events.forEach(function(event) {
           var li = document.createElement('li');
@@ -108,13 +108,16 @@ if (calendarEl) {
       calendarEl.appendChild(ul);
     })
     .catch(function() {
-      var ul = document.createElement('ul');
-      var li = document.createElement('li');
-      li.textContent = 'No Upcoming Events';
-      li.style.opacity = '0.6';
-      ul.appendChild(li);
-      calendarEl.appendChild(ul);
+      // If the calendar can't be reached, hide the block too — better a
+      // clean page than an error or a false "nothing coming up".
+      hideUpcomingBlock();
     });
+
+  // Hides the "UPCOMING EVENTS" heading along with its (empty) list.
+  function hideUpcomingBlock() {
+    var block = calendarEl.parentElement;
+    if (block) { block.style.display = 'none'; }
+  }
 }
 
 // DOM Bindings
@@ -139,6 +142,10 @@ const collaborationCard = document.querySelector(".collaboration-container");
 const bookingCard = document.querySelector(".booking-container");
 const eventsCard = document.querySelector(".events-container");
 const projectsCard = document.querySelector(".projects-container");
+const listenCard = document.querySelector(".listen-container");
+const listenWelcomeCard = document.querySelector(".listen-welcome-container");
+const loopCard = document.querySelector(".loop-container");
+const listenLinks = Array.from(document.querySelectorAll(".listen-link"));
 const pageSections = Array.from(document.querySelectorAll(".page-section"));
 
 const defaultPageKey = "services";
@@ -195,6 +202,31 @@ const pageRegistry = {
     activeElements: musicLessonsLinks,
     triggerElements: musicLessonsLinks,
   },
+  // The freebie landing page. No nav link points here (yet) — it's reached
+  // directly, e.g. from a link or the QR code we'll generate later.
+  // Shows the offers bar above it, like the other service pages, so people
+  // can keep moving between Bespoke Sound, Music Lessons, and the gift.
+  listen: {
+    path: "/listen",
+    title: "Listen | Being Sound Studio",
+    sections: [offersCard, listenCard],
+    activeElements: listenLinks,
+    triggerElements: listenLinks,
+  },
+  // The QR-code target. Printed on cards, so this path must never change.
+  loop: {
+    path: "/loop",
+    title: "Stay in the loop | Being Sound Studio",
+    sections: [loopCard],
+  },
+  // The hidden thank-you page. `noindex: true` keeps it out of search results
+  // (see the robots-meta handling in navigateToPage below).
+  "listen-welcome": {
+    path: "/listen/welcome",
+    title: "Your soundscape | Being Sound Studio",
+    sections: [listenWelcomeCard],
+    noindex: true,
+  },
 };
 
 const highlightableElements = new Set();
@@ -227,9 +259,24 @@ Object.entries(pageRegistry).forEach(([key, config]) => {
   });
 });
 
+// A single <meta name="robots"> tag we reuse to keep certain pages (like the
+// hidden welcome page) out of search results. We create it once if it's missing.
+// This is needed because every route shares one HTML document, so a static tag
+// in <head> would (un)index the whole site rather than one page.
+const robotsMeta =
+  document.querySelector('meta[name="robots"]') ||
+  document.head.appendChild(
+    Object.assign(document.createElement("meta"), { name: "robots" })
+  );
+
 function navigateToPage(pageKey, options = {}) {
   const { updateHistory = true, replaceState = false } = options;
   const targetKey = pageRegistry[pageKey] ? pageKey : defaultPageKey;
+
+  // Keep noindex pages out of search; let every other page be indexed normally.
+  robotsMeta.content = pageRegistry[targetKey].noindex
+    ? "noindex, nofollow"
+    : "index, follow";
 
   const sectionsToShow = new Set(
     (pageRegistry[targetKey].sections || []).filter(Boolean)
@@ -265,6 +312,21 @@ function navigateToPage(pageKey, options = {}) {
     }
   }
 
+  // Background videos only autoplay if they're visible when the page loads,
+  // and these sections start hidden — so start the one on the page we just
+  // opened, and pause the others to save battery.
+  document.querySelectorAll(".section-video").forEach(function (video) {
+    var onShownPage = video.closest(".page-section.show");
+    if (onShownPage) {
+      var attempt = video.play();
+      // Browsers return a promise here and reject it if they refuse; the
+      // page looks fine either way, so we just swallow the refusal.
+      if (attempt && attempt.catch) { attempt.catch(function () {}); }
+    } else {
+      video.pause();
+    }
+  });
+
   // Reset scroll so each "page" loads at the top.
   window.scrollTo({ top: 0, left: 0, behavior: "auto" });
 }
@@ -289,6 +351,43 @@ window.addEventListener("popstate", () => {
 
 const initialPage = getPageFromPath(window.location.pathname);
 navigateToPage(initialPage, { replaceState: true });
+
+// ============================================================
+//  Background halves (the glass pages)
+//  Each dark page names one photograph in its HTML. Here we make a
+//  second copy of it so the image continues underneath the translucent
+//  panel instead of stopping at its edge. Doing it here — rather than
+//  writing the <img> twice in the HTML — keeps one image per page as
+//  the single thing to change.
+//
+//  A page can show a DIFFERENT image under the glass by adding
+//  data-under="images/whatever.jpg" to its <img>. (The About page does
+//  this: a plain sky sits under the glass so the portrait isn't repeated.)
+//
+//  The copy is decorative, so it's hidden from screen readers.
+// ============================================================
+document
+  .querySelectorAll(
+    ".teaching-container > .section-pic," +
+      ".about-container > .section-pic," +
+      ".bespoke-sonic-worlds-container > .section-pic," +
+      ".music-lessons-container > .section-pic," +
+      ".listen-container > .section-pic," +
+      ".listen-welcome-container > .section-pic," +
+      ".loop-container > .section-pic," +
+      ".events-container > .section-pic"
+  )
+  .forEach(function (image) {
+    var mirror = image.cloneNode();
+    mirror.classList.remove("section-pic");
+    mirror.classList.add("section-pic-mirror");
+    if (image.dataset.under) {
+      mirror.src = image.dataset.under;
+    }
+    mirror.setAttribute("alt", "");
+    mirror.setAttribute("aria-hidden", "true");
+    image.parentNode.insertBefore(mirror, image.nextSibling);
+  });
 
 // Generative Music Player
 
@@ -436,6 +535,8 @@ button.onclick = function() {
 
 // Playlist Player
 
+const queuePlaySVG = '<svg width="11" height="11" viewBox="0 0 14 14" fill="white"><polygon points="3,1 12,7 3,13"/></svg>';
+const queuePauseSVG = '<svg width="11" height="11" viewBox="0 0 14 14" fill="white"><rect x="2" y="1" width="4" height="12" rx="1"/><rect x="8" y="1" width="4" height="12" rx="1"/></svg>';
 const playIconSVG = '<svg width="14" height="14" viewBox="0 0 14 14" fill="white"><polygon points="3,1 12,7 3,13"/></svg>';
 const pauseIconSVG = '<svg width="14" height="14" viewBox="0 0 14 14" fill="white"><rect x="2" y="1" width="4" height="12" rx="1"/><rect x="8" y="1" width="4" height="12" rx="1"/></svg>';
 const transportPlaySVG = '<svg width="16" height="16" viewBox="0 0 16 16" fill="white"><polygon points="3,1 14,8 3,15"/></svg>';
@@ -457,21 +558,98 @@ function resetAllPlaylistBtns() {
   activePlaylistBtn = null;
 }
 
+// Which page the playing track was started from, so clicking its title in
+// the bar can take you back there. Set whenever playback starts.
+let transportSourcePage = null;
+
 function showTransport(trackName, triggerBtn) {
   transportBar.classList.add('visible');
   document.body.classList.add('transport-visible');
-  transportTrackName.textContent = trackName;
+
+  // Work out which page this track lives on by finding the section it sits
+  // in, then the registry entry that lists that section.
+  const section = triggerBtn && triggerBtn.closest('.page-section');
+  const entry = section && Object.entries(pageRegistry)
+    .find(([, config]) => (config.sections || []).includes(section));
+  transportSourcePage = entry ? entry[0] : null;
+  transportTrackName.classList.toggle('is-linked', !!transportSourcePage);
+  // Keep the wrapper itself — it's what stacks the title above the meta.
+  transportTrackName.replaceChildren(buildTrackLabel(trackName, 'transport-track-label'));
   transportPlayPause.innerHTML = transportPauseSVG;
+
+  // Show the artwork of whatever is playing. If a track has none, hide the
+  // slot rather than leaving a broken picture.
+  const transportArt = document.getElementById('transport-art');
+  if (transportArt) {
+    const item = triggerBtn && triggerBtn.closest('.playlist-item');
+    const art = item ? artworkFor(item) : null;
+    if (art) {
+      transportArt.src = art;
+      transportArt.style.display = '';
+    } else {
+      transportArt.removeAttribute('src');
+      transportArt.style.display = 'none';
+    }
+  }
+
   if (triggerBtn) {
     buildQueue(triggerBtn);
   }
+  // The queue stays shut until someone opens it — the bar already shows
+  // what's playing, and a panel springing open is a lot to throw at you
+  // just for pressing play.
   closeQueue();
-  if (transportQueue.children.length > 1) {
-    setTimeout(() => {
-      transportQueue.classList.add('open');
-      transportQueueToggle.classList.add('open');
-    }, 0);
+}
+
+// Track names are written as "Title — Artist — Album" (that's the order
+// they're shown in, so there's nothing to remember). Split off the first
+// part as the title; whatever follows becomes the quieter second line, the
+// same way the album cards show a title with smaller grey text beneath.
+function splitTrackName(name) {
+  const parts = String(name).split(' — ');
+  return {
+    title: parts.shift(),
+    meta: parts.join(' — ')
+  };
+}
+
+// Builds the two-line label used by both the bar and the queue, so they
+// can't drift apart.
+function buildTrackLabel(name, className) {
+  const parts = splitTrackName(name);
+
+  const wrap = document.createElement('span');
+  wrap.className = className;
+
+  const title = document.createElement('span');
+  title.className = 'track-title';
+  title.textContent = parts.title;
+  wrap.appendChild(title);
+
+  if (parts.meta) {
+    const meta = document.createElement('span');
+    meta.className = 'track-meta';
+    meta.textContent = parts.meta;
+    wrap.appendChild(meta);
   }
+
+  return wrap;
+}
+
+// Where a track's artwork comes from, in order of preference:
+//   1. data-art on the track itself
+//   2. data-art on the playlist it belongs to (one image for a whole set)
+//   3. the album card's own picture, when the track sits in a card
+// Returns null if there's no picture to be had, and the layout copes.
+function artworkFor(item) {
+  if (item.dataset.art) return item.dataset.art;
+
+  const playlist = item.closest('ul.playlist');
+  if (playlist && playlist.dataset.art) return playlist.dataset.art;
+
+  const card = item.closest('.album-card');
+  const image = card && card.querySelector('.album-card-image img');
+  return image ? image.getAttribute('src') : null;
 }
 
 function buildQueue(triggerBtn) {
@@ -484,9 +662,35 @@ function buildQueue(triggerBtn) {
     const btn = item.querySelector('.playlist-play-btn');
     const name = item.getAttribute('data-transport-name') || item.querySelector('.playlist-track-name').textContent;
     const src = btn.getAttribute('data-src');
+    const art = artworkFor(item);
+
+    // Each queue entry is built like a list row — artwork, then title — so
+    // the queue, the page lists and the bar all read the same way.
     const li = document.createElement('li');
-    li.textContent = name;
     li.setAttribute('data-src', src);
+
+    if (art) {
+      const thumb = document.createElement('span');
+      thumb.className = 'transport-queue-thumb';
+
+      const image = document.createElement('img');
+      image.className = 'transport-queue-art';
+      image.src = art;
+      image.alt = '';
+      image.setAttribute('aria-hidden', 'true');
+      thumb.appendChild(image);
+
+      // The badge over the artwork: play on hover, pause on the track
+      // that's currently sounding — exactly how the cards behave.
+      const badge = document.createElement('span');
+      badge.className = 'transport-queue-play';
+      thumb.appendChild(badge);
+
+      li.appendChild(thumb);
+    }
+
+    li.appendChild(buildTrackLabel(name, 'transport-queue-name'));
+
     if (src === currentTrackSrc) li.classList.add('active');
     li.addEventListener('click', (e) => {
       e.stopPropagation();
@@ -499,7 +703,16 @@ function buildQueue(triggerBtn) {
 
 function updateQueueActive() {
   transportQueue.querySelectorAll('li').forEach(li => {
-    li.classList.toggle('active', li.getAttribute('data-src') === currentTrackSrc);
+    const isCurrent = li.getAttribute('data-src') === currentTrackSrc;
+    li.classList.toggle('active', isCurrent);
+
+    // The current row shows pause while it's sounding (and play if it's
+    // been paused); every other row shows play, revealed on hover.
+    const badge = li.querySelector('.transport-queue-play');
+    if (badge) {
+      const showPause = isCurrent && !playlistAudio.paused;
+      badge.innerHTML = showPause ? queuePauseSVG : queuePlaySVG;
+    }
   });
 }
 
@@ -539,9 +752,13 @@ function updateCardStates() {
   });
 }
 
-// Remove play button from cards that link externally (no local playlist)
+// Remove play button from cards that link externally (no local playlist).
+// A card that is itself a track (list view, where the row IS the item rather
+// than holding a nested playlist) keeps its button — it has something to play.
 document.querySelectorAll('.album-card').forEach(card => {
-  if (!card.querySelector('ul.playlist')) {
+  const holdsAPlaylist = !!card.querySelector('ul.playlist');
+  const isATrackItself = card.classList.contains('playlist-item');
+  if (!holdsAPlaylist && !isATrackItself) {
     const playBtn = card.querySelector('.album-card-play');
     if (playBtn) playBtn.remove();
     card.classList.add('album-card-external');
@@ -625,17 +842,88 @@ transportLeft.addEventListener('click', () => {
   updateCardStates();
 });
 
+// The badge follows the audio itself rather than the click. Starting
+// playback is asynchronous — `paused` is still true for a moment after
+// play() is called — so updating on the click would leave the badge a step
+// behind. These two events fire when playback really starts and stops.
+['play', 'pause'].forEach((eventName) => {
+  playlistAudio.addEventListener(eventName, updateQueueActive);
+});
+
 transportRight.addEventListener('click', () => {
   transportQueue.classList.toggle('open');
   transportQueueToggle.classList.toggle('open');
 });
+
+// --- Previous / next ---
+// These reuse the queue the transport bar already builds, so they follow the
+// same order as the list you started from. Clicking a queue entry is what
+// actually plays a track, so we just click the neighbouring one.
+const transportPrev = document.getElementById('transport-prev');
+const transportNext = document.getElementById('transport-next');
+
+function stepTrack(offset) {
+  const items = Array.from(transportQueue.querySelectorAll('li'));
+  if (!items.length) return;
+  const index = items.findIndex(li => li.getAttribute('data-src') === currentTrackSrc);
+  if (index < 0) return;
+  const target = items[index + offset];
+  if (target) target.click();
+}
+
+// stopPropagation matters here: these sit inside the left-hand area, which
+// itself toggles play/pause when clicked. Without it, skipping a track would
+// also pause it.
+if (transportPrev) {
+  transportPrev.addEventListener('click', (event) => {
+    event.stopPropagation();
+    stepTrack(-1);
+  });
+}
+
+if (transportNext) {
+  transportNext.addEventListener('click', (event) => {
+    event.stopPropagation();
+    stepTrack(1);
+  });
+}
+
+// --- Volume ---
+// Same reasoning: the slider lives inside the right-hand area, which opens
+// the queue when clicked, so its events must not travel upward.
+const transportVolume = document.getElementById('transport-volume');
+
+if (transportVolume) {
+  playlistAudio.volume = parseFloat(transportVolume.value);
+
+  // CSS can't read an input's value, so we hand it the percentage to fill.
+  function paintVolumeFill() {
+    transportVolume.style.setProperty(
+      '--volume-fill',
+      (parseFloat(transportVolume.value) * 100) + '%'
+    );
+  }
+  paintVolumeFill();
+
+  transportVolume.addEventListener('input', (event) => {
+    event.stopPropagation();
+    playlistAudio.volume = parseFloat(transportVolume.value);
+    paintVolumeFill();
+  });
+
+  ['click', 'mousedown', 'touchstart'].forEach((name) => {
+    transportVolume.addEventListener(name, (event) => event.stopPropagation());
+  });
+}
 
 transportQueue.addEventListener('click', (e) => {
   e.stopPropagation();
 });
 
 document.addEventListener('click', (e) => {
-  if (!transportBar.contains(e.target)) {
+  // The queue is a sibling of the bar rather than a child (so its blur can
+  // reach the page), so both have to be checked here.
+  if (!transportBar.contains(e.target) && !transportQueue.contains(e.target)) {
     closeQueue();
   }
 });
@@ -693,3 +981,79 @@ button.onclick = function() {
   }
   origOnClick.call(this);
 };
+
+// ============================================================
+//  Keyboard control for the player
+//  Space plays and pauses; the left and right arrows step between
+//  tracks. Only while something is actually loaded, and never while
+//  someone is typing — otherwise a space in the email field would
+//  pause the music instead of typing a space.
+// ============================================================
+document.addEventListener('keydown', (event) => {
+  // Ignore anything typed into a field, or with a modifier held.
+  const target = event.target;
+  const isTyping =
+    target &&
+    (target.matches('input, textarea, select') || target.isContentEditable);
+  if (isTyping || event.metaKey || event.ctrlKey || event.altKey) return;
+
+  // Nothing to control until a track has been chosen.
+  if (!currentTrackSrc) return;
+
+  if (event.code === 'Space') {
+    // Space would otherwise scroll the page.
+    event.preventDefault();
+    if (playlistAudio.paused) {
+      playlistAudio.play();
+      transportPlayPause.innerHTML = transportPauseSVG;
+      if (activePlaylistBtn) activePlaylistBtn.innerHTML = pauseIconSVG;
+    } else {
+      playlistAudio.pause();
+      transportPlayPause.innerHTML = transportPlaySVG;
+      if (activePlaylistBtn) activePlaylistBtn.innerHTML = playIconSVG;
+    }
+    updateCardStates();
+  } else if (event.code === 'ArrowRight') {
+    event.preventDefault();
+    stepTrack(1);
+  } else if (event.code === 'ArrowLeft') {
+    event.preventDefault();
+    stepTrack(-1);
+  }
+});
+
+
+// ============================================================
+//  Playback position
+//  Fills the hairline at the bottom of the bar as the track plays.
+//  'timeupdate' fires a few times a second while playing.
+// ============================================================
+const transportProgressPlayed = document.getElementById('transport-progress-played');
+
+if (transportProgressPlayed) {
+  function paintProgress() {
+    const total = playlistAudio.duration;
+    // duration is NaN until the file's metadata has loaded.
+    const fraction = total ? playlistAudio.currentTime / total : 0;
+    transportProgressPlayed.style.width = (fraction * 100) + '%';
+  }
+
+  playlistAudio.addEventListener('timeupdate', paintProgress);
+  // Reset the line the moment a different track is loaded.
+  playlistAudio.addEventListener('loadedmetadata', paintProgress);
+  playlistAudio.addEventListener('emptied', paintProgress);
+}
+
+
+// ============================================================
+//  The track title leads back to where it came from
+//  Clicking it returns to the page the track was played from —
+//  the way a music app takes you back to the album.
+// ============================================================
+transportTrackName.addEventListener('click', (event) => {
+  if (!transportSourcePage) return;
+  // The bar's left half toggles play/pause when clicked, so this click must
+  // not carry on up to it.
+  event.stopPropagation();
+  navigateToPage(transportSourcePage);
+});

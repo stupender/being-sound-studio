@@ -117,11 +117,25 @@ div.button-container {
     background-color: rgb(24 24 24);
     color: #e0e0e0;
 }
+
+/* /listen, its hidden welcome page, and /loop reuse the same dark-card look
+   as the About / Bespoke / Music Lessons pages. */
+.listen-container,
+.listen-welcome-container,
+.loop-container {
+    margin-left: 5%;
+    margin-right: 5%;
+    display: none;
+    justify-content: space-between;
+    align-items: stretch;
+    background-color: rgb(24 24 24);
+    color: #e0e0e0;
+}
 .collaboration-container {
     margin-left: 5%;
     margin-right: 5%;
     padding-top: 15px;
-    padding-bottom: 5%;
+    padding-bottom: 40px;
     display: none;
     flex-direction: column;
 }
@@ -135,22 +149,20 @@ div.button-container {
     margin-left: 5%;
     margin-right: 5%;
     padding-top: 15px;
-    padding-bottom: 5%;
+    padding-bottom: 40px;
     display: none;
     flex-direction: column;
 }
 
+/* The events page is a dark glass card like the other image pages. */
 .events-container {
     margin-left: 5%;
     margin-right: 5%;
-    padding-top: 15px;
-    padding-right: 5%;
-    padding-bottom: 5%;
     display: none;
-    flex-direction: column;
-    justify-content: space-around;
-    align-items: flex-start;
-    /* align-items: center; */
+    justify-content: space-between;
+    align-items: stretch;
+    background-color: rgb(24 24 24);
+    color: #e0e0e0;
 }
 
 .events-container .contact-title,
@@ -274,7 +286,7 @@ div.button-container {
     margin: 0px 30px 15px 30px;
 }
 
-.text-section #about-text {
+.text-section .about-text {
     margin-top: 15px;
 }
 
@@ -370,7 +382,7 @@ li.offer-items:first-child {
     font-weight: 300;
  }
 
-#about-text {
+.about-text {
     font-family: 'Chivo', sans-serif;
     font-weight: 100;
     font-size: .9em;
@@ -378,11 +390,11 @@ li.offer-items:first-child {
     margin: 0px 30px 30px 30px;
 }
 
-#about-text.about-text-tight {
+.about-text.about-text-tight {
     margin-bottom: 12px;
 }
 
-#about-text.list-intro {
+.about-text.list-intro {
     margin-bottom: 10px;
 }
 
@@ -452,6 +464,10 @@ a:hover {
 .about-container.show,
 .bespoke-sonic-worlds-container.show,
 .music-lessons-container.show,
+.listen-container.show,
+.listen-welcome-container.show,
+.loop-container.show,
+.events-container.show,
 .teaching-container.show {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -465,7 +481,7 @@ a:hover {
     display: none;
     flex-direction: column;
     padding-top: 15px;
-    padding-bottom: 5%;
+    padding-bottom: 40px;
 }
 
 .projects-container.show {
@@ -487,10 +503,27 @@ a:hover {
     text-align: justify;
 }
 
-.project-grid {
-    grid-template-columns: repeat(3, 1fr);
+/* Four across on a wide screen, stepping down to two and then one.
+   These use both class names (.album-grid.project-grid) so they beat the
+   plain .album-grid rule further down the file, which sets three. */
+.album-grid.project-grid {
+    grid-template-columns: repeat(4, 1fr);
     gap: 8px;
     margin-bottom: 25px;
+}
+
+/* Two across on tablets and narrow desktop windows. */
+@media only screen and (max-width: 1100px) {
+    .album-grid.project-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+/* One across on a phone. */
+@media only screen and (max-width: 600px) {
+    .album-grid.project-grid {
+        grid-template-columns: 1fr;
+    }
 }
 
 /* Album-card overrides scoped to the projects page */
@@ -613,7 +646,11 @@ a:hover {
 .text-section,
 .about-container .text-block,
 .bespoke-sonic-worlds-container .text-block,
-.music-lessons-container .text-block {
+.music-lessons-container .text-block,
+.listen-container .text-block,
+.listen-welcome-container .text-block,
+.loop-container .text-block,
+.events-container .text-block {
     flex: 1 1 50%;
 }
 
@@ -635,9 +672,10 @@ a:hover {
     display: flex;
 }
 
+/* A hairline above the light list pages. The events page is a dark image
+   card now, so it sets its own edge and doesn't take the line. */
 .collaboration-container.show,
 .personal-container.show,
-.events-container.show,
 .contact-container.show,
 .offers-container.show {
     border-top: 1px solid #0000001c;
@@ -646,6 +684,112 @@ a:hover {
 .showing {
     background-color: rgb(24 24 24);
     color: #e0e0e0;
+}
+
+/* ============================================================
+   EMAIL CAPTURE ("the front door")
+   Styling for every <form class="capture-form"> — /listen now,
+   /loop and the footer later. Built from the site's two colours
+   so it matches without introducing anything new.
+   ============================================================ */
+
+/* The form sits at the same 30px left edge as the card's labels and body
+   text (the dark cards use per-element margins, not container padding).
+   max-width keeps the field a comfortable width on the wide column. */
+.capture-form {
+    margin: 25px 30px 30px 30px;
+    max-width: 340px;
+}
+
+/* We rely on the input's placeholder for the on-screen prompt, so the
+   <label> is kept for screen readers only (accessibility) but hidden. */
+.capture-label {
+    position: absolute;
+    left: -9999px;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+}
+
+/* A single underline rather than a box — quieter, and it lets the typed
+   text sit flush with the label and body copy above it. */
+.capture-input {
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
+    background-color: transparent;
+    color: #e0e0e0;
+    border: none;
+    border-bottom: 1px solid #e0e0e0;
+    border-radius: 0;
+    padding: 10px 0;
+    font-family: 'Chivo', sans-serif;
+    font-weight: 300;
+    font-size: .9em;
+    line-height: 1.5em;
+    margin-bottom: 20px;
+    /* The blinking cursor picks up the site's accent colour. */
+    caret-color: rgb(228 107 108);
+}
+
+/* No browser focus ring, and the underline holds its weight — the blinking
+   text cursor is what shows the field is active, so nothing needs to move. */
+.capture-input:focus {
+    outline: none;
+}
+
+.capture-input::placeholder {
+    color: #e0e0e0;
+    opacity: 0.5;
+}
+
+/* The submit button reuses the site's real .button-link style (see the HTML).
+   These rules only undo the defaults the base <button> rule would impose
+   (fixed 60px width) and add the disabled state. */
+.capture-button {
+    width: auto;
+    cursor: pointer;
+    margin: 0;
+}
+
+.capture-button:disabled {
+    opacity: 0.5;
+    cursor: default;
+}
+
+/* Status line under the form (e.g. "Sending…" or "You're in."). */
+.capture-message {
+    margin-top: 15px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: .8em;
+}
+
+/* Until there's something to say it takes up no room at all, so forms
+   aren't followed by a band of empty space. */
+.capture-message:empty {
+    display: none;
+}
+
+.capture-message-error {
+    font-style: italic;
+    opacity: 0.85;
+}
+
+/* The honeypot: pushed far off-screen so people never see it, but
+   bots still fill it in. forms.js discards anything with it filled. */
+.capture-hp {
+    position: absolute;
+    left: -9999px;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+}
+
+/* On the welcome page, give the download button clear space below the
+   soundscape player so the two don't touch. Scoped to this page so the
+   site's shared .button-container spacing stays as it is elsewhere. */
+.listen-welcome-container .button-container {
+    margin-top: 25px;
 }
 
 /* .showing:hover {
@@ -657,11 +801,15 @@ a:hover {
 /* TRANSPORT BAR */
 .transport-bar {
     position: fixed;
-    top: 0;
+    bottom: 0;
     left: 0;
     width: 100%;
     z-index: 1000;
-    background: rgb(24 24 24);
+    /* Translucent, with the page blurred behind it — same glass as the
+       image pages. */
+    background: rgb(24 24 24 / 0.55);
+    -webkit-backdrop-filter: blur(30px) saturate(130%);
+    backdrop-filter: blur(30px) saturate(130%);
     color: #e0e0e0;
     height: 50px;
     display: none;
@@ -673,7 +821,7 @@ a:hover {
     text-transform: uppercase;
     font-size: 0.75em;
     font-weight: 300;
-    border-bottom: 1px solid #e0e0e0;
+    border-top: 1px solid rgb(224 224 224 / 0.3);
 }
 
 .transport-bar.visible {
@@ -682,7 +830,7 @@ a:hover {
 }
 
 body.transport-visible {
-    padding-top: 50px;
+    padding-bottom: 50px;
 }
 
 .transport-left {
@@ -739,18 +887,25 @@ body.transport-visible {
     background: transparent;
 }
 
-.transport-queue-toggle.open {
+.transport-queue-toggle {
     transform: rotate(180deg);
+}
+
+.transport-queue-toggle.open {
+    transform: rotate(0deg);
 }
 
 .transport-queue {
     display: none;
     position: fixed;
-    top: 50px;
+    bottom: 50px;
     left: 0;
     width: 100%;
-    background: rgb(24 24 24);
-    border-bottom: 1px solid #e0e0e0;
+    z-index: 999;
+    background: rgb(24 24 24 / 0.68);
+    -webkit-backdrop-filter: blur(30px) saturate(130%);
+    backdrop-filter: blur(30px) saturate(130%);
+    border-top: 1px solid rgb(224 224 224 / 0.3);
     list-style: none;
     margin: 0;
     padding: 8px 14px;
@@ -775,13 +930,9 @@ body.transport-visible {
     cursor: pointer;
 }
 
-.transport-queue li:hover {
-    color: rgb(228 107 108);
-}
-
-.transport-queue li.active {
-    color: rgb(228 107 108);
-}
+/* Hover and "now playing" are handled further down, using the same light
+   wash and left rule the rest of the site uses — not the accent colour,
+   which is reserved for the small section labels. */
 
 .playlist-item.queue-only {
     display: none;
@@ -834,8 +985,15 @@ ul.playlist {
     background: transparent;
 }
 
+/* Hover brightens the icon slightly rather than turning it the accent
+   colour — that colour belongs to the small section labels. */
+.playlist-play-btn svg {
+    opacity: 0.8;
+    transition: opacity 0.15s ease;
+}
+
 .playlist-play-btn:hover svg {
-    fill: rgb(228 107 108);
+    opacity: 1;
 }
 
 .playlist-track-name {
@@ -975,8 +1133,11 @@ ul.playlist.album-card-playlist {
     display: none;
 }
 
-/* Album cards on dark background (Bespoke Sound) */
-.bespoke-sonic-worlds-container .album-grid {
+/* Album cards on dark background (Bespoke Sound and the gift page).
+   The 30px matches the margins every other element on these cards uses,
+   so the rows line up with the text above them. */
+.bespoke-sonic-worlds-container .album-grid,
+.listen-welcome-container .album-grid {
     grid-template-columns: repeat(2, 1fr);
     padding-left: 30px;
     padding-right: 30px;
@@ -1060,6 +1221,10 @@ ul.playlist.album-card-playlist {
     .about-container.show,
     .bespoke-sonic-worlds-container.show,
     .music-lessons-container.show,
+    .listen-container.show,
+    .listen-welcome-container.show,
+    .loop-container.show,
+    .events-container.show,
     .teaching-container.show {
         display: flex;
         flex-direction: column;
@@ -1079,6 +1244,15 @@ ul.playlist.album-card-playlist {
     }
 
     .music-lessons-container {
+        margin-left: 0;
+        margin-right: 0;
+        flex-direction: column;
+    }
+
+    .listen-container,
+    .listen-welcome-container,
+    .loop-container,
+    .events-container {
         margin-left: 0;
         margin-right: 0;
         flex-direction: column;
@@ -1153,12 +1327,1059 @@ ul.playlist.album-card-playlist {
         padding-right: 0;
     }
 
-    .project-grid {
-        grid-template-columns: repeat(2, 1fr);
-    }
+    /* .project-grid's phone layout is set with the rest of its breakpoints,
+       next to the rule itself. */
 
     .skills-grid {
         grid-template-columns: 1fr;
         gap: 24px;
     }
+}
+
+/* ============================================================
+   GLASS EXPERIMENT (July 2026)
+   Full-bleed image backgrounds on the dark pages, with the text
+   area as a dark translucent "glass" panel (the image glows
+   through), plus glass info-bars on the song cards.
+   Everything for this experiment lives in this one block, so
+   deleting the block restores the previous half-and-half look.
+   ============================================================ */
+
+/* --- The dark pages: image becomes the whole background --- */
+
+/* The container anchors the image and clips it; the dark colour
+   stays as a fallback while the image loads. */
+.teaching-container,
+.about-container,
+.bespoke-sonic-worlds-container,
+.music-lessons-container,
+.listen-container,
+.listen-welcome-container,
+.loop-container,
+.events-container {
+    position: relative;
+    overflow: hidden;
+}
+
+/* The page image fills its own half of the card, so the photograph is
+   framed the same way it always was — the subject stays in the open half
+   instead of landing under the glass. */
+.teaching-container > .section-pic,
+.about-container > .section-pic,
+.bespoke-sonic-worlds-container > .section-pic,
+.music-lessons-container > .section-pic,
+.listen-container > .section-pic,
+.listen-welcome-container > .section-pic,
+.loop-container > .section-pic,
+.events-container > .section-pic {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 50%;
+    height: 100%;
+    object-fit: cover;
+    z-index: 0;
+}
+
+/* A second copy fills the other half, so the image continues underneath the
+   glass instead of stopping at its edge. It runs the same direction as the
+   original — a flipped copy reads as a reflection, which draws attention to
+   itself. script.js creates this copy from the image already in the HTML,
+   so each page still names its photograph only once. */
+.section-pic-mirror {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    width: 50%;
+    height: 100%;
+    object-fit: cover;
+    z-index: 0;
+}
+
+/* The text area becomes the glass: translucent dark fill plus a
+   blur of whatever sits behind it (backdrop-filter is the CSS
+   that makes frosted glass; -webkit- covers Safari). */
+.teaching-container .text-section,
+.about-container .text-block,
+.bespoke-sonic-worlds-container .text-block,
+.music-lessons-container .text-block,
+.listen-container .text-block,
+.listen-welcome-container .text-block,
+.loop-container .text-block,
+.events-container .text-block {
+    position: relative;
+    z-index: 1;
+    background-color: rgb(24 24 24 / 0.55);
+    -webkit-backdrop-filter: blur(22px) saturate(115%);
+    backdrop-filter: blur(22px) saturate(115%);
+}
+
+/* Keep the text on the right half (where it already was), so the
+   uncovered left half shows the image plainly. The Services page
+   is the mirror image — its text was always on the left. */
+.about-container .text-block,
+.bespoke-sonic-worlds-container .text-block,
+.music-lessons-container .text-block,
+.listen-container .text-block,
+.listen-welcome-container .text-block,
+.loop-container .text-block,
+.events-container .text-block {
+    grid-column: 2;
+}
+
+/* The Services page is the mirror image — its text has always sat on the
+   left, so its photograph takes the right half instead. */
+.teaching-container .text-section {
+    grid-column: 1;
+}
+
+.teaching-container > .section-pic {
+    left: 50%;
+}
+
+.teaching-container > .section-pic-mirror {
+    left: 0;
+}
+
+/* Buttons on the glass panels lose their solid black fill so the frosted
+   panel shows through them — a solid block would break the translucence.
+   They keep their light outline and text, and still fill light on hover. */
+.teaching-container .button-link,
+.about-container .button-link,
+.bespoke-sonic-worlds-container .button-link,
+.music-lessons-container .button-link,
+.listen-container .button-link,
+.listen-welcome-container .button-link,
+.loop-container .button-link,
+.events-container .button-link {
+    background-color: transparent;
+}
+
+/* On hover they still fill light, as buttons do everywhere else on the site.
+   This rule has to be repeated here: the transparent rule above is just as
+   specific as the site-wide .button-link:hover and comes later in the file,
+   so without this the button would stay transparent on hover. */
+.teaching-container .button-link:hover,
+.about-container .button-link:hover,
+.bespoke-sonic-worlds-container .button-link:hover,
+.music-lessons-container .button-link:hover,
+.listen-container .button-link:hover,
+.listen-welcome-container .button-link:hover,
+.loop-container .button-link:hover,
+.events-container .button-link:hover {
+    background-color: #e0e0e0;
+    color: rgb(24 24 24);
+}
+
+
+/* ============================================================
+   CONVERSION LAYER
+   Footer capture, the light-background form variant, proof
+   lines beside CTAs, and outbound-link markers.
+   ============================================================ */
+
+/* --- The site footer: on every page, so every page is a door --- */
+.site-footer {
+    margin: 0 5%;
+    padding: 30px 0 40px 0;
+    border-top: 1px solid #00000054;
+}
+
+/* The line is a nice divider under the light list pages, but under a dark
+   image card the card's own edge already does that job — so the line just
+   reads as a stray grey rule. Drop it whenever a glass page is showing.
+   (:has() lets the footer respond to which page is open.) */
+body:has(.teaching-container.show) .site-footer,
+body:has(.about-container.show) .site-footer,
+body:has(.bespoke-sonic-worlds-container.show) .site-footer,
+body:has(.music-lessons-container.show) .site-footer,
+body:has(.listen-container.show) .site-footer,
+body:has(.listen-welcome-container.show) .site-footer,
+body:has(.loop-container.show) .site-footer,
+body:has(.events-container.show) .site-footer,
+body:has(.personal-container.show) .site-footer,
+body:has(.collaboration-container.show) .site-footer,
+body:has(.projects-container.show) .site-footer {
+    border-top: none;
+}
+
+.footer-capture .contact-title {
+    margin-bottom: 12px;
+}
+
+.footer-note {
+    font-family: 'Chivo', sans-serif;
+    font-weight: 300;
+    font-size: 0.75em;
+    color: rgb(24 24 24);
+    opacity: 0.6;
+    margin-top: 25px;
+}
+
+/* The footer sits on the light background, so its link needs the dark
+   ink colour (.p-link is the light-on-dark version used inside cards). */
+.footer-link {
+    color: rgb(24 24 24);
+    border-bottom: 1px solid rgb(24 24 24);
+}
+
+.footer-link:hover {
+    background-color: rgb(24 24 24);
+    color: #e0e0e0;
+}
+
+/* --- Light-background variant of the capture form ---
+   The base .capture-form is built for the dark cards. On the light
+   background (footer, events page) the colours invert. */
+.capture-form-light .capture-input {
+    color: rgb(24 24 24);
+    border-bottom-color: rgb(24 24 24);
+}
+
+.capture-form-light .capture-input::placeholder {
+    color: rgb(24 24 24);
+    opacity: 0.45;
+}
+
+/* Outlined at rest, filling to solid ink on hover — the same behaviour as
+   the site's other buttons on a light background. */
+.capture-form-light .capture-button {
+    background-color: transparent;
+    color: rgb(24 24 24);
+    border: 1px solid rgb(24 24 24);
+}
+
+.capture-form-light .capture-button:hover {
+    background-color: rgb(24 24 24);
+    color: #e0e0e0;
+}
+
+/* --- The footer's one-line layout: field and button side by side --- */
+.capture-form-inline {
+    margin: 0;
+    max-width: 520px;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 10px;
+}
+
+.capture-form-inline .capture-input {
+    flex: 1 1 240px;
+    margin-bottom: 0;
+}
+
+.capture-form-inline .capture-button {
+    flex: 0 0 auto;
+}
+
+/* The status line sits on its own row beneath the field + button. */
+.capture-form-inline .capture-message {
+    flex: 1 1 100%;
+    margin-top: 0;
+}
+
+/* --- The events page's "never miss a show" block --- */
+/* It leads the page, so it needs room beneath it rather than above —
+   30px, the same gap the site's other buttons leave below themselves. */
+.events-loop {
+    margin-bottom: 30px;
+}
+
+/* --- The events page on its dark glass card --- */
+/* Its content wasn't written with the 30px element margins the other dark
+   pages use, so the panel carries the padding instead. */
+.events-container .text-block {
+    padding: 30px;
+    box-sizing: border-box;
+}
+
+/* Links and dates flip to the light ink, since the global link colour is
+   the dark one meant for light backgrounds. */
+.events-container a {
+    color: #e0e0e0;
+    border-bottom-color: #e0e0e0;
+}
+
+.events-container a:hover {
+    background-color: #e0e0e0;
+    color: rgb(24 24 24);
+}
+
+.events-container .capture-form {
+    margin: 0;
+}
+
+/* Same weight as the site's body copy (.about-text) — Chivo 100, not 300,
+   which was reading as bold next to everything around it. */
+.events-loop-text {
+    font-family: 'Chivo', sans-serif;
+    font-weight: 100;
+    font-size: 0.9em;
+    line-height: 1.5em;
+    max-width: 420px;
+    margin: 0 0 15px 0;
+}
+
+.events-container .capture-form {
+    margin: 0;
+}
+
+/* --- One line of proof beside a call to action --- */
+/* 30px below to match the 30px the paragraph above leaves, so the quote
+   sits evenly between the copy and the button. */
+.cta-proof {
+    font-family: 'Chivo', sans-serif;
+    font-size: 0.85em;
+    font-weight: 300;
+    font-style: italic;
+    margin: 0 30px 30px 30px;
+    opacity: 0.85;
+}
+
+.cta-proof-name {
+    font-style: normal;
+    font-size: 0.85em;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    opacity: 0.6;
+    white-space: nowrap;
+}
+
+/* --- Outbound-link marker ---
+   A small ↗ after links that leave the site, so a click is never a
+   surprise. forms.js adds it as its own element just after the link
+   (see the note there), so it sits clear of the link's underline. */
+.external-arrow {
+    margin-left: 0.3em;
+    font-size: 0.8em;
+    opacity: 0.55;
+    /* Never let it wrap onto a line by itself, away from its link. */
+    white-space: nowrap;
+}
+
+@media only screen and (max-width: 600px) {
+    /* On a phone the card is a single column, so the photograph fills the
+       whole card and the mirrored copy isn't needed. */
+    .teaching-container > .section-pic,
+    .about-container > .section-pic,
+    .bespoke-sonic-worlds-container > .section-pic,
+    .music-lessons-container > .section-pic,
+    .listen-container > .section-pic,
+    .listen-welcome-container > .section-pic,
+    .loop-container > .section-pic,
+    .events-container > .section-pic,
+    .teaching-container > .section-pic {
+        left: 0;
+        width: 100%;
+    }
+
+    .section-pic-mirror {
+        display: none;
+    }
+
+    .capture-form-inline .capture-input,
+    .capture-form-inline .capture-button {
+        flex: 1 1 100%;
+    }
+
+    .cta-proof {
+        margin-left: 30px;
+        margin-right: 30px;
+    }
+}
+
+/* Project cards without a link yet: they look the same but do nothing
+   when clicked, rather than jumping to the top of the page.
+   Give a card a real <a href="..."> again once its link exists. */
+.album-card-pending {
+    display: block;
+    cursor: default;
+}
+
+.album-card:has(.album-card-pending) {
+    cursor: default;
+}
+
+/* ============================================================
+   WATER BACKGROUND (Music & Collaborations)
+   A looping video sits behind the whole page, fully covered by a
+   frosted panel — so you never see the footage itself, only light
+   moving under the glass.
+   Used on Music, Collaborations, and Apps. Delete this block to return
+   those pages to the plain background.
+   ============================================================ */
+
+.personal-container,
+.collaboration-container,
+.projects-container {
+    position: relative;
+    overflow: hidden;
+    background-color: rgb(24 24 24);
+    color: #e0e0e0;
+    /* Now that these pages have a background of their own, the content
+       needs the same 30px breathing room the other dark cards use, so
+       nothing sits against the edge. */
+    padding: 30px;
+    box-sizing: border-box;
+}
+
+/* The footage: behind everything, covering the card. */
+.section-video {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: 0;
+    pointer-events: none;
+    /* Black and white, to sit with the site's photography. Dial this down
+       (0.6, 0.4 …) to let some colour back into the refractions. */
+    filter: grayscale(1);
+}
+
+/* The glass: covers the video completely, so only refracted light
+   comes through. ::before means no extra element in the HTML. */
+.personal-container::before,
+.collaboration-container::before,
+.projects-container::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    background-color: rgb(24 24 24 / 0.85);
+    -webkit-backdrop-filter: blur(40px);
+    backdrop-filter: blur(40px);
+    pointer-events: none;
+}
+
+/* The page's own content sits above the glass. */
+.personal-container > div,
+.collaboration-container > div,
+.projects-container > div {
+    position: relative;
+    z-index: 2;
+}
+
+/* On the dark card, the cards and links take the light ink. */
+.personal-container .album-card,
+.collaboration-container .album-card,
+.projects-container .album-card,
+.bespoke-sonic-worlds-container .album-card,
+.listen-welcome-container .album-card {
+    border-color: #e0e0e0;
+}
+
+.personal-container .album-card-image,
+.collaboration-container .album-card-image,
+.projects-container .album-card-image,
+.bespoke-sonic-worlds-container .album-card-image,
+.listen-welcome-container .album-card-image {
+    border-color: #e0e0e0;
+}
+
+.personal-container .album-card-title,
+.personal-container .album-card-title a,
+.personal-container .album-card-meta,
+.personal-container a,
+.collaboration-container .album-card-title,
+.collaboration-container .album-card-title a,
+.collaboration-container .album-card-meta,
+.collaboration-container a,
+.projects-container .album-card-title,
+.projects-container .album-card-title a,
+.projects-container .album-card-meta,
+.projects-container .album-card-type,
+.projects-container .album-card-pending,
+.projects-container a,
+.bespoke-sonic-worlds-container .album-card-title,
+.bespoke-sonic-worlds-container .album-card-title a,
+.bespoke-sonic-worlds-container .album-card-meta,
+.listen-welcome-container .album-card-title,
+.listen-welcome-container .album-card-meta {
+    color: #e0e0e0;
+    border-bottom-color: #e0e0e0;
+}
+
+.personal-container a:hover,
+.collaboration-container a:hover,
+.projects-container a:hover {
+    background-color: #e0e0e0;
+    color: rgb(24 24 24);
+}
+
+/* Some people set their system to reduce motion; hold a still frame
+   for them rather than looping video. */
+@media (prefers-reduced-motion: reduce) {
+    .section-video {
+        display: none;
+    }
+}
+
+/* --- Card interactions on the water pages --- */
+
+/* Link hover flips to the light fill (the site-wide rule fills dark,
+   which vanishes against this background). */
+.personal-container .album-card-external:hover .album-card-title a,
+.collaboration-container .album-card-external:hover .album-card-title a,
+.projects-container .album-card-external:hover .album-card-title a,
+.bespoke-sonic-worlds-container .album-card-external:hover .album-card-title a,
+.personal-container .album-card-title a:hover,
+.collaboration-container .album-card-title a:hover,
+.projects-container .album-card-title a:hover,
+.bespoke-sonic-worlds-container .album-card-title a:hover {
+    background-color: #e0e0e0;
+    color: rgb(24 24 24);
+}
+
+/* Hovering the card lifts it very slightly out of the background. */
+.personal-container .album-card,
+.collaboration-container .album-card,
+.projects-container .album-card,
+.bespoke-sonic-worlds-container .album-card,
+.listen-welcome-container .album-card {
+    transition: background-color 0.2s ease;
+}
+
+.personal-container .album-card:hover,
+.collaboration-container .album-card:hover,
+.projects-container .album-card:hover,
+.bespoke-sonic-worlds-container .album-card:hover,
+.listen-welcome-container .album-card:hover {
+    background-color: rgb(224 224 224 / 0.08);
+}
+
+/* The play control: a dark, blurred disc that only appears on hover —
+   or stays put while that card is the one playing. */
+.personal-container .album-card-play,
+.collaboration-container .album-card-play,
+.bespoke-sonic-worlds-container .album-card-play,
+.listen-welcome-container .album-card-play {
+    background: rgb(24 24 24 / 0.55);
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+    opacity: 0;
+    transition: opacity 0.2s ease;
+}
+
+.personal-container .album-card:hover .album-card-play,
+.collaboration-container .album-card:hover .album-card-play,
+.bespoke-sonic-worlds-container .album-card:hover .album-card-play,
+.listen-welcome-container .album-card:hover .album-card-play,
+.personal-container .album-card.playing .album-card-play,
+.collaboration-container .album-card.playing .album-card-play,
+.bespoke-sonic-worlds-container .album-card.playing .album-card-play,
+.listen-welcome-container .album-card.playing .album-card-play {
+    opacity: 1;
+}
+
+/* The last block on these pages carries its own bottom margin, which stacked
+   on top of the container's padding and made the gap below noticeably bigger
+   than the one above. Let the padding alone set the spacing. */
+.personal-container > *:last-child,
+.collaboration-container > *:last-child,
+.projects-container > *:last-child {
+    margin-bottom: 0;
+}
+
+/* ============================================================
+   LIST VIEW FOR SONG CARDS
+   An alternative to the square grid: full-width rows with small
+   artwork on the left and the text beside it. Add "album-list"
+   next to "album-grid" on any grid to switch it over.
+   ============================================================ */
+
+.album-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+}
+
+.album-list .album-card {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 10px;
+    /* Rows share a single hairline between them rather than each
+       carrying a full box. */
+    border: none;
+    border-bottom: 1px solid rgb(224 224 224 / 0.25);
+}
+
+.album-list .album-card:first-child {
+    border-top: 1px solid rgb(224 224 224 / 0.25);
+}
+
+/* Small square artwork, fixed so every row lines up. */
+.album-list .album-card-image {
+    flex: 0 0 64px;
+    width: 64px;
+    height: 64px;
+    aspect-ratio: auto;
+}
+
+/* The play control sits centred over the artwork instead of in a corner.
+   All four offsets must stay at 0 for `margin: auto` to do the centring —
+   overriding any one of them back to `auto` breaks it. */
+.album-list .album-card-play {
+    inset: 0;
+    margin: auto;
+    width: 32px;
+    height: 32px;
+}
+
+/* The text takes the rest of the row. min-width:0 is what allows a long
+   title to be clipped instead of stretching the row. */
+.album-list .album-card-info {
+    flex: 1 1 auto;
+    min-width: 0;
+    padding: 0;
+}
+
+/* Titles and captions stay on one line and are clipped if too long —
+   the marquee below slides them on hover rather than wrapping. */
+.album-list .album-card-title,
+.album-list .album-card-meta {
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+/* The sliding text. --marquee-shift and --marquee-time are measured and
+   set by script.js, since CSS can't tell how wide the text is. */
+.marquee-inner {
+    display: inline-block;
+    transition: transform 0.3s ease;
+}
+
+/* Slide out to reveal the end, hold, then come back — so the text is
+   never left sitting off-screen. Repeats while the row is hovered. */
+@keyframes marquee-slide {
+    0%, 12%   { transform: translateX(0); }
+    45%, 60%  { transform: translateX(var(--marquee-shift)); }
+    93%, 100% { transform: translateX(0); }
+}
+
+.album-card:hover .is-overflowing .marquee-inner {
+    animation: marquee-slide var(--marquee-time) ease-in-out infinite;
+}
+
+@media only screen and (max-width: 600px) {
+    .album-list .album-card-image {
+        flex-basis: 52px;
+        width: 52px;
+        height: 52px;
+    }
+}
+
+/* ============================================================
+   TRANSPORT CONTROLS
+   Previous/next either side of play, and a volume slider. Kept to
+   the site's two colours and thin lines — no chrome, no gradients.
+   ============================================================ */
+
+/* Previous / next. Same shape as the play button, slightly dimmer so
+   play stays the primary control. */
+.transport-step {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    width: auto;
+    padding: 4px;
+    display: flex;
+    align-items: center;
+    opacity: 0.65;
+    transform: none;
+    transition: opacity 0.15s ease;
+}
+
+.transport-step:hover {
+    background: transparent;
+    opacity: 1;
+    transform: none;
+}
+
+/* --- Volume --- */
+.transport-volume-wrap {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-right: 14px;
+    cursor: pointer;
+}
+
+.transport-volume-icon {
+    opacity: 0.65;
+    flex: 0 0 auto;
+}
+
+/* A hairline track with a small round handle — the same visual weight
+   as the underlines used elsewhere on the site. */
+.transport-volume {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 70px;
+    height: 14px;
+    background: transparent;
+    cursor: pointer;
+    margin: 0;
+}
+
+/* The part of the track to the left of the handle is solid, so the slider
+   shows how full it is at a glance. --volume-fill is set by script.js,
+   because CSS can't read an input's value on its own. */
+.transport-volume::-webkit-slider-runnable-track {
+    height: 1px;
+    background: linear-gradient(
+        to right,
+        #e0e0e0 var(--volume-fill, 100%),
+        rgb(224 224 224 / 0.35) var(--volume-fill, 100%)
+    );
+}
+
+/* Firefox has a dedicated pseudo-element for the filled portion. */
+.transport-volume::-moz-range-track {
+    height: 1px;
+    background: rgb(224 224 224 / 0.35);
+}
+
+.transport-volume::-moz-range-progress {
+    height: 1px;
+    background: #e0e0e0;
+}
+
+.transport-volume::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    background: #e0e0e0;
+    border: none;
+    /* Pull the handle up so it sits centred on the 1px track. */
+    margin-top: -4px;
+}
+
+.transport-volume::-moz-range-thumb {
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    background: #e0e0e0;
+    border: none;
+}
+
+.transport-volume:focus {
+    outline: none;
+}
+
+/* Visible to screen readers, invisible on screen. */
+.visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+}
+
+/* On a phone the volume slider is redundant — the hardware buttons do it,
+   and the row needs the space for the track name. */
+@media only screen and (max-width: 600px) {
+    .transport-volume-wrap {
+        display: none;
+    }
+}
+
+/* A long track name must never wrap inside the fixed-height bar — clip it
+   with an ellipsis instead. min-width:0 is what lets a flex item shrink
+   below its content so the clipping can happen. */
+.transport-left {
+    min-width: 0;
+}
+
+.transport-track-name {
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+/* ============================================================
+   PLAYBACK, AS ONE DESIGN
+   Artwork, then title — the same row wherever sound appears: in a
+   page list, in the queue, and in the bar itself. Spacing follows
+   the site's rhythm rather than being eyeballed per element.
+   ============================================================ */
+
+/* --- Spacing in the bar ---
+   The control cluster sits together, then a clear break before the
+   artwork and title. */
+.transport-left {
+    gap: 6px;
+}
+
+.transport-play-pause {
+    margin-right: 0;
+}
+
+.transport-art {
+    width: 34px;
+    height: 34px;
+    object-fit: cover;
+    flex: 0 0 34px;
+    margin-left: 12px;
+    display: block;
+}
+
+.transport-track-name {
+    margin-left: 12px;
+}
+
+/* --- The right-hand controls ---
+   Volume and the queue toggle, evenly spaced and aligned to the end
+   rather than crowded together. */
+.transport-right {
+    gap: 18px;
+}
+
+.transport-volume-wrap {
+    margin-right: 0;
+}
+
+.transport-queue-toggle {
+    margin-left: 0;
+}
+
+/* --- The queue, built like the page lists --- */
+.transport-queue {
+    padding: 0;
+    /* The queue used to sit inside the bar and inherit its type. Now that
+       it's a sibling it has to state the same values itself, or it renders
+       at the page's larger default size. */
+    font-family: 'Chivo', sans-serif;
+    font-size: 0.75em;
+    font-weight: 300;
+    text-transform: uppercase;
+}
+
+/* Uppercase, like the bar above it and the card titles on the pages —
+   track names are set the same way wherever they appear. */
+.transport-queue li {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 8px 14px;
+    border-bottom: 1px solid rgb(224 224 224 / 0.12);
+}
+
+.transport-queue li:last-child {
+    border-bottom: none;
+}
+
+.transport-queue li:hover {
+    background-color: rgb(224 224 224 / 0.08);
+}
+
+.transport-queue-thumb {
+    position: relative;
+    flex: 0 0 34px;
+    width: 34px;
+    height: 34px;
+    display: block;
+}
+
+.transport-queue-art {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+/* The badge over the artwork — the same dark blurred disc the cards use.
+   Hidden until you hover a row, and always showing on the row that's
+   playing, so the queue says what's sounding and what's clickable. */
+.transport-queue-play {
+    position: absolute;
+    inset: 0;
+    margin: auto;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background: rgb(24 24 24 / 0.55);
+    -webkit-backdrop-filter: blur(8px);
+    backdrop-filter: blur(8px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.15s ease;
+    pointer-events: none;
+}
+
+.transport-queue li:hover .transport-queue-play,
+.transport-queue li.active .transport-queue-play {
+    opacity: 1;
+}
+
+/* Titles stay on one line and clip, as they do in the list view. */
+.transport-queue-name {
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+/* Taller rows now, so show fewer before scrolling. */
+.transport-queue {
+    max-height: calc(4 * 51px);
+}
+
+@media only screen and (max-width: 600px) {
+    .transport-art {
+        width: 28px;
+        height: 28px;
+        flex-basis: 28px;
+        margin-left: 10px;
+    }
+
+    .transport-track-name {
+        margin-left: 10px;
+    }
+
+    .transport-right {
+        gap: 10px;
+    }
+}
+
+/* --- Track title with quieter second line ---
+   The same relationship the album cards use: title, then smaller and
+   dimmer underneath. Applies in the bar and the queue alike. */
+.transport-track-label,
+.transport-queue-name {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    min-width: 0;
+    line-height: 1.25;
+}
+
+.track-title,
+.track-meta {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    display: inline-block;
+    max-width: 100%;
+    align-self: flex-start;
+}
+
+.track-meta {
+    font-size: 0.82em;
+    opacity: 0.55;
+    padding-top: 1px;
+}
+
+/* The bar's name slot holds the stacked label rather than plain text. */
+.transport-track-name {
+    display: flex;
+    align-items: center;
+    overflow: visible;
+}
+
+/* --- Secondary descriptions elsewhere ---
+   Press captions and event roles are the same kind of content — a quiet
+   note attached to a link — so they get the same dimming. */
+.event-desc {
+    opacity: 0.55;
+}
+
+/* --- Press captions ---
+   Uppercase and set apart by space rather than a dash, so the caption
+   reads as a quiet label rather than a continuation of the sentence. */
+.press-desc {
+    font-size: .7em;
+    font-weight: 300;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    opacity: 0.5;
+    margin-left: 8px;
+    white-space: nowrap;
+}
+
+/* --- Focus on the player controls ---
+   The browser's default ring is a bright yellow box that has nothing to do
+   with this site. Replace it with a thin light ring, and only show it for
+   keyboard use (:focus-visible) — so it appears when tabbing, not when
+   clicking. Never remove it outright: it's how keyboard users see where
+   they are. */
+.transport-bar button:focus,
+.transport-volume:focus {
+    outline: none;
+}
+
+.transport-bar button:focus-visible,
+.transport-volume:focus-visible {
+    outline: 1px solid rgb(224 224 224 / 0.7);
+    outline-offset: 2px;
+    border-radius: 2px;
+}
+
+/* --- Playback position ---
+   A hairline along the bottom edge of the bar. The played portion is solid
+   light; the rest is faint. Read-only — there's no handle to drag. */
+.transport-progress {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 2px;
+    background: rgb(224 224 224 / 0.2);
+    pointer-events: none;
+}
+
+.transport-progress span {
+    display: block;
+    width: 0;
+    height: 100%;
+    background: #e0e0e0;
+}
+
+/* The track title leads back to the page it came from, so it reads as
+   something you can click — but quietly, since the bar is already busy. */
+.transport-track-name.is-linked {
+    cursor: pointer;
+}
+
+.transport-track-name.is-linked .track-title {
+    display: inline-block;
+    border-bottom: 1px solid transparent;
+    transition: border-color 0.15s ease;
+}
+
+.transport-track-name.is-linked:hover .track-title {
+    border-bottom-color: rgb(224 224 224 / 0.6);
+}
+
+/* --- Autofill ---
+   When a browser fills in a saved email it paints the field its own pale
+   yellow. That background can't be overridden directly, but the browser
+   applies it as a *transition* — so giving it an absurdly long delay means
+   it never arrives, and the field keeps its transparent line look.
+   -webkit-text-fill-color is needed because plain `color` is ignored on an
+   autofilled field. */
+.capture-input:-webkit-autofill,
+.capture-input:-webkit-autofill:hover,
+.capture-input:-webkit-autofill:focus,
+.capture-input:-webkit-autofill:active {
+    -webkit-text-fill-color: #e0e0e0;
+    caret-color: rgb(228 107 108);
+    transition: background-color 9999s ease-in-out 0s;
+}
+
+/* On the light backgrounds the text goes back to ink. */
+.capture-form-light .capture-input:-webkit-autofill,
+.capture-form-light .capture-input:-webkit-autofill:hover,
+.capture-form-light .capture-input:-webkit-autofill:focus,
+.capture-form-light .capture-input:-webkit-autofill:active {
+    -webkit-text-fill-color: rgb(24 24 24);
 }
