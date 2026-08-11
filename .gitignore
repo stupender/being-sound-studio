@@ -1,1 +1,13 @@
 .DS_Store
+
+# Source video/audio masters — too large for GitHub (100MB limit).
+# The web-ready copies live in video/ and audio/.
+*.MOV
+*.mov
+
+# Full-length soundscape masters — 144MB each (GitHub rejects >100MB).
+# Web previews live in audio/; the full set is distributed via a download link.
+audio/Soundscape In 12 Keys/
+
+# Local Claude Code scratch
+.claude/worktrees/
