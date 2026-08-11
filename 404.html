@@ -823,7 +823,7 @@
                      the lowest-friction way into the work. -->
                 <div class="offers-group">
                     <p class="contact-title">A GIFT</p>
-                    <a href="/listen" class="contact-link listen-link">Twelve Soundscapes</a>
+                    <a href="/listen" class="contact-link listen-link">A Free Soundscape</a>
                 </div>
 
                 <div class="offers-group">
@@ -857,9 +857,9 @@
                          the rest use .body-title-alt.) -->
                     <div>
                         <p class="body-title">A GIFT</p>
-                        <a href="/listen" class="body-link p-link listen-link">Twelve Soundscapes</a>
+                        <a href="/listen" class="body-link p-link listen-link">A Free Soundscape</a>
                         <p class="about-text">
-                            <b>Twelve soundscapes, one for each key.</b> Unmetered sound to practice with — enter through listening, the voice, or an instrument. Yours to download and keep.
+                            <b>An hour of unmetered sound.</b> Something to practice with — enter through listening, the voice, or an instrument. Yours to download and keep.
                         </p>
                     </div>
 
@@ -1069,14 +1069,14 @@
 
                     <div class="album-card">
                         <div class="album-card-image">
-                            <span class="album-card-thumb-link album-card-pending" data-project="audio-archive">
+                            <a class="album-card-thumb-link" href="https://github.com/stupender/archive" target="_blank">
                                 <img src="images/projects/Audio%20Archive.png" alt="Archive">
                                 <div class="album-card-overlay"></div>
-                            </span>
+                            </a>
                         </div>
                         <div class="album-card-info">
                             <p class="album-card-type">IOS APP</p>
-                            <div class="album-card-title"><span class="album-card-pending" data-project="audio-archive">Archive</span></div>
+                            <div class="album-card-title"><a href="https://github.com/stupender/archive" target="_blank">Archive</a></div>
                             <div class="album-card-meta">Sonic Catalog &amp; Creative Process Tool · 2026</div>
                         </div>
                     </div>
@@ -1291,7 +1291,7 @@
                 <img src="images/listening-in-studio.jpg" class="section-pic" alt="">
                 <div class="text-block">
                     <p class="body-subtitle">A GIFT</p>
-                    <p class="about-text about-text-tight"><b>Twelve soundscapes. One for each key.</b></p>
+                    <p class="about-text about-text-tight"><b>Soundscape in C. One unmetered hour.</b></p>
                     <p class="about-text">
                         Unmetered sound to practice with. Enter through listening, the voice,
                         or an instrument — there's no tempo to keep up with, leaving room for
@@ -1300,6 +1300,28 @@
                         Recorded in June 2026 during a month-long residency with Silvia Nakkach.
                         Yours to download and keep.
                     </p>
+
+                    <!-- The excerpt, playable before signing up — the email buys the
+                         download, not the listen. Same list-view row as the welcome page
+                         and the Bespoke Sound cards. -->
+                    <div class="album-grid album-list">
+
+                        <div class="album-card">
+                            <div class="album-card-image">
+                                <img src="images/twelve-soundscapes.jpg" alt="Soundscape in C">
+                                <div class="album-card-overlay"></div>
+                                <div class="album-card-play"><svg width="16" height="16" viewBox="0 0 16 16" fill="white"><polygon points="3,1 14,8 3,15"/></svg></div>
+                            </div>
+                            <div class="album-card-info">
+                                <div class="album-card-title">Soundscape in C</div>
+                                <div class="album-card-meta">Excerpt &middot; the full piece runs one hour</div>
+                            </div>
+                            <ul class="playlist album-card-playlist" data-art="images/twelve-soundscapes.jpg">
+                                <li class="playlist-item" data-transport-name="Soundscape in C — Being Sound"><button class="playlist-play-btn" data-src="audio/soundscape-in-c-preview.mp3"><svg width="14" height="14" viewBox="0 0 14 14" fill="white"><polygon points="3,1 12,7 3,13"/></svg></button><span class="playlist-track-name">Soundscape in C</span></li>
+                            </ul>
+                        </div>
+
+                    </div>
 
                     <!-- The email capture form.
                          data-source   -> tag saved in Kit so we know they came from /listen
@@ -1313,7 +1335,7 @@
 
                         <label class="capture-label" for="listen-email">Email address</label>
                         <input type="email" id="listen-email" name="email_address" class="capture-input" placeholder="you@example.com" required autocomplete="email">
-                        <button type="submit" class="button-link capture-button">Send me the soundscapes</button>
+                        <button type="submit" class="button-link capture-button">Send me the soundscape</button>
                         <p class="capture-message" role="status" aria-live="polite"></p>
                     </form>
                 </div>
@@ -1330,11 +1352,10 @@
                 <img src="images/twelve-soundscapes.jpg" class="section-pic" alt="">
                 <div class="text-block">
                     <p class="body-subtitle">YOU'RE IN</p>
-                    <p class="about-text about-text-tight"><b>Here are your twelve soundscapes.</b></p>
+                    <p class="about-text about-text-tight"><b>Here is your soundscape.</b></p>
                     <p class="about-text">
-                        Each one runs a full hour, unmetered. Listen to an excerpt below,
-                        then take the whole set with you — there's no right order and no
-                        tempo to keep.
+                        It runs a full hour, unmetered. Listen to an excerpt below, then take the
+                        whole piece with you — there's no right way in and no tempo to keep.
                     </p>
 
                     <!-- The list-view player, same as the Bespoke Sound page: artwork on
@@ -1347,7 +1368,7 @@
 
                         <div class="album-card">
                             <div class="album-card-image">
-                                <img src="images/twelve-soundscapes.jpg" alt="Twelve Soundscapes">
+                                <img src="images/twelve-soundscapes.jpg" alt="Soundscape in C">
                                 <div class="album-card-overlay"></div>
                                 <div class="album-card-play"><svg width="16" height="16" viewBox="0 0 16 16" fill="white"><polygon points="3,1 14,8 3,15"/></svg></div>
                             </div>
@@ -1356,18 +1377,17 @@
                                 <div class="album-card-meta">Excerpt &middot; the full piece runs one hour</div>
                             </div>
                             <ul class="playlist album-card-playlist" data-art="images/twelve-soundscapes.jpg">
-                                <li class="playlist-item" data-transport-name="Soundscape in C — Being Sound — Twelve Soundscapes"><button class="playlist-play-btn" data-src="audio/soundscape-in-c-preview.mp3"><svg width="14" height="14" viewBox="0 0 14 14" fill="white"><polygon points="3,1 12,7 3,13"/></svg></button><span class="playlist-track-name">Soundscape in C</span></li>
+                                <li class="playlist-item" data-transport-name="Soundscape in C — Being Sound"><button class="playlist-play-btn" data-src="audio/soundscape-in-c-preview.mp3"><svg width="14" height="14" viewBox="0 0 14 14" fill="white"><polygon points="3,1 12,7 3,13"/></svg></button><span class="playlist-track-name">Soundscape in C</span></li>
                             </ul>
                         </div>
 
                     </div>
 
-                    <!-- >>> PUT THE DOWNLOAD LINK HERE <<<
-                         Upload the twelve mp3s to Google Drive (or Dropbox), set the
-                         folder to "anyone with the link", and paste that link below in
-                         place of the # — that's the only edit needed. -->
+                    <!-- >>> PUT THE BANDCAMP ALBUM LINK HERE <<<
+                         Replace the URL below with the album page for the full set.
+                         It currently points at the artist page as a safe fallback. -->
                     <div class="button-container">
-                        <a class="button-link flex-button" href="#" target="_blank" rel="noopener">Download all twelve</a>
+                        <a class="button-link flex-button" href="https://stupender.bandcamp.com/" target="_blank" rel="noopener">Hear all twelve on Bandcamp</a>
                     </div>
                 </div>
             </div>
