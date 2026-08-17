@@ -1138,7 +1138,8 @@ ul.playlist.album-card-playlist {
    so the rows line up with the text above them. */
 .bespoke-sonic-worlds-container .album-grid,
 .listen-welcome-container .album-grid,
-.listen-container .album-grid {
+.listen-container .album-grid,
+.teaching-container .album-grid {
     grid-template-columns: repeat(2, 1fr);
     padding-left: 30px;
     padding-right: 30px;
@@ -1768,7 +1769,8 @@ body:has(.projects-container.show) .site-footer {
 .projects-container .album-card,
 .bespoke-sonic-worlds-container .album-card,
 .listen-welcome-container .album-card,
-.listen-container .album-card {
+.listen-container .album-card,
+.teaching-container .album-card {
     border-color: #e0e0e0;
 }
 
@@ -1777,7 +1779,8 @@ body:has(.projects-container.show) .site-footer {
 .projects-container .album-card-image,
 .bespoke-sonic-worlds-container .album-card-image,
 .listen-welcome-container .album-card-image,
-.listen-container .album-card-image {
+.listen-container .album-card-image,
+.teaching-container .album-card-image {
     border-color: #e0e0e0;
 }
 
@@ -1801,7 +1804,10 @@ body:has(.projects-container.show) .site-footer {
 .listen-welcome-container .album-card-title,
 .listen-welcome-container .album-card-meta,
 .listen-container .album-card-title,
-.listen-container .album-card-meta {
+.listen-container .album-card-meta,
+.teaching-container .album-card-title,
+.teaching-container .album-card-title a,
+.teaching-container .album-card-meta {
     color: #e0e0e0;
     border-bottom-color: #e0e0e0;
 }
@@ -1829,6 +1835,7 @@ body:has(.projects-container.show) .site-footer {
 .collaboration-container .album-card-external:hover .album-card-title a,
 .projects-container .album-card-external:hover .album-card-title a,
 .bespoke-sonic-worlds-container .album-card-external:hover .album-card-title a,
+.teaching-container .album-card-external:hover .album-card-title a,
 .personal-container .album-card-title a:hover,
 .collaboration-container .album-card-title a:hover,
 .projects-container .album-card-title a:hover,
@@ -1843,7 +1850,8 @@ body:has(.projects-container.show) .site-footer {
 .projects-container .album-card,
 .bespoke-sonic-worlds-container .album-card,
 .listen-welcome-container .album-card,
-.listen-container .album-card {
+.listen-container .album-card,
+.teaching-container .album-card {
     transition: background-color 0.2s ease;
 }
 
@@ -1852,7 +1860,8 @@ body:has(.projects-container.show) .site-footer {
 .projects-container .album-card:hover,
 .bespoke-sonic-worlds-container .album-card:hover,
 .listen-welcome-container .album-card:hover,
-.listen-container .album-card:hover {
+.listen-container .album-card:hover,
+.teaching-container .album-card:hover {
     background-color: rgb(224 224 224 / 0.08);
 }
 
