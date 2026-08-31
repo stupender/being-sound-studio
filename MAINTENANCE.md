@@ -114,10 +114,20 @@ What the site actually carries:
 | `audio/soundscape-in-c-preview.mp3` | 4.6 MB | A five-minute excerpt, the only audio hosted |
 | `images/twelve-soundscapes.jpg` | 209 KB | The artwork, resized from `IMG_3115.JPG` |
 
-**The full set is delivered by link, not by download from here.** Upload the
-twelve mp3s to Google Drive (or Dropbox), set the folder to "anyone with the
-link", and paste that link into the `href="#"` on the welcome page's
-"Download all twelve" button. That is the only edit needed.
+**The full track is delivered by link, not by download from here.** It lives on
+Google Drive, shared as "anyone with the link", and the welcome page's
+"Download Soundscape in C" button points straight at it:
+
+```
+https://drive.google.com/file/d/1N6ljWHNodk6zuKY7OT4ZvrRfxkPxZFFa/view?usp=share_link
+```
+
+To swap in a different file, upload it to Drive, set it to "anyone with the
+link", and replace that one `href` in `index.html` (then re-sync `404.html`).
+**Share the mp3, not the wav** — the wav is 908 MB and most people will give up
+on the download; the mp3 is 137 MB and sounds the same on the devices anyone
+will actually play it on. After swapping, open the link in a private window to
+confirm it does not ask for a Google sign-in.
 
 To remake the excerpt from a different key, or a different stretch:
 
