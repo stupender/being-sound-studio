@@ -503,6 +503,13 @@ a:hover {
     text-align: justify;
 }
 
+.projects-intro-title {
+    font-family: 'Chivo', sans-serif;
+    font-weight: 300;
+    font-size: 0.9em;
+    margin: 8px 0 0 0;
+}
+
 /* Four across on a wide screen, stepping down to two and then one.
    These use both class names (.album-grid.project-grid) so they beat the
    plain .album-grid rule further down the file, which sets three. */
