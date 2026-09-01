@@ -1656,16 +1656,53 @@ body:has(.projects-container.show) .site-footer {
 }
 
 /* --- Outbound-link marker ---
-   A small ↗ after links that leave the site, so a click is never a
-   surprise. forms.js adds it as its own element just after the link
-   (see the note there), so it sits clear of the link's underline. */
+   A small "arrow leaving a box" after links that go off the site, so a
+   click is never a surprise. forms.js adds it as its own element just
+   after the link (see the note there), so it sits clear of the link's
+   underline.
+
+   It stays visible rather than appearing on hover. Hover-only reads well
+   where a link is the last thing on its line, but these links sit inside
+   sentences: holding the space open leaves a gap before the following
+   comma, and not holding it open makes the rest of the line jump sideways
+   whenever the pointer passes over. Always-on avoids both, and it is the
+   honest choice anyway — a marker that only shows on hover cannot warn
+   anyone reading on a phone. It does brighten on hover, so the pairing of
+   link and icon still reads as one thing. */
 .external-arrow {
-    margin-left: 0.3em;
-    font-size: 0.8em;
+    display: inline-block;
+    /* Sized in em, so it tracks whatever text it follows — nav, body copy
+       and footer all get an icon in proportion. 0.72em is about the height
+       of a capital letter, which is what makes it read as part of the line
+       rather than stuck on after it. */
+    width: 0.72em;
+    height: 0.72em;
+    /* A hair below the baseline looks centred against the letters; sitting
+       exactly on it looks a touch high. */
+    vertical-align: -0.04em;
+    margin-left: 0.32em;
     opacity: 0.55;
+    transition: opacity 0.15s ease;
     /* Never let it wrap onto a line by itself, away from its link. */
     white-space: nowrap;
 }
+
+/* Hovering either the link or the icon brightens it. :focus-within covers
+   the same ground for anyone tabbing through with a keyboard. */
+.external-wrap:hover .external-arrow,
+.external-wrap:focus-within .external-arrow {
+    opacity: 0.9;
+}
+
+.external-arrow svg {
+    /* An inline SVG sits on the text baseline and leaves a gap beneath it,
+       which would make the box taller than the size set above. Making it a
+       block removes that gap. */
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+
 
 @media only screen and (max-width: 600px) {
     /* On a phone the card is a single column, so the photograph fills the

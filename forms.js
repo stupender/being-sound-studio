@@ -128,11 +128,29 @@ document.querySelectorAll('a[href^="http"]').forEach(function (link) {
     // counts as one thing. There's no space between them in the HTML, so
     // there's nowhere for a line break to fall either.
     //
-    // aria-hidden keeps screen readers from announcing the arrow as text.
+    // aria-hidden keeps screen readers from announcing the icon.
+    //
+    // The icon is drawn as an SVG rather than typed as a text character.
+    // A character like ↗ is supplied by whatever font the visitor happens
+    // to have, so it lands at a different weight and height on every
+    // machine. This is drawn by us, so it looks the same everywhere, and
+    // "currentColor" means it is painted in whatever colour the text
+    // around it is — no colour to keep in sync.
+    //
+    // The markup below is a fixed string with nothing from the page in it,
+    // so setting it with innerHTML is safe.
     var arrow = document.createElement("span");
     arrow.className = "external-arrow";
     arrow.setAttribute("aria-hidden", "true");
-    arrow.textContent = "↗";
+    arrow.innerHTML =
+      '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" ' +
+      'stroke-width="2" stroke-linecap="round" stroke-linejoin="round">' +
+      // The open-cornered box.
+      '<path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>' +
+      // The arrowhead, and the shaft leaving through the open corner.
+      '<polyline points="15 3 21 3 21 9"/>' +
+      '<line x1="10" y1="14" x2="21" y2="3"/>' +
+      "</svg>";
 
     var wrapper = document.createElement("span");
     wrapper.className = "external-wrap";

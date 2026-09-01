@@ -85,3 +85,9 @@ A running log of concepts, one line each, in the order I met them.
 - **`closest()` walks up the tree** — asking a play button for its nearest `.page-section` is how the player works out which page a track came from, without anything having to be written down per track.
 - **The page registry is a two-way map** — it lists which sections each page shows, so searching it backwards (which page lists *this* section?) turns an element back into a page name.
 - **Decorative images get `alt=""`** — an empty alt (plus `aria-hidden`) tells a screen reader to skip it, which is right for a copy that carries no new information.
+- **An icon drawn as SVG beats an icon typed as a character** — `↗` is supplied by whatever font the visitor happens to have, so it lands at a different weight and height on every machine; an inline SVG is drawn by us and looks the same everywhere.
+- **`stroke="currentColor"`** — the icon paints itself in whatever colour the surrounding text is, so there's no second colour to keep in sync when the text colour changes.
+- **Size icons in `em`, not pixels** — one rule then fits nav, body copy and footer, because `em` means "relative to the text I'm sitting next to". About `0.72em` matches a capital letter, which is what makes an icon read as part of the line.
+- **An inline SVG sits on the text baseline and leaves a gap under it** — `display: block` on the svg removes that gap, so the box is the size you asked for.
+- **Hover-only decoration has to go somewhere when it's hidden** — hold the space open and there's a gap before the following comma; don't, and the rest of the line jumps sideways on hover. Fine for a link at the end of a line, wrong for links inside sentences.
+- **A hover-only marker doesn't exist on a phone** — touchscreens have no hover, so anything that only appears on hover never appears at all for those readers.
