@@ -387,6 +387,11 @@ document
     mirror.setAttribute("alt", "");
     mirror.setAttribute("aria-hidden", "true");
     image.parentNode.insertBefore(mirror, image.nextSibling);
+    // The photograph is floated so the copy sets beside it and then runs
+    // full width once it clears. A float only affects content that comes
+    // after it, and these images are authored after their text block, so
+    // the image moves to the top of the section here.
+    image.parentNode.insertBefore(image, image.parentNode.firstChild);
   });
 
 // Generative Music Player

@@ -70,6 +70,11 @@ nav {
     padding-bottom: 15px;
     display: flex;
     flex-direction: row;
+    flex-wrap: wrap;
+    align-items: baseline;
+    /* A real minimum between items, so the row stays spread but can never
+       crowd; it wraps onto a second line instead of cramping. */
+    gap: 12px clamp(18px, 2.2vw, 44px);
     justify-content: space-between;
 }
 
@@ -510,9 +515,7 @@ a:hover {
 .loop-container.show,
 .events-container.show,
 .teaching-container.show {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    align-items: stretch;
+    display: block;
 }
 
 /* PROJECTS */
@@ -809,7 +812,7 @@ a:hover {
 /* Status line under the form (e.g. "Sending…" or "You're in."). */
 .capture-message {
     margin-top: 15px;
-    font-family: 'Newsreader', Georgia, serif;
+    font-family: 'Montserrat', sans-serif;
     font-size: .8em;
 }
 
@@ -2535,9 +2538,10 @@ body::after {
 
 /* =================================================================
    LABEL VOICE
-   Body copy is a serif now, but the small uppercase labels are the
-   spec voice, not prose — they stay in the sans, like the headings.
-   These are all <p> elements, so without this they inherit the serif.
+   These labels are <p> elements, so they originally took their face
+   from the p rule — which was Montserrat, not Chivo. Body copy is a
+   serif now, so they need it stated explicitly to stay exactly as
+   they were.
    ================================================================= */
 .body-subtitle,
 .body-title,
@@ -2546,17 +2550,51 @@ body::after {
 .filter-title,
 .event-date,
 .cta-proof-name {
-    font-family: 'Chivo', sans-serif;
+    font-family: 'Montserrat', sans-serif;
 }
 
 
 /* =================================================================
-   SECTION PHOTOGRAPHS — the original two-column composition, held.
-   The photograph keeps its own half and its own sensible height; it
-   is no longer stretched to whatever height the copy happens to be.
-   Both the photograph and its mirrored half stick while the longer
-   column scrolls past, so the composition stays intact end to end.
+   SECTION PHOTOGRAPHS — split at the top, full width underneath.
+   The photograph floats in one half at a fixed, sensible height. The
+   copy sets beside it while it lasts, then runs the full width of the
+   section once it clears — a magazine wrap rather than two rigid
+   columns. Long copy can no longer stretch the image, and no empty
+   half is left trailing below it.
+
+   Behind everything sits a warm gradient drawn from the vision board
+   (night into clay into ember), so the full-width stretch still has
+   colour under it.
    ================================================================= */
+.about-container,
+.bespoke-sonic-worlds-container,
+.music-lessons-container,
+.listen-container,
+.listen-welcome-container,
+.loop-container,
+.events-container,
+.teaching-container {
+    background-color: var(--ink);
+    background-image: linear-gradient(168deg,
+        var(--night) 0%,
+        #241F2B 34%,
+        #3E2A22 68%,
+        #55341F 100%);
+}
+
+.about-container .section-pic,
+.bespoke-sonic-worlds-container .section-pic,
+.music-lessons-container .section-pic,
+.listen-container .section-pic,
+.listen-welcome-container .section-pic,
+.loop-container .section-pic,
+.events-container .section-pic {
+    float: left;
+    margin-right: 0;
+}
+
+.teaching-container .section-pic { float: right; }
+
 .about-container .section-pic,
 .bespoke-sonic-worlds-container .section-pic,
 .music-lessons-container .section-pic,
@@ -2564,48 +2602,23 @@ body::after {
 .listen-welcome-container .section-pic,
 .loop-container .section-pic,
 .events-container .section-pic,
-.teaching-container .section-pic,
-.about-container .section-pic-mirror,
-.bespoke-sonic-worlds-container .section-pic-mirror,
-.music-lessons-container .section-pic-mirror,
-.listen-container .section-pic-mirror,
-.listen-welcome-container .section-pic-mirror,
-.loop-container .section-pic-mirror,
-.events-container .section-pic-mirror,
-.teaching-container .section-pic-mirror {
-    position: sticky;
-    top: 0;
-    left: auto;
-    grid-row: 1;
-    align-self: start;
-    width: 100%;
-    height: min(100svh, 860px);
+.teaching-container .section-pic {
+    position: static;
+    width: 50%;
+    height: min(78svh, 720px);
     object-fit: cover;
-    z-index: 0;
+    display: block;
+    shape-outside: inset(0);
 }
 
-/* Photograph right, mirrored half left — except Services, which has
-   always been the other way round. */
-.about-container .section-pic,
-.bespoke-sonic-worlds-container .section-pic,
-.music-lessons-container .section-pic,
-.listen-container .section-pic,
-.listen-welcome-container .section-pic,
-.loop-container .section-pic,
-.events-container .section-pic { grid-column: 1; }
+/* The mirrored half is retired — the gradient now supplies the colour
+   the duplicate image used to. */
+.section-pic-mirror { display: none; }
 
-.about-container .section-pic-mirror,
-.bespoke-sonic-worlds-container .section-pic-mirror,
-.music-lessons-container .section-pic-mirror,
-.listen-container .section-pic-mirror,
-.listen-welcome-container .section-pic-mirror,
-.loop-container .section-pic-mirror,
-.events-container .section-pic-mirror { grid-column: 2; }
-
-.teaching-container .section-pic        { grid-column: 2; }
-.teaching-container .section-pic-mirror { grid-column: 1; }
-
-/* The copy shares that row, above the imagery. */
+/* The copy is one full-width column that wraps the float. A translucent
+   tint keeps it legible over the gradient; no backdrop blur, because a
+   blur would establish a new block formatting context and the text
+   would refuse to wrap. */
 .teaching-container .text-section,
 .about-container .text-block,
 .bespoke-sonic-worlds-container .text-block,
@@ -2614,12 +2627,33 @@ body::after {
 .listen-welcome-container .text-block,
 .loop-container .text-block,
 .events-container .text-block {
-    grid-row: 1;
-    z-index: 1;
+    /* Normal flow, not flex: a flex container establishes a block
+       formatting context and would sit beside the float instead of
+       wrapping around it. */
+    display: block;
+    position: static;
+    width: auto;
+    background-color: rgb(var(--ink-rgb) / 0.42);
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+    z-index: auto;
 }
 
-/* One column on a phone: the photograph becomes a plain banner above
-   the copy, and the mirrored half is not needed. */
+/* Clear the float so the section closes around the photograph. */
+.about-container::after,
+.bespoke-sonic-worlds-container::after,
+.music-lessons-container::after,
+.listen-container::after,
+.listen-welcome-container::after,
+.loop-container::after,
+.events-container::after,
+.teaching-container::after {
+    content: "";
+    display: block;
+    clear: both;
+}
+
+/* One column on a phone: the photograph is a plain banner above the copy. */
 @media (max-width: 820px) {
     .about-container .section-pic,
     .bespoke-sonic-worlds-container .section-pic,
@@ -2629,21 +2663,9 @@ body::after {
     .loop-container .section-pic,
     .events-container .section-pic,
     .teaching-container .section-pic {
-        position: static;
-        grid-column: 1 / -1;
-        grid-row: auto;
+        float: none;
+        width: 100%;
         height: 42svh;
-    }
-    .section-pic-mirror { display: none; }
-    .teaching-container .text-section,
-    .about-container .text-block,
-    .bespoke-sonic-worlds-container .text-block,
-    .music-lessons-container .text-block,
-    .listen-container .text-block,
-    .listen-welcome-container .text-block,
-    .loop-container .text-block,
-    .events-container .text-block {
-        grid-row: auto;
     }
 }
 
