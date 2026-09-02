@@ -50,6 +50,9 @@ body {
     margin: 0 0 0 0;
     background-color: var(--bone);
     min-height: 100vh;
+    /* A base face for the document. Without one, any element that does
+       not name a font falls back to the browser default (Times). */
+    font-family: 'Chivo', sans-serif;
 }
 
 header {
@@ -83,7 +86,7 @@ button {
     color: var(--ink);
     border: 1px solid var(--ink);
     width: 60px;
-    font-family: 'Newsreader', Georgia, serif;
+    font-family: 'Montserrat', sans-serif;
     font-size: .75em;
 }
 
@@ -96,8 +99,8 @@ button:hover {
     background-color: var(--ink);
     color: var(--bone);
     border: 1px solid var(--bone);
-    padding: 10px
-    font-family: 'Newsreader', Georgia, serif;
+    padding: 10px;
+    font-family: 'Montserrat', sans-serif;
     font-weight: 300;
     line-height: 1.5em;
     padding: 10px;
@@ -382,7 +385,7 @@ h2 {
 }
 
 p {
-    font-family: 'Newsreader', Georgia, serif;
+    font-family: 'Montserrat', sans-serif;
     font-size: .9em;
     font-weight: 300;
     margin: 0 0;
@@ -515,7 +518,9 @@ a:hover {
 .loop-container.show,
 .events-container.show,
 .teaching-container.show {
-    display: block;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    align-items: stretch;
 }
 
 /* PROJECTS */
@@ -2555,121 +2560,6 @@ body::after {
 
 
 /* =================================================================
-   SECTION PHOTOGRAPHS — split at the top, full width underneath.
-   The photograph floats in one half at a fixed, sensible height. The
-   copy sets beside it while it lasts, then runs the full width of the
-   section once it clears — a magazine wrap rather than two rigid
-   columns. Long copy can no longer stretch the image, and no empty
-   half is left trailing below it.
-
-   Behind everything sits a warm gradient drawn from the vision board
-   (night into clay into ember), so the full-width stretch still has
-   colour under it.
-   ================================================================= */
-.about-container,
-.bespoke-sonic-worlds-container,
-.music-lessons-container,
-.listen-container,
-.listen-welcome-container,
-.loop-container,
-.events-container,
-.teaching-container {
-    background-color: var(--ink);
-    background-image: linear-gradient(168deg,
-        var(--night) 0%,
-        #241F2B 34%,
-        #3E2A22 68%,
-        #55341F 100%);
-}
-
-.about-container .section-pic,
-.bespoke-sonic-worlds-container .section-pic,
-.music-lessons-container .section-pic,
-.listen-container .section-pic,
-.listen-welcome-container .section-pic,
-.loop-container .section-pic,
-.events-container .section-pic {
-    float: left;
-    margin-right: 0;
-}
-
-.teaching-container .section-pic { float: right; }
-
-.about-container .section-pic,
-.bespoke-sonic-worlds-container .section-pic,
-.music-lessons-container .section-pic,
-.listen-container .section-pic,
-.listen-welcome-container .section-pic,
-.loop-container .section-pic,
-.events-container .section-pic,
-.teaching-container .section-pic {
-    position: static;
-    width: 50%;
-    height: min(78svh, 720px);
-    object-fit: cover;
-    display: block;
-    shape-outside: inset(0);
-}
-
-/* The mirrored half is retired — the gradient now supplies the colour
-   the duplicate image used to. */
-.section-pic-mirror { display: none; }
-
-/* The copy is one full-width column that wraps the float. A translucent
-   tint keeps it legible over the gradient; no backdrop blur, because a
-   blur would establish a new block formatting context and the text
-   would refuse to wrap. */
-.teaching-container .text-section,
-.about-container .text-block,
-.bespoke-sonic-worlds-container .text-block,
-.music-lessons-container .text-block,
-.listen-container .text-block,
-.listen-welcome-container .text-block,
-.loop-container .text-block,
-.events-container .text-block {
-    /* Normal flow, not flex: a flex container establishes a block
-       formatting context and would sit beside the float instead of
-       wrapping around it. */
-    display: block;
-    position: static;
-    width: auto;
-    background-color: rgb(var(--ink-rgb) / 0.42);
-    -webkit-backdrop-filter: none;
-    backdrop-filter: none;
-    z-index: auto;
-}
-
-/* Clear the float so the section closes around the photograph. */
-.about-container::after,
-.bespoke-sonic-worlds-container::after,
-.music-lessons-container::after,
-.listen-container::after,
-.listen-welcome-container::after,
-.loop-container::after,
-.events-container::after,
-.teaching-container::after {
-    content: "";
-    display: block;
-    clear: both;
-}
-
-/* One column on a phone: the photograph is a plain banner above the copy. */
-@media (max-width: 820px) {
-    .about-container .section-pic,
-    .bespoke-sonic-worlds-container .section-pic,
-    .music-lessons-container .section-pic,
-    .listen-container .section-pic,
-    .listen-welcome-container .section-pic,
-    .loop-container .section-pic,
-    .events-container .section-pic,
-    .teaching-container .section-pic {
-        float: none;
-        width: 100%;
-        height: 42svh;
-    }
-}
-
-/* =================================================================
    CARD FLIP — the artwork turns over to a short back side.
    Built by card-flip.js from content already in the markup.
    ================================================================= */
@@ -2781,3 +2671,29 @@ header h1 a {
     background: none;
 }
 header h1 a:hover { color: var(--accent); }
+
+
+/* =================================================================
+   DIGITAL PRODUCT DESIGN — the third door, built exactly like its
+   siblings: two columns, photograph one side, glass copy the other.
+   ================================================================= */
+.digital-product-design-container {
+    margin-left: 5%;
+    margin-right: 5%;
+    display: none;
+    color: var(--bone);
+    background-color: var(--ink);
+}
+.digital-product-design-container.show {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    align-items: stretch;
+}
+.digital-product-design-container .text-block {
+    grid-column: 2;
+    position: relative;
+    z-index: 1;
+    background-color: var(--glass-fill);
+    -webkit-backdrop-filter: var(--glass-blur);
+    backdrop-filter: var(--glass-blur);
+}
