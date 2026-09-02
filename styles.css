@@ -1891,9 +1891,8 @@ body:has(.projects-container.show) .site-footer {
     object-fit: cover;
     z-index: 0;
     pointer-events: none;
-    /* Black and white, to sit with the site's photography. Dial this down
-       (0.6, 0.4 …) to let some colour back into the refractions. */
-    filter: grayscale(1);
+    /* Colour, so the refractions under the glass keep their own light.
+       Add `filter: grayscale(1)` here to put it back to black and white. */
 }
 
 /* The glass: covers the video completely, so only refracted light
