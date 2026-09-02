@@ -2635,3 +2635,48 @@ body::after {
     color: var(--bone);
     background-color: var(--ink);
 }
+
+
+/* =================================================================
+   PROJECT CARDS — the alternative style, after the reference cards in
+   Paper & Night: one bordered card holding a media panel above its own
+   title and description, rather than an image with loose text beneath.
+
+   These sit on the dark Tools ground, so the card itself is the paper:
+   printed matter laid on the surface. Scoped to .projects-container so
+   the discography cards are untouched.
+   ================================================================= */
+.projects-container .album-card {
+    display: flex;
+    flex-direction: column;
+    background-color: var(--bone);
+    border: 1px solid rgb(var(--ink-rgb) / 0.16);
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.projects-container .album-card-image {
+    aspect-ratio: 16 / 10;
+    /* The photograph bleeds to the card's edges — no border, no inset.
+       The card's own outline is the only line. */
+    border: none;
+    background-color: transparent;
+}
+
+.projects-container .album-card-info {
+    padding: 15px 17px 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+/* Ink on the card's own stock, not bone on the dark ground. */
+.projects-container .album-card-type  { color: var(--accent); margin: 0; }
+.projects-container .album-card-title { color: var(--ink); font-size: 0.95em; }
+.projects-container .album-card-title a { color: var(--ink); }
+.projects-container .album-card-meta {
+    color: rgb(var(--ink-rgb) / 0.62);
+    text-transform: none;
+    letter-spacing: 0;
+    line-height: 1.5;
+}
