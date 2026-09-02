@@ -24,6 +24,7 @@
        system on the portfolio side. Coral runs warm and does everything
        alone; these give the palette a cool register to answer it.
        Declared but unused — nothing changes until they are placed. */
+    --riso-blue: #33468a;  /* one ink on warm stock */
     --slate:  #6E8CA0;   /* batik blue */
     --lav:    #AC9CC8;   /* lavender   */
 
@@ -85,25 +86,25 @@ header {
     min-width: 0;
 }
 
-/* The studio mark: one ink on warm stock. A spiral, printed rather than
-   drawn — the accent is masked twice, once by the spiral and once by a
-   turbulence field, so the ink lands mottled and imperfect the way a
-   risograph lays it down. Technique borrowed from Paper & Night. */
+/* The studio mark: one ink on warm stock. A riso blue disc masked by a
+   turbulence-filtered circle, so the ink lands mottled and imperfect the
+   way a risograph lays it down. Lifted from Paper & Night's own mark,
+   values and all. */
 #studio-mark {
     flex: none;
-    width: clamp(38px, 5vw, 54px);
+    width: clamp(46px, 5.6vw, 62px);
     aspect-ratio: 1;
-    background-color: var(--accent);
-    -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2.3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M12.00,12.00L12.07,12.01L12.14,12.02L12.21,12.05L12.28,12.10L12.33,12.15L12.38,12.21L12.43,12.28L12.46,12.36L12.48,12.45L12.49,12.54L12.49,12.63L12.48,12.73L12.45,12.84L12.41,12.94L12.35,13.04L12.28,13.13L12.20,13.22L12.10,13.31L11.99,13.38L11.87,13.45L11.74,13.51L11.59,13.55L11.44,13.58L11.28,13.60L11.12,13.59L10.95,13.58L10.78,13.54L10.60,13.49L10.43,13.41L10.26,13.32L10.10,13.21L9.94,13.09L9.79,12.94L9.65,12.78L9.52,12.60L9.41,12.40L9.31,12.19L9.23,11.96L9.17,11.73L9.13,11.48L9.12,11.22L9.12,10.96L9.15,10.70L9.20,10.43L9.28,10.16L9.39,9.90L9.52,9.64L9.68,9.39L9.86,9.15L10.06,8.92L10.29,8.70L10.54,8.50L10.81,8.32L11.11,8.17L11.42,8.04L11.74,7.93L12.08,7.85L12.44,7.80L12.80,7.78L13.16,7.79L13.53,7.83L13.90,7.90L14.27,8.01L14.64,8.16L14.99,8.33L15.34,8.54L15.67,8.78L15.98,9.05L16.27,9.35L16.54,9.68L16.79,10.04L17.00,10.42L17.19,10.83L17.34,11.25L17.46,11.69L17.54,12.15L17.58,12.62L17.58,13.09L17.54,13.57L17.46,14.05L17.33,14.52L17.17,14.99L16.96,15.45L16.72,15.90L16.43,16.33L16.10,16.74L15.74,17.12L15.34,17.47L14.90,17.80L14.44,18.09L13.95,18.34L13.43,18.55L12.89,18.72L12.34,18.84L11.77,18.92L11.19,18.95L10.60,18.93L10.01,18.86L9.42,18.74L8.84,18.56L8.27,18.34L7.71,18.07L7.18,17.75L6.67,17.38L6.18,16.97L5.73,16.51L5.32,16.01L4.94,15.48L4.61,14.91L4.32,14.30L4.09,13.68L3.90,13.02L3.77,12.35L3.70,11.66L3.69,10.97L3.73,10.27L3.83,9.57L3.99,8.87L4.21,8.19L4.49,7.52L4.83,6.87L5.23,6.24L5.68,5.65L6.18,5.09L6.73,4.57L7.33,4.10L7.97,3.67L8.64,3.30L9.36,2.98L10.10,2.72L10.87,2.52L11.65,2.39L12.46,2.32L13.27,2.32L14.08,2.39L14.89,2.52L15.70,2.73L16.48,3.00L17.25,3.34L18.00,3.75'/%3E%3C/svg%3E"), url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='m'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.22' numOctaves='4'/%3E%3CfeColorMatrix type='matrix' values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 -6 4.4'/%3E%3C/filter%3E%3Crect width='120' height='120' filter='url(%23m)'/%3E%3C/svg%3E");
-    -webkit-mask-size: contain, 70px 70px;
-    -webkit-mask-repeat: no-repeat, repeat;
-    -webkit-mask-position: center, center;
-    -webkit-mask-composite: source-in;
-    mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2.3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M12.00,12.00L12.07,12.01L12.14,12.02L12.21,12.05L12.28,12.10L12.33,12.15L12.38,12.21L12.43,12.28L12.46,12.36L12.48,12.45L12.49,12.54L12.49,12.63L12.48,12.73L12.45,12.84L12.41,12.94L12.35,13.04L12.28,13.13L12.20,13.22L12.10,13.31L11.99,13.38L11.87,13.45L11.74,13.51L11.59,13.55L11.44,13.58L11.28,13.60L11.12,13.59L10.95,13.58L10.78,13.54L10.60,13.49L10.43,13.41L10.26,13.32L10.10,13.21L9.94,13.09L9.79,12.94L9.65,12.78L9.52,12.60L9.41,12.40L9.31,12.19L9.23,11.96L9.17,11.73L9.13,11.48L9.12,11.22L9.12,10.96L9.15,10.70L9.20,10.43L9.28,10.16L9.39,9.90L9.52,9.64L9.68,9.39L9.86,9.15L10.06,8.92L10.29,8.70L10.54,8.50L10.81,8.32L11.11,8.17L11.42,8.04L11.74,7.93L12.08,7.85L12.44,7.80L12.80,7.78L13.16,7.79L13.53,7.83L13.90,7.90L14.27,8.01L14.64,8.16L14.99,8.33L15.34,8.54L15.67,8.78L15.98,9.05L16.27,9.35L16.54,9.68L16.79,10.04L17.00,10.42L17.19,10.83L17.34,11.25L17.46,11.69L17.54,12.15L17.58,12.62L17.58,13.09L17.54,13.57L17.46,14.05L17.33,14.52L17.17,14.99L16.96,15.45L16.72,15.90L16.43,16.33L16.10,16.74L15.74,17.12L15.34,17.47L14.90,17.80L14.44,18.09L13.95,18.34L13.43,18.55L12.89,18.72L12.34,18.84L11.77,18.92L11.19,18.95L10.60,18.93L10.01,18.86L9.42,18.74L8.84,18.56L8.27,18.34L7.71,18.07L7.18,17.75L6.67,17.38L6.18,16.97L5.73,16.51L5.32,16.01L4.94,15.48L4.61,14.91L4.32,14.30L4.09,13.68L3.90,13.02L3.77,12.35L3.70,11.66L3.69,10.97L3.73,10.27L3.83,9.57L3.99,8.87L4.21,8.19L4.49,7.52L4.83,6.87L5.23,6.24L5.68,5.65L6.18,5.09L6.73,4.57L7.33,4.10L7.97,3.67L8.64,3.30L9.36,2.98L10.10,2.72L10.87,2.52L11.65,2.39L12.46,2.32L13.27,2.32L14.08,2.39L14.89,2.52L15.70,2.73L16.48,3.00L17.25,3.34L18.00,3.75'/%3E%3C/svg%3E"), url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='m'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.22' numOctaves='4'/%3E%3CfeColorMatrix type='matrix' values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 -6 4.4'/%3E%3C/filter%3E%3Crect width='120' height='120' filter='url(%23m)'/%3E%3C/svg%3E");
-    mask-size: contain, 70px 70px;
-    mask-repeat: no-repeat, repeat;
-    mask-position: center, center;
-    mask-composite: intersect;
+    border-radius: 50%;
+    background: var(--riso-blue);
+    opacity: 0.9;
+    -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='m'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.04' numOctaves='3'/%3E%3CfeColorMatrix type='matrix' values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 -18 8'/%3E%3C/filter%3E%3Ccircle cx='60' cy='60' r='58' filter='url(%23m)'/%3E%3C/svg%3E");
+    -webkit-mask-size: contain;
+    -webkit-mask-repeat: no-repeat;
+    -webkit-mask-position: center;
+    mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='m'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.04' numOctaves='3'/%3E%3CfeColorMatrix type='matrix' values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 -18 8'/%3E%3C/filter%3E%3Ccircle cx='60' cy='60' r='58' filter='url(%23m)'/%3E%3C/svg%3E");
+    mask-size: contain;
+    mask-repeat: no-repeat;
+    mask-position: center;
 }
 
 nav {
