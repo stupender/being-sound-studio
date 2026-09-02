@@ -1,20 +1,41 @@
+/* =================================================================
+   PALETTE TOKENS
+   Extracted verbatim from the existing stylesheet — these are the
+   site's current colours, unchanged. Every colour below now flows
+   from one of these, so the whole site can be reskinned by editing
+   the three RGB triples.
+   ================================================================= */
+:root {
+    --bone-rgb:   224 224 224;   /* page ground                    */
+    --ink-rgb:    24 24 24;      /* text, dark panels              */
+    --accent-rgb: 228 107 108;   /* coral                          */
+
+    --bone:   rgb(var(--bone-rgb));
+    --ink:    rgb(var(--ink-rgb));
+    --accent: rgb(var(--accent-rgb));
+    --muted:  rgb(196 196 196);
+
+    --hair:        rgb(0 0 0 / 0.11);
+    --hair-strong: rgb(0 0 0 / 0.33);
+}
+
 html {
     margin: 0 0 0 0;
     padding: 0 0 0 0;
-    background-color: rgb(24 24 24);
+    background-color: var(--ink);
 }
 
 body {
     padding: 0 0 0 0;
     margin: 0 0 0 0;
-    background-color: #e0e0e0;
+    background-color: var(--bone);
     min-height: 100vh;
 }
 
 header {
     margin-left: 5%;
     margin-right: 5%;
-    border-bottom: 1px solid #00000054;
+    border-bottom: 1px solid var(--hair-strong);
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -33,23 +54,23 @@ nav {
 }
 
 button {
-    background-color: #e0e0e0;
-    color: rgb(24 24 24);
-    border: 1px solid rgb(24 24 24);
+    background-color: var(--bone);
+    color: var(--ink);
+    border: 1px solid var(--ink);
     width: 60px;
     font-family: 'Montserrat', sans-serif;
     font-size: .75em;
 }
 
 button:hover {
-    background-color: rgb(24 24 24);
-    color: #e0e0e0;
+    background-color: var(--ink);
+    color: var(--bone);
 }
 
 .button-link {
-    background-color: rgb(24 24 24);
-    color: #e0e0e0;
-    border: 1px solid #e0e0e0;
+    background-color: var(--ink);
+    color: var(--bone);
+    border: 1px solid var(--bone);
     padding: 10px
     font-family: 'Montserrat', sans-serif;
     font-weight: 300;
@@ -62,8 +83,8 @@ button:hover {
 
 
 .button-link:hover {
-    background-color: #e0e0e0;
-    color: rgb(24 24 24);
+    background-color: var(--bone);
+    color: var(--ink);
 }
 
 div.button-container {
@@ -94,8 +115,8 @@ div.button-container {
     display: none;
     justify-content: space-between;
     align-items: stretch;
-    background-color: rgb(24 24 24);
-    color: #e0e0e0;
+    background-color: var(--ink);
+    color: var(--bone);
 }
 
 .bespoke-sonic-worlds-container {
@@ -104,8 +125,8 @@ div.button-container {
     display: none;
     justify-content: space-between;
     align-items: stretch;
-    background-color: rgb(24 24 24);
-    color: #e0e0e0;
+    background-color: var(--ink);
+    color: var(--bone);
 }
 
 .music-lessons-container {
@@ -114,8 +135,8 @@ div.button-container {
     display: none;
     justify-content: space-between;
     align-items: stretch;
-    background-color: rgb(24 24 24);
-    color: #e0e0e0;
+    background-color: var(--ink);
+    color: var(--bone);
 }
 
 /* /listen, its hidden welcome page, and /loop reuse the same dark-card look
@@ -128,8 +149,8 @@ div.button-container {
     display: none;
     justify-content: space-between;
     align-items: stretch;
-    background-color: rgb(24 24 24);
-    color: #e0e0e0;
+    background-color: var(--ink);
+    color: var(--bone);
 }
 .collaboration-container {
     margin-left: 5%;
@@ -161,8 +182,8 @@ div.button-container {
     display: none;
     justify-content: space-between;
     align-items: stretch;
-    background-color: rgb(24 24 24);
-    color: #e0e0e0;
+    background-color: var(--ink);
+    color: var(--bone);
 }
 
 .events-container .contact-title,
@@ -178,8 +199,8 @@ div.button-container {
     display: none;
     justify-content: space-between;
     align-items: stretch;
-    background-color: rgb(24 24 24);
-    color: #e0e0e0;
+    background-color: var(--ink);
+    color: var(--bone);
 }
 
 .contact-container {
@@ -227,7 +248,7 @@ div.button-container {
 .filter-title {
     margin-right: 10px;
     font-size: .75em;
-    color: rgb(228 107 108);
+    color: var(--accent);
 
     /* font-style: italic; */
 }
@@ -235,7 +256,7 @@ div.button-container {
 .contact-title {
     margin: 0px 10px 0px 0px;
     font-size: .75em;
-    color: rgb(228 107 108);
+    color: var(--accent);
     font-weight: 400;
 }
 
@@ -243,7 +264,7 @@ div.button-container {
     margin-right: 10px;
     margin-bottom: 2px;
     font-size: .75em;
-    color: #e0e0e0;
+    color: var(--bone);
     font-weight: 400;
 }
 
@@ -254,7 +275,7 @@ div.button-container {
 
 .social-proof-list li.offer-items {
     margin-top: 25px;
-    border-left: 1px solid #e0e0e0;
+    border-left: 1px solid var(--bone);
     padding-left: 15px;
 }
 
@@ -265,7 +286,7 @@ div.button-container {
 .testimonial-subtitle {
     display: block;
     font-size: .7em;
-    color: #e0e0e0;
+    color: var(--bone);
     font-weight: 300;
     margin-bottom: 6px;
 }
@@ -273,7 +294,7 @@ div.button-container {
 .body-title {
     margin-right: 10px;
     font-size: .75em;
-    color: rgb(228 107 108);
+    color: var(--accent);
     font-weight: 400;
     margin: 30px 30px 15px 30px;
 }
@@ -281,7 +302,7 @@ div.button-container {
 .body-title-alt {
     margin-right: 10px;
     font-size: .75em;
-    color: rgb(228 107 108);
+    color: var(--accent);
     font-weight: 400;
     margin: 0px 30px 15px 30px;
 }
@@ -292,23 +313,23 @@ div.button-container {
 
 .body-link {
     font-family: 'Chivo', sans-serif;
-    color: #e0e0e0;
-    border-bottom: 1px solid #e0e0e0;
+    color: var(--bone);
+    border-bottom: 1px solid var(--bone);
     font-size: .9em;
     font-weight: 300;
     margin-left: 30px;
 }
 /* .body-link:hover {
-    color: rgb(24 24 24);
-    border-bottom: 1px solid rgb(24 24 24);
-    background-color: #e0e0e0;
+    color: var(--ink);
+    border-bottom: 1px solid var(--ink);
+    background-color: var(--bone);
 } */
 
 
 .body-subtitle {
     margin-right: 10px;
     font-size: .75em;
-    color: rgb(228 107 108);
+    color: var(--accent);
     font-weight: 400;
     margin: 30px 30px 15px 30px;
 
@@ -344,10 +365,10 @@ p {
 }
 
 b {
-    /* color: rgb(228 107 108); */
+    /* color: var(--accent); */
     font-size: 1em;
     font-weight: 400;  
-    /* border-bottom: 1px solid #e0e0e075; */
+    /* border-bottom: 1px solid rgb(var(--bone-rgb) / 0.46); */
 }
 
 ul {
@@ -421,8 +442,8 @@ a {
     font-family: 'Chivo', sans-serif;
     font-weight: 300;
     text-decoration: none;
-    color: rgb(24 24 24);
-    border-bottom: 1px solid rgb(24 24 24);
+    color: var(--ink);
+    border-bottom: 1px solid var(--ink);
     /* padding: 1px 1px; */
 }
 
@@ -430,8 +451,8 @@ a {
     font-family: 'Chivo', sans-serif;
     font-weight: 300;
     text-decoration: none;
-    color: #e0e0e0;
-    border-bottom: 1px solid #e0e0e0;
+    color: var(--bone);
+    border-bottom: 1px solid var(--bone);
     /* padding: 1px 1px; */
 }
 
@@ -439,17 +460,17 @@ a {
     font-family: 'Chivo', sans-serif;
     font-weight: 300;
     text-decoration: none;
-    background-color: #e0e0e0;
-    color: rgb(24 24 24);
-    border-bottom: 1px solid #e0e0e0;
+    background-color: var(--bone);
+    color: var(--ink);
+    border-bottom: 1px solid var(--bone);
     /* padding: 1px 1px; */
 
 }
 
 a:hover {
-    background-color: rgb(24 24 24);
-    color: #e0e0e0;
-    /* border-bottom: 1px solid rgb(24 24 24); */
+    background-color: var(--ink);
+    color: var(--bone);
+    /* border-bottom: 1px solid var(--ink); */
 }
 
 .section-pic {
@@ -486,7 +507,7 @@ a:hover {
 
 .projects-container.show {
     display: flex;
-    border-top: 1px solid #0000001c;
+    border-top: 1px solid var(--hair);
 }
 
 .projects-intro {
@@ -548,7 +569,7 @@ a:hover {
     font-family: 'Chivo', sans-serif;
     font-size: 0.65em;
     font-weight: 400;
-    color: rgb(228 107 108);
+    color: var(--accent);
     margin: 0 0 6px 0;
     letter-spacing: 0.04em;
     text-transform: uppercase;
@@ -580,10 +601,10 @@ a:hover {
 /* Hatch-pattern placeholder for projects without screenshots yet */
 .album-card-placeholder {
     position: relative;
-    background-color: #e0e0e0;
+    background-color: var(--bone);
     background-image:
-        linear-gradient(45deg, rgba(24, 24, 24, 0.06) 25%, transparent 25%),
-        linear-gradient(-45deg, rgba(24, 24, 24, 0.06) 25%, transparent 25%);
+        linear-gradient(45deg, rgb(var(--ink-rgb) / 0.06) 25%, transparent 25%),
+        linear-gradient(-45deg, rgb(var(--ink-rgb) / 0.06) 25%, transparent 25%);
     background-size: 14px 14px;
 }
 
@@ -599,7 +620,7 @@ a:hover {
     font-weight: 300;
     text-transform: uppercase;
     letter-spacing: 0.08em;
-    color: rgba(24, 24, 24, 0.45);
+    color: rgb(var(--ink-rgb) / 0.45);
     text-align: center;
     padding: 0 12px;
     z-index: 1;
@@ -626,7 +647,7 @@ a:hover {
     font-family: 'Chivo', sans-serif;
     font-size: 0.75em;
     font-weight: 400;
-    color: rgb(228 107 108);
+    color: var(--accent);
     margin: 0 0 12px 0;
     letter-spacing: 0.02em;
 }
@@ -685,12 +706,12 @@ a:hover {
 .personal-container.show,
 .contact-container.show,
 .offers-container.show {
-    border-top: 1px solid #0000001c;
+    border-top: 1px solid var(--hair);
 }
 
 .showing {
-    background-color: rgb(24 24 24);
-    color: #e0e0e0;
+    background-color: var(--ink);
+    color: var(--bone);
 }
 
 /* ============================================================
@@ -725,9 +746,9 @@ a:hover {
     width: 100%;
     box-sizing: border-box;
     background-color: transparent;
-    color: #e0e0e0;
+    color: var(--bone);
     border: none;
-    border-bottom: 1px solid #e0e0e0;
+    border-bottom: 1px solid var(--bone);
     border-radius: 0;
     padding: 10px 0;
     font-family: 'Chivo', sans-serif;
@@ -736,7 +757,7 @@ a:hover {
     line-height: 1.5em;
     margin-bottom: 20px;
     /* The blinking cursor picks up the site's accent colour. */
-    caret-color: rgb(228 107 108);
+    caret-color: var(--accent);
 }
 
 /* No browser focus ring, and the underline holds its weight — the blinking
@@ -746,7 +767,7 @@ a:hover {
 }
 
 .capture-input::placeholder {
-    color: #e0e0e0;
+    color: var(--bone);
     opacity: 0.5;
 }
 
@@ -800,9 +821,9 @@ a:hover {
 }
 
 /* .showing:hover {
-    background-color: rgb(196, 196, 196);
-    color: rgb(24 24 24);
-    border-bottom: 1px solid rgb(24 24 24);
+    background-color: var(--muted);
+    color: var(--ink);
+    border-bottom: 1px solid var(--ink);
 } */
 
 /* TRANSPORT BAR */
@@ -814,10 +835,10 @@ a:hover {
     z-index: 1000;
     /* Translucent, with the page blurred behind it — same glass as the
        image pages. */
-    background: rgb(24 24 24 / 0.55);
+    background: rgb(var(--ink-rgb) / 0.55);
     -webkit-backdrop-filter: blur(30px) saturate(130%);
     backdrop-filter: blur(30px) saturate(130%);
-    color: #e0e0e0;
+    color: var(--bone);
     height: 50px;
     display: none;
     flex-direction: row;
@@ -828,7 +849,7 @@ a:hover {
     text-transform: uppercase;
     font-size: 0.75em;
     font-weight: 300;
-    border-top: 1px solid rgb(224 224 224 / 0.3);
+    border-top: 1px solid rgb(var(--bone-rgb) / 0.3);
 }
 
 .transport-bar.visible {
@@ -909,10 +930,10 @@ body.transport-visible {
     left: 0;
     width: 100%;
     z-index: 999;
-    background: rgb(24 24 24 / 0.68);
+    background: rgb(var(--ink-rgb) / 0.68);
     -webkit-backdrop-filter: blur(30px) saturate(130%);
     backdrop-filter: blur(30px) saturate(130%);
-    border-top: 1px solid rgb(224 224 224 / 0.3);
+    border-top: 1px solid rgb(var(--bone-rgb) / 0.3);
     list-style: none;
     margin: 0;
     padding: 8px 14px;
@@ -932,7 +953,7 @@ body.transport-visible {
     font-size: 1em;
     font-weight: 300;
     text-transform: uppercase;
-    color: #e0e0e0;
+    color: var(--bone);
     padding: 8px 0;
     cursor: pointer;
 }
@@ -951,12 +972,12 @@ ul.playlist.playlist-light {
 
 
 .playlist-light .playlist-play-btn svg {
-    fill: rgb(24 24 24);
+    fill: var(--ink);
 }
 
 .playlist-light .playlist-track-name {
-    color: rgb(24 24 24);
-    border-bottom-color: rgb(24 24 24);
+    color: var(--ink);
+    border-bottom-color: var(--ink);
 }
 
 .playlist-light .playlist-play-btn {
@@ -1007,19 +1028,19 @@ ul.playlist {
     font-family: 'Chivo', sans-serif;
     font-size: 0.9em;
     font-weight: 100;
-    color: #e0e0e0;
-    border-bottom: 1px solid #e0e0e0;
+    color: var(--bone);
+    border-bottom: 1px solid var(--bone);
     cursor: pointer;
 }
 
 .playlist-track-name:hover {
-    background-color: #e0e0e0;
-    color: rgb(24 24 24);
+    background-color: var(--bone);
+    color: var(--ink);
 }
 
 .playlist-light .playlist-track-name:hover {
-    background-color: rgb(24 24 24);
-    color: #e0e0e0;
+    background-color: var(--ink);
+    color: var(--bone);
 }
 
 /* ALBUM CARDS */
@@ -1032,7 +1053,7 @@ ul.playlist {
 }
 
 .album-card {
-    border: 1px solid rgb(24 24 24);
+    border: 1px solid var(--ink);
     padding: 8px;
     padding-bottom: 20px;
     cursor: pointer;
@@ -1042,7 +1063,7 @@ ul.playlist {
     position: relative;
     aspect-ratio: 1;
     overflow: hidden;
-    border: 1px solid rgb(24 24 24);
+    border: 1px solid var(--ink);
 }
 
 .album-card-image img {
@@ -1076,7 +1097,7 @@ ul.playlist {
 }
 
 .album-card-no-art {
-    background: rgb(24, 24, 24);
+    background: var(--ink);
 }
 
 .album-card-overlay {
@@ -1101,7 +1122,7 @@ ul.playlist {
     pointer-events: none;
     width: 40px;
     height: 40px;
-    background: rgb(224 224 224 / 0.2);
+    background: rgb(var(--bone-rgb) / 0.2);
     border-radius: 50%;
     display: flex;
     align-items: center;
@@ -1118,7 +1139,7 @@ ul.playlist {
     font-size: 0.75em;
     font-weight: 300;
     text-transform: uppercase;
-    color: rgb(24 24 24);
+    color: var(--ink);
 }
 
 .album-card-meta {
@@ -1126,14 +1147,14 @@ ul.playlist {
     font-size: 0.65em;
     font-weight: 300;
     text-transform: uppercase;
-    color: rgb(24 24 24);
+    color: var(--ink);
     opacity: 0.6;
     padding-top: 2px;
 }
 
 .album-card-external:hover .album-card-title a {
-    background-color: rgb(24 24 24);
-    color: #e0e0e0;
+    background-color: var(--ink);
+    color: var(--bone);
 }
 
 ul.playlist.album-card-playlist {
@@ -1153,29 +1174,29 @@ ul.playlist.album-card-playlist {
 }
 
 .bespoke-sonic-worlds-container .album-card {
-    border-color: #e0e0e0;
+    border-color: var(--bone);
 }
 
 .bespoke-sonic-worlds-container .album-card-image {
-    border-color: #e0e0e0;
+    border-color: var(--bone);
 }
 
 .bespoke-sonic-worlds-container .album-card-title {
-    color: #e0e0e0;
+    color: var(--bone);
 }
 
 .bespoke-sonic-worlds-container .album-card-title a {
-    color: #e0e0e0;
-    border-bottom-color: #e0e0e0;
+    color: var(--bone);
+    border-bottom-color: var(--bone);
 }
 
 .bespoke-sonic-worlds-container .album-card-title a:hover {
-    background-color: #e0e0e0;
-    color: rgb(24 24 24);
+    background-color: var(--bone);
+    color: var(--ink);
 }
 
 .bespoke-sonic-worlds-container .album-card-meta {
-    color: #e0e0e0;
+    color: var(--bone);
 }
 
 .booking-container {
@@ -1188,7 +1209,7 @@ ul.playlist.album-card-playlist {
     flex-direction: row;
     justify-content: space-between;
     align-items: left;
-    border-top: 1px solid #0000001c;
+    border-top: 1px solid var(--hair);
 }
 
 .booking-container.show {
@@ -1418,7 +1439,7 @@ ul.playlist.album-card-playlist {
 .events-container .text-block {
     position: relative;
     z-index: 1;
-    background-color: rgb(24 24 24 / 0.55);
+    background-color: rgb(var(--ink-rgb) / 0.55);
     -webkit-backdrop-filter: blur(22px) saturate(115%);
     backdrop-filter: blur(22px) saturate(115%);
 }
@@ -1476,8 +1497,8 @@ ul.playlist.album-card-playlist {
 .listen-welcome-container .button-link:hover,
 .loop-container .button-link:hover,
 .events-container .button-link:hover {
-    background-color: #e0e0e0;
-    color: rgb(24 24 24);
+    background-color: var(--bone);
+    color: var(--ink);
 }
 
 
@@ -1491,7 +1512,7 @@ ul.playlist.album-card-playlist {
 .site-footer {
     margin: 0 5%;
     padding: 30px 0 40px 0;
-    border-top: 1px solid #00000054;
+    border-top: 1px solid var(--hair-strong);
 }
 
 /* The line is a nice divider under the light list pages, but under a dark
@@ -1520,7 +1541,7 @@ body:has(.projects-container.show) .site-footer {
     font-family: 'Chivo', sans-serif;
     font-weight: 300;
     font-size: 0.75em;
-    color: rgb(24 24 24);
+    color: var(--ink);
     opacity: 0.6;
     margin-top: 25px;
 }
@@ -1528,25 +1549,25 @@ body:has(.projects-container.show) .site-footer {
 /* The footer sits on the light background, so its link needs the dark
    ink colour (.p-link is the light-on-dark version used inside cards). */
 .footer-link {
-    color: rgb(24 24 24);
-    border-bottom: 1px solid rgb(24 24 24);
+    color: var(--ink);
+    border-bottom: 1px solid var(--ink);
 }
 
 .footer-link:hover {
-    background-color: rgb(24 24 24);
-    color: #e0e0e0;
+    background-color: var(--ink);
+    color: var(--bone);
 }
 
 /* --- Light-background variant of the capture form ---
    The base .capture-form is built for the dark cards. On the light
    background (footer, events page) the colours invert. */
 .capture-form-light .capture-input {
-    color: rgb(24 24 24);
-    border-bottom-color: rgb(24 24 24);
+    color: var(--ink);
+    border-bottom-color: var(--ink);
 }
 
 .capture-form-light .capture-input::placeholder {
-    color: rgb(24 24 24);
+    color: var(--ink);
     opacity: 0.45;
 }
 
@@ -1554,13 +1575,13 @@ body:has(.projects-container.show) .site-footer {
    the site's other buttons on a light background. */
 .capture-form-light .capture-button {
     background-color: transparent;
-    color: rgb(24 24 24);
-    border: 1px solid rgb(24 24 24);
+    color: var(--ink);
+    border: 1px solid var(--ink);
 }
 
 .capture-form-light .capture-button:hover {
-    background-color: rgb(24 24 24);
-    color: #e0e0e0;
+    background-color: var(--ink);
+    color: var(--bone);
 }
 
 /* --- The footer's one-line layout: field and button side by side --- */
@@ -1606,13 +1627,13 @@ body:has(.projects-container.show) .site-footer {
 /* Links and dates flip to the light ink, since the global link colour is
    the dark one meant for light backgrounds. */
 .events-container a {
-    color: #e0e0e0;
-    border-bottom-color: #e0e0e0;
+    color: var(--bone);
+    border-bottom-color: var(--bone);
 }
 
 .events-container a:hover {
-    background-color: #e0e0e0;
-    color: rgb(24 24 24);
+    background-color: var(--bone);
+    color: var(--ink);
 }
 
 .events-container .capture-form {
@@ -1761,8 +1782,8 @@ body:has(.projects-container.show) .site-footer {
 .projects-container {
     position: relative;
     overflow: hidden;
-    background-color: rgb(24 24 24);
-    color: #e0e0e0;
+    background-color: var(--ink);
+    color: var(--bone);
     /* Now that these pages have a background of their own, the content
        needs the same 30px breathing room the other dark cards use, so
        nothing sits against the edge. */
@@ -1793,7 +1814,7 @@ body:has(.projects-container.show) .site-footer {
     position: absolute;
     inset: 0;
     z-index: 1;
-    background-color: rgb(24 24 24 / 0.85);
+    background-color: rgb(var(--ink-rgb) / 0.85);
     -webkit-backdrop-filter: blur(40px);
     backdrop-filter: blur(40px);
     pointer-events: none;
@@ -1815,7 +1836,7 @@ body:has(.projects-container.show) .site-footer {
 .listen-welcome-container .album-card,
 .listen-container .album-card,
 .teaching-container .album-card {
-    border-color: #e0e0e0;
+    border-color: var(--bone);
 }
 
 .personal-container .album-card-image,
@@ -1825,7 +1846,7 @@ body:has(.projects-container.show) .site-footer {
 .listen-welcome-container .album-card-image,
 .listen-container .album-card-image,
 .teaching-container .album-card-image {
-    border-color: #e0e0e0;
+    border-color: var(--bone);
 }
 
 .personal-container .album-card-title,
@@ -1852,15 +1873,15 @@ body:has(.projects-container.show) .site-footer {
 .teaching-container .album-card-title,
 .teaching-container .album-card-title a,
 .teaching-container .album-card-meta {
-    color: #e0e0e0;
-    border-bottom-color: #e0e0e0;
+    color: var(--bone);
+    border-bottom-color: var(--bone);
 }
 
 .personal-container a:hover,
 .collaboration-container a:hover,
 .projects-container a:hover {
-    background-color: #e0e0e0;
-    color: rgb(24 24 24);
+    background-color: var(--bone);
+    color: var(--ink);
 }
 
 /* Some people set their system to reduce motion; hold a still frame
@@ -1884,8 +1905,8 @@ body:has(.projects-container.show) .site-footer {
 .collaboration-container .album-card-title a:hover,
 .projects-container .album-card-title a:hover,
 .bespoke-sonic-worlds-container .album-card-title a:hover {
-    background-color: #e0e0e0;
-    color: rgb(24 24 24);
+    background-color: var(--bone);
+    color: var(--ink);
 }
 
 /* Hovering the card lifts it very slightly out of the background. */
@@ -1906,7 +1927,7 @@ body:has(.projects-container.show) .site-footer {
 .listen-welcome-container .album-card:hover,
 .listen-container .album-card:hover,
 .teaching-container .album-card:hover {
-    background-color: rgb(224 224 224 / 0.08);
+    background-color: rgb(var(--bone-rgb) / 0.08);
 }
 
 /* The play control: a dark, blurred disc that only appears on hover —
@@ -1916,7 +1937,7 @@ body:has(.projects-container.show) .site-footer {
 .bespoke-sonic-worlds-container .album-card-play,
 .listen-welcome-container .album-card-play,
 .listen-container .album-card-play {
-    background: rgb(24 24 24 / 0.55);
+    background: rgb(var(--ink-rgb) / 0.55);
     -webkit-backdrop-filter: blur(10px);
     backdrop-filter: blur(10px);
     opacity: 0;
@@ -1966,11 +1987,11 @@ body:has(.projects-container.show) .site-footer {
     /* Rows share a single hairline between them rather than each
        carrying a full box. */
     border: none;
-    border-bottom: 1px solid rgb(224 224 224 / 0.25);
+    border-bottom: 1px solid rgb(var(--bone-rgb) / 0.25);
 }
 
 .album-list .album-card:first-child {
-    border-top: 1px solid rgb(224 224 224 / 0.25);
+    border-top: 1px solid rgb(var(--bone-rgb) / 0.25);
 }
 
 /* Small square artwork, fixed so every row lines up. */
@@ -2094,20 +2115,20 @@ body:has(.projects-container.show) .site-footer {
     height: 1px;
     background: linear-gradient(
         to right,
-        #e0e0e0 var(--volume-fill, 100%),
-        rgb(224 224 224 / 0.35) var(--volume-fill, 100%)
+        var(--bone) var(--volume-fill, 100%),
+        rgb(var(--bone-rgb) / 0.35) var(--volume-fill, 100%)
     );
 }
 
 /* Firefox has a dedicated pseudo-element for the filled portion. */
 .transport-volume::-moz-range-track {
     height: 1px;
-    background: rgb(224 224 224 / 0.35);
+    background: rgb(var(--bone-rgb) / 0.35);
 }
 
 .transport-volume::-moz-range-progress {
     height: 1px;
-    background: #e0e0e0;
+    background: var(--bone);
 }
 
 .transport-volume::-webkit-slider-thumb {
@@ -2116,7 +2137,7 @@ body:has(.projects-container.show) .site-footer {
     width: 9px;
     height: 9px;
     border-radius: 50%;
-    background: #e0e0e0;
+    background: var(--bone);
     border: none;
     /* Pull the handle up so it sits centred on the 1px track. */
     margin-top: -4px;
@@ -2126,7 +2147,7 @@ body:has(.projects-container.show) .site-footer {
     width: 9px;
     height: 9px;
     border-radius: 50%;
-    background: #e0e0e0;
+    background: var(--bone);
     border: none;
 }
 
@@ -2231,7 +2252,7 @@ body:has(.projects-container.show) .site-footer {
     align-items: center;
     gap: 12px;
     padding: 8px 14px;
-    border-bottom: 1px solid rgb(224 224 224 / 0.12);
+    border-bottom: 1px solid rgb(var(--bone-rgb) / 0.12);
 }
 
 .transport-queue li:last-child {
@@ -2239,7 +2260,7 @@ body:has(.projects-container.show) .site-footer {
 }
 
 .transport-queue li:hover {
-    background-color: rgb(224 224 224 / 0.08);
+    background-color: rgb(var(--bone-rgb) / 0.08);
 }
 
 .transport-queue-thumb {
@@ -2267,7 +2288,7 @@ body:has(.projects-container.show) .site-footer {
     width: 22px;
     height: 22px;
     border-radius: 50%;
-    background: rgb(24 24 24 / 0.55);
+    background: rgb(var(--ink-rgb) / 0.55);
     -webkit-backdrop-filter: blur(8px);
     backdrop-filter: blur(8px);
     display: flex;
@@ -2382,7 +2403,7 @@ body:has(.projects-container.show) .site-footer {
 
 .transport-bar button:focus-visible,
 .transport-volume:focus-visible {
-    outline: 1px solid rgb(224 224 224 / 0.7);
+    outline: 1px solid rgb(var(--bone-rgb) / 0.7);
     outline-offset: 2px;
     border-radius: 2px;
 }
@@ -2396,7 +2417,7 @@ body:has(.projects-container.show) .site-footer {
     bottom: 0;
     width: 100%;
     height: 2px;
-    background: rgb(224 224 224 / 0.2);
+    background: rgb(var(--bone-rgb) / 0.2);
     pointer-events: none;
 }
 
@@ -2404,7 +2425,7 @@ body:has(.projects-container.show) .site-footer {
     display: block;
     width: 0;
     height: 100%;
-    background: #e0e0e0;
+    background: var(--bone);
 }
 
 /* The track title leads back to the page it came from, so it reads as
@@ -2420,7 +2441,7 @@ body:has(.projects-container.show) .site-footer {
 }
 
 .transport-track-name.is-linked:hover .track-title {
-    border-bottom-color: rgb(224 224 224 / 0.6);
+    border-bottom-color: rgb(var(--bone-rgb) / 0.6);
 }
 
 /* --- Autofill ---
@@ -2434,8 +2455,8 @@ body:has(.projects-container.show) .site-footer {
 .capture-input:-webkit-autofill:hover,
 .capture-input:-webkit-autofill:focus,
 .capture-input:-webkit-autofill:active {
-    -webkit-text-fill-color: #e0e0e0;
-    caret-color: rgb(228 107 108);
+    -webkit-text-fill-color: var(--bone);
+    caret-color: var(--accent);
     transition: background-color 9999s ease-in-out 0s;
 }
 
@@ -2444,5 +2465,5 @@ body:has(.projects-container.show) .site-footer {
 .capture-form-light .capture-input:-webkit-autofill:hover,
 .capture-form-light .capture-input:-webkit-autofill:focus,
 .capture-form-light .capture-input:-webkit-autofill:active {
-    -webkit-text-fill-color: rgb(24 24 24);
+    -webkit-text-fill-color: var(--ink);
 }
