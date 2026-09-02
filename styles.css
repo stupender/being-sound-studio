@@ -2481,3 +2481,20 @@ body:has(.projects-container.show) .site-footer {
 .capture-form-light .capture-input:-webkit-autofill:active {
     -webkit-text-fill-color: var(--ink);
 }
+
+
+/* =================================================================
+   FILM GRAIN — the analog layer.
+   Fixed over the page, inert to pointer events, hidden in print.
+   This is what keeps warm paper from reading as a flat screen.
+   ================================================================= */
+body::after {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 9999;
+    opacity: 0.05;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.82' numOctaves='4'/%3E%3C/filter%3E%3Crect width='220' height='220' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+@media print { body::after { display: none; } }
