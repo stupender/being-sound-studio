@@ -2638,52 +2638,60 @@ body::after {
 
 
 /* =================================================================
-   PROJECT CARDS — borrowing only the shape from the reference: one
-   card holding the photograph above its own text, a hairline outline,
-   soft corners, and the photograph running flush to the card's edges
-   with no border or inset of its own.
+   CARD SHELL — one card holding its media above its own text, with a
+   hairline outline, square corners, and the artwork running flush to
+   the edges. No border or inset around the media; the card's outline
+   is the only line.
 
-   The colours stay exactly as they were — the section's own dark
-   ground, with its existing text treatment. Scoped to
-   .projects-container so the discography cards are untouched.
+   Shared by Apps, Music and Collaborations. The only difference is the
+   media's shape: apps are screenshots (landscape), records are sleeves
+   (square). Colours stay the section's own.
    ================================================================= */
-.projects-container .album-card {
+.projects-container .album-card,
+.personal-container .album-card,
+.collaboration-container .album-card {
     display: flex;
     flex-direction: column;
     background-color: transparent;
     border: 1px solid rgb(var(--bone-rgb) / 0.18);
     border-radius: 0;
     overflow: hidden;
-    /* the base .album-card carries 8px padding; the photograph has to
-       reach the card's edge, so the padding moves to the text block */
+    /* the base .album-card has 8px padding; the media has to reach the
+       edge, so the inset moves to the text below it */
     padding: 0;
 }
 
-.projects-container .album-card-image {
-    aspect-ratio: 16 / 10;
-    /* flush to the card's edges — the card's outline is the only line */
+.projects-container .album-card-image,
+.personal-container .album-card-image,
+.collaboration-container .album-card-image {
     border: none;
     margin: 0;
     background-color: transparent;
 }
 
-.projects-container .album-card-info {
+/* screenshots read landscape; sleeves stay square */
+.projects-container .album-card-image { aspect-ratio: 16 / 10; }
+.personal-container .album-card-image,
+.collaboration-container .album-card-image { aspect-ratio: 1; }
+
+.projects-container .album-card-info,
+.personal-container .album-card-info,
+.collaboration-container .album-card-info {
     padding: 14px 16px 17px;
     display: flex;
     flex-direction: column;
     gap: 6px;
 }
+
+/* the tracklist sits inside the card now, so it needs the same inset */
+.personal-container .album-card-playlist,
+.collaboration-container .album-card-playlist {
+    padding: 0 16px 14px;
+    margin: 0;
+}
+
 .projects-container .album-card-meta {
     text-transform: none;
     letter-spacing: 0;
     line-height: 1.5;
-}
-
-
-
-
-/* Testimonials were always list-style-type: none; the spiral marker is
-   a ::before, which ignores that, so it is suppressed here. */
-.social-proof-list li.offer-items::before {
-    content: none;
 }
