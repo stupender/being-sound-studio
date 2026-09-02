@@ -6,11 +6,11 @@
    the three RGB triples.
    ================================================================= */
 :root {
-    /* Warm Cosmos — the same values, warmed. The ground keeps its
-       lightness and changes temperature; the coral deepens into ember
-       and survives as --blush. */
-    --bone-rgb:   233 226 214;   /* was 224 224 224 — same value, warmer */
-    --ink-rgb:    28 24 21;      /* was 24 24 24 — nudged off neutral    */
+    /* The site's original cool palette: grey ground, neutral ink, coral
+       accent. The warm variant lives in git if it's ever wanted again
+       (--bone-rgb 233 226 214, --ink-rgb 28 24 21). */
+    --bone-rgb:   224 224 224;   /* the original cool grey ground        */
+    --ink-rgb:    24 24 24;      /* the original neutral ink             */
     --accent-rgb: 228 107 108;   /* coral — the original accent, kept    */
 
     --bone:   rgb(var(--bone-rgb));
