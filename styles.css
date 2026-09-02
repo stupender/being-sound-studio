@@ -2672,8 +2672,8 @@ body::after {
     background-color: transparent;
 }
 
-/* screenshots read landscape; sleeves stay square */
-.projects-container .album-card-image { aspect-ratio: 16 / 10; }
+/* square across the board — screenshots and sleeves alike */
+.projects-container .album-card-image,
 .personal-container .album-card-image,
 .collaboration-container .album-card-image { aspect-ratio: 1; }
 
