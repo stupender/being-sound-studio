@@ -53,6 +53,12 @@ body {
     /* A base face for the document. Without one, any element that does
        not name a font falls back to the browser default (Times). */
     font-family: 'Chivo', sans-serif;
+    /* Paper. A fine fibrous speckle sits in the page ground itself, so
+       the light areas read as a material and the glass panels — which
+       sit above it, smooth and translucent — read as glass by contrast.
+       The noise is mostly transparent, so the bone shows through. */
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='p'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3CfeComponentTransfer%3E%3CfeFuncA type='linear' slope='0.11'/%3E%3C/feComponentTransfer%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23p)'/%3E%3C/svg%3E");
+    background-repeat: repeat;
 }
 
 header {
@@ -411,12 +417,26 @@ ul {
 }
 
 ul.offer-items {
-    /* list-style-type: circle; */
-    list-style-type: "𖦹 ";
-    padding-left: 1.1em;
+    /* A drawn spiral instead of a glyph: it inherits the accent colour,
+       scales cleanly, and renders identically across platforms (the old
+       𖦹 character is missing from many system fonts). */
+    list-style: none;
+    padding-left: 1.7em;
+}
+li.offer-items::before {
+    content: "";
+    position: absolute;
+    left: -1.7em;
+    top: 0.34em;
+    width: 0.78em;
+    height: 0.78em;
+    background-color: var(--accent);
+    -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2' stroke-linecap='round'%3E%3Cpath d='M12.6 12.4a1.7 1.7 0 1 0-1.7-1.7a3.8 3.8 0 1 0 3.8 3.8a6 6 0 1 0-6-6a8.3 8.3 0 1 0 8.3 8.3'/%3E%3C/svg%3E") center / contain no-repeat;
+    mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2' stroke-linecap='round'%3E%3Cpath d='M12.6 12.4a1.7 1.7 0 1 0-1.7-1.7a3.8 3.8 0 1 0 3.8 3.8a6 6 0 1 0-6-6a8.3 8.3 0 1 0 8.3 8.3'/%3E%3C/svg%3E") center / contain no-repeat;
 }
 
 li.offer-items {
+    position: relative;
     margin: 12px 0 0 0;
     text-indent: 0;
 }
@@ -517,6 +537,7 @@ a:hover {
 .listen-welcome-container.show,
 .loop-container.show,
 .events-container.show,
+.bespoke-design-container.show,
 .teaching-container.show {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -1415,7 +1436,8 @@ ul.playlist.album-card-playlist {
 .listen-container,
 .listen-welcome-container,
 .loop-container,
-.events-container {
+.events-container,
+.bespoke-design-container {
     position: relative;
     overflow: hidden;
 }
@@ -1430,7 +1452,8 @@ ul.playlist.album-card-playlist {
 .listen-container > .section-pic,
 .listen-welcome-container > .section-pic,
 .loop-container > .section-pic,
-.events-container > .section-pic {
+.events-container > .section-pic,
+.bespoke-design-container > .section-pic {
     position: absolute;
     top: 0;
     left: 0;
@@ -1465,7 +1488,8 @@ ul.playlist.album-card-playlist {
 .listen-container .text-block,
 .listen-welcome-container .text-block,
 .loop-container .text-block,
-.events-container .text-block {
+.events-container .text-block,
+.bespoke-design-container .text-block {
     position: relative;
     z-index: 1;
     background-color: var(--glass-fill);
@@ -1482,7 +1506,8 @@ ul.playlist.album-card-playlist {
 .listen-container .text-block,
 .listen-welcome-container .text-block,
 .loop-container .text-block,
-.events-container .text-block {
+.events-container .text-block,
+.bespoke-design-container .text-block {
     grid-column: 2;
 }
 
@@ -2509,7 +2534,7 @@ body::after {
     inset: 0;
     pointer-events: none;
     z-index: 9999;
-    opacity: 0.05;
+    opacity: 0.03;
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.82' numOctaves='4'/%3E%3C/filter%3E%3Crect width='220' height='220' filter='url(%23n)'/%3E%3C/svg%3E");
 }
 @media print { body::after { display: none; } }
@@ -2675,17 +2700,4 @@ body::after {
     display: none;
     color: var(--bone);
     background-color: var(--ink);
-}
-.bespoke-design-container.show {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    align-items: stretch;
-}
-.bespoke-design-container .text-block {
-    grid-column: 2;
-    position: relative;
-    z-index: 1;
-    background-color: var(--glass-fill);
-    -webkit-backdrop-filter: var(--glass-blur);
-    backdrop-filter: var(--glass-blur);
 }
