@@ -140,8 +140,10 @@ button:hover {
     background-color: var(--ink);
     color: var(--bone);
     border: 1px solid var(--bone);
-    padding: 10px;
-    font-family: 'Montserrat', sans-serif;
+    /* No font-family here on purpose: the `a` rule sets Chivo, which is
+       what this button has always rendered as. (The original declaration
+       was voided by a missing semicolon; restoring it changed the face,
+       so it stays out.) */
     font-weight: 300;
     line-height: 1.5em;
     padding: 10px;
@@ -2613,14 +2615,12 @@ body::after {
 .body-title-alt,
 .contact-title,
 .filter-title,
-.event-date,
-.cta-proof-name {
+.event-date {
     font-family: 'Montserrat', sans-serif;
 }
 
 
 
-}
 
 
 
@@ -2677,4 +2677,83 @@ body::after {
     text-transform: none;
     letter-spacing: 0;
     line-height: 1.5;
+}
+
+
+/* =================================================================
+   LONG PAGES — photograph on top, copy on glass over moving water.
+   The side-by-side split forced the photograph to match the height of
+   whatever copy sat beside it, which on a long page stretched it to a
+   sliver. Here the photograph is a banner of its own fixed height, the
+   copy runs the full width beneath it, and the looping water sits
+   behind that copy so the glass has light to refract — the same
+   treatment Music and Collaborations already use.
+   ================================================================= */
+.teaching-container.show,
+.about-container.show,
+.bespoke-sonic-worlds-container.show,
+.music-lessons-container.show,
+.bespoke-design-container.show,
+.listen-container.show,
+.listen-welcome-container.show,
+.loop-container.show,
+.events-container.show {
+    display: block;
+    position: relative;
+}
+
+.teaching-container > .section-video,
+.about-container > .section-video,
+.bespoke-sonic-worlds-container > .section-video,
+.music-lessons-container > .section-video,
+.bespoke-design-container > .section-video,
+.listen-container > .section-video,
+.listen-welcome-container > .section-video,
+.loop-container > .section-video,
+.events-container > .section-video {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: 0;
+    pointer-events: none;
+    filter: grayscale(1);
+}
+
+.teaching-container > .section-pic,
+.about-container > .section-pic,
+.bespoke-sonic-worlds-container > .section-pic,
+.music-lessons-container > .section-pic,
+.bespoke-design-container > .section-pic,
+.listen-container > .section-pic,
+.listen-welcome-container > .section-pic,
+.loop-container > .section-pic,
+.events-container > .section-pic {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    height: clamp(230px, 40svh, 460px);
+    object-fit: cover;
+    display: block;
+    left: auto;
+    top: auto;
+}
+
+/* the mirrored half is meaningless once the photograph spans the page */
+.section-pic-mirror { display: none; }
+
+.teaching-container .text-block,
+.about-container .text-block,
+.bespoke-sonic-worlds-container .text-block,
+.music-lessons-container .text-block,
+.bespoke-design-container .text-block,
+.listen-container .text-block,
+.listen-welcome-container .text-block,
+.loop-container .text-block,
+.events-container .text-block,
+.teaching-container .text-section {
+    position: relative;
+    z-index: 1;
+    grid-column: auto;
 }
