@@ -6,17 +6,31 @@
    the three RGB triples.
    ================================================================= */
 :root {
-    --bone-rgb:   224 224 224;   /* page ground                    */
-    --ink-rgb:    24 24 24;      /* text, dark panels              */
-    --accent-rgb: 228 107 108;   /* coral                          */
+    /* Warm Cosmos — the same values, warmed. The ground keeps its
+       lightness and changes temperature; the coral deepens into ember
+       and survives as --blush. */
+    --bone-rgb:   233 226 214;   /* was 224 224 224 — same value, warmer */
+    --ink-rgb:    28 24 21;      /* was 24 24 24 — nudged off neutral    */
+    --accent-rgb: 201 89 42;     /* was 228 107 108 — coral into ember   */
 
     --bone:   rgb(var(--bone-rgb));
     --ink:    rgb(var(--ink-rgb));
     --accent: rgb(var(--accent-rgb));
-    --muted:  rgb(196 196 196);
+    --muted:  rgb(196 190 180);
 
-    --hair:        rgb(0 0 0 / 0.11);
-    --hair-strong: rgb(0 0 0 / 0.33);
+    /* the old coral, kept as the soft register */
+    --blush:  #DE8A86;
+
+    /* supporting warmth the site was missing */
+    --clay:   #C28A62;
+    --timber: #A97C4E;
+    --sage:   #A6B598;
+
+    /* night — a register for atmosphere, never the ground */
+    --night:  #16223C;
+
+    --hair:        rgb(var(--ink-rgb) / 0.11);
+    --hair-strong: rgb(var(--ink-rgb) / 0.33);
 }
 
 html {
