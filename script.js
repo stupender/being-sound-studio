@@ -158,9 +158,7 @@ const pageRegistry = {
     path: "/services",
     title: "Stu Pender — Being Sound",
     sections: [offersCard, teachingCard],
-    // The wordmark is the trigger for home, so nothing is highlighted —
-    // an active pill on the studio name would read as a selected tab.
-    activeElements: [],
+    activeElements: [servicesButton],
   },
   projects: {
     button: projectsButton,

@@ -2664,14 +2664,6 @@ body::after {
 }
 
 
-/* The studio name doubles as the link home, and must not look like a link. */
-header h1 a {
-    color: inherit;
-    text-decoration: none;
-    background: none;
-}
-header h1 a:hover { color: var(--accent); }
-
 
 /* =================================================================
    BESPOKE DESIGN — the third door, built exactly like its
