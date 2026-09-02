@@ -29,6 +29,12 @@
     /* night — a register for atmosphere, never the ground */
     --night:  #16223C;
 
+    /* glass — the frosted panel that lets a photograph stay visible
+       through the copy. One definition, used everywhere. */
+    --glass-fill:  rgb(var(--ink-rgb) / 0.55);
+    --glass-blur:  blur(22px) saturate(115%);
+    --glass-edge:  rgb(var(--bone-rgb) / 0.18);
+
     --hair:        rgb(var(--ink-rgb) / 0.11);
     --hair-strong: rgb(var(--ink-rgb) / 0.33);
 }
@@ -1117,14 +1123,16 @@ ul.playlist {
 .album-card-overlay {
     position: absolute;
     inset: 0;
-    background: black;
+    background: var(--glass-fill);
+    -webkit-backdrop-filter: var(--glass-blur);
+    backdrop-filter: var(--glass-blur);
     opacity: 0;
-    transition: opacity 0.2s ease;
+    transition: opacity 0.3s ease;
     pointer-events: none;
 }
 
 .album-card:hover .album-card-overlay {
-    opacity: 0.4;
+    opacity: 1;
 }
 
 .album-card-play {
@@ -1453,9 +1461,9 @@ ul.playlist.album-card-playlist {
 .events-container .text-block {
     position: relative;
     z-index: 1;
-    background-color: rgb(var(--ink-rgb) / 0.55);
-    -webkit-backdrop-filter: blur(22px) saturate(115%);
-    backdrop-filter: blur(22px) saturate(115%);
+    background-color: var(--glass-fill);
+    -webkit-backdrop-filter: var(--glass-blur);
+    backdrop-filter: var(--glass-blur);
 }
 
 /* Keep the text on the right half (where it already was), so the
@@ -2498,3 +2506,29 @@ body::after {
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.82' numOctaves='4'/%3E%3C/filter%3E%3Crect width='220' height='220' filter='url(%23n)'/%3E%3C/svg%3E");
 }
 @media print { body::after { display: none; } }
+
+
+/* =================================================================
+   GLASS — reusable frosted panel, for copy that sits over imagery.
+   .glass        dark frost (default, for photographs)
+   .glass--light warm frost (for bright or busy images)
+   Falls back to a near-opaque fill where backdrop-filter is absent.
+   ================================================================= */
+.glass {
+    position: relative;
+    z-index: 1;
+    background-color: var(--glass-fill);
+    -webkit-backdrop-filter: var(--glass-blur);
+    backdrop-filter: var(--glass-blur);
+    border: 1px solid var(--glass-edge);
+    color: var(--bone);
+}
+.glass--light {
+    background-color: rgb(var(--bone-rgb) / 0.62);
+    border-color: rgb(var(--bone-rgb) / 0.5);
+    color: var(--ink);
+}
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+    .glass         { background-color: rgb(var(--ink-rgb) / 0.86); }
+    .glass--light  { background-color: rgb(var(--bone-rgb) / 0.92); }
+}
