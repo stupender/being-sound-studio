@@ -2664,7 +2664,10 @@ body::after {
 .projects-container .album-card-image,
 .personal-container .album-card-image,
 .collaboration-container .album-card-image {
-    border: none;
+    /* a hairline around the artwork inside the mat — a frame within a
+       frame, lighter than the card's own outline so it reads as the
+       inner line rather than competing with it */
+    border: 1px solid rgb(var(--bone-rgb) / 0.14);
     margin: 0;
     background-color: transparent;
 }
