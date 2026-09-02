@@ -72,7 +72,7 @@ button {
     color: var(--ink);
     border: 1px solid var(--ink);
     width: 60px;
-    font-family: 'Montserrat', sans-serif;
+    font-family: 'Newsreader', Georgia, serif;
     font-size: .75em;
 }
 
@@ -86,7 +86,7 @@ button:hover {
     color: var(--bone);
     border: 1px solid var(--bone);
     padding: 10px
-    font-family: 'Montserrat', sans-serif;
+    font-family: 'Newsreader', Georgia, serif;
     font-weight: 300;
     line-height: 1.5em;
     padding: 10px;
@@ -371,7 +371,7 @@ h2 {
 }
 
 p {
-    font-family: 'Montserrat', sans-serif;
+    font-family: 'Newsreader', Georgia, serif;
     font-size: .9em;
     font-weight: 300;
     margin: 0 0;
@@ -802,7 +802,7 @@ a:hover {
 /* Status line under the form (e.g. "Sending…" or "You're in."). */
 .capture-message {
     margin-top: 15px;
-    font-family: 'Montserrat', sans-serif;
+    font-family: 'Newsreader', Georgia, serif;
     font-size: .8em;
 }
 
