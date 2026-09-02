@@ -130,7 +130,7 @@ const eventsButton = document.querySelector(".events");
 const aboutLinks = Array.from(document.querySelectorAll(".about"));
 const bespokeSonicWorldsLinks = Array.from(document.querySelectorAll(".bespoke-sonic-worlds"));
 const musicLessonsLinks = Array.from(document.querySelectorAll(".music-lessons"));
-const digitalProductDesignLinks = Array.from(document.querySelectorAll(".digital-product-design"));
+const bespokeDesignLinks = Array.from(document.querySelectorAll(".bespoke-design"));
 
 const aboutCard = document.querySelector(".about-container");
 const contactCard = document.querySelector(".contact-container");
@@ -138,7 +138,7 @@ const offersCard = document.querySelector(".offers-container");
 const teachingCard = document.querySelector(".teaching-container");
 const bespokeSonicWorldsCard = document.querySelector(".bespoke-sonic-worlds-container");
 const musicLessonsCard = document.querySelector(".music-lessons-container");
-const digitalProductDesignCard = document.querySelector(".digital-product-design-container");
+const bespokeDesignCard = document.querySelector(".bespoke-design-container");
 const personalCard = document.querySelector(".personal-container");
 const collaborationCard = document.querySelector(".collaboration-container");
 const bookingCard = document.querySelector(".booking-container");
@@ -200,12 +200,12 @@ const pageRegistry = {
     activeElements: bespokeSonicWorldsLinks,
     triggerElements: bespokeSonicWorldsLinks,
   },
-"digital-product-design": {
-    path: "/digital-product-design",
-    title: "Digital Product Design | Being Sound Studio",
-    sections: [offersCard, digitalProductDesignCard],
-    activeElements: digitalProductDesignLinks,
-    triggerElements: digitalProductDesignLinks,
+"bespoke-design": {
+    path: "/bespoke-design",
+    title: "Bespoke Design | Being Sound Studio",
+    sections: [offersCard, bespokeDesignCard],
+    activeElements: bespokeDesignLinks,
+    triggerElements: bespokeDesignLinks,
   },
   "music-lessons": {
     path: "/music-lessons",
@@ -387,7 +387,7 @@ document
       ".listen-welcome-container > .section-pic," +
       ".loop-container > .section-pic," +
       ".events-container > .section-pic," +
-      ".digital-product-design-container > .section-pic"
+      ".bespoke-design-container > .section-pic"
   )
   .forEach(function (image) {
     var mirror = image.cloneNode();

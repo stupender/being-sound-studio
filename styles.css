@@ -2674,22 +2674,22 @@ header h1 a:hover { color: var(--accent); }
 
 
 /* =================================================================
-   DIGITAL PRODUCT DESIGN — the third door, built exactly like its
+   BESPOKE DESIGN — the third door, built exactly like its
    siblings: two columns, photograph one side, glass copy the other.
    ================================================================= */
-.digital-product-design-container {
+.bespoke-design-container {
     margin-left: 5%;
     margin-right: 5%;
     display: none;
     color: var(--bone);
     background-color: var(--ink);
 }
-.digital-product-design-container.show {
+.bespoke-design-container.show {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
     align-items: stretch;
 }
-.digital-product-design-container .text-block {
+.bespoke-design-container .text-block {
     grid-column: 2;
     position: relative;
     z-index: 1;
