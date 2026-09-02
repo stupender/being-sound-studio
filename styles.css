@@ -2652,7 +2652,7 @@ body::after {
     flex-direction: column;
     background-color: transparent;
     border: 1px solid rgb(var(--bone-rgb) / 0.18);
-    border-radius: 10px;
+    border-radius: 0;
     overflow: hidden;
     /* the base .album-card carries 8px padding; the photograph has to
        reach the card's edge, so the padding moves to the text block */
