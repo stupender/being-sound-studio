@@ -2694,8 +2694,9 @@ body::after {
     margin: 0;
 }
 
-.projects-container .album-card-meta {
-    text-transform: none;
-    letter-spacing: 0;
-    line-height: 1.5;
-}
+/* Apps follow the music cards: title first, then the uppercase lines
+   beneath it. The type label is authored before the title in the
+   markup, so it is reordered here rather than moving it in the HTML. */
+.projects-container .album-card-title { order: 1; }
+.projects-container .album-card-type  { order: 2; }
+.projects-container .album-card-meta  { order: 3; }
