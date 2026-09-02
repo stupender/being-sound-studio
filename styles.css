@@ -2656,9 +2656,9 @@ body::after {
     border: 1px solid rgb(var(--bone-rgb) / 0.18);
     border-radius: 0;
     overflow: hidden;
-    /* the base .album-card has 8px padding; the media has to reach the
-       edge, so the inset moves to the text below it */
-    padding: 0;
+    /* The artwork sits in a mat rather than bleeding to the outline —
+       the inset is what gave these cards their character. */
+    padding: 10px;
 }
 
 .projects-container .album-card-image,
@@ -2677,16 +2677,17 @@ body::after {
 .projects-container .album-card-info,
 .personal-container .album-card-info,
 .collaboration-container .album-card-info {
-    padding: 14px 16px 17px;
+    /* aligned to the artwork's edges, not the card's */
+    padding: 12px 2px 4px;
     display: flex;
     flex-direction: column;
     gap: 6px;
 }
 
-/* the tracklist sits inside the card now, so it needs the same inset */
+/* the tracklist lines up with the artwork too */
 .personal-container .album-card-playlist,
 .collaboration-container .album-card-playlist {
-    padding: 0 16px 14px;
+    padding: 0 2px 6px;
     margin: 0;
 }
 
