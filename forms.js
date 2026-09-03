@@ -111,7 +111,8 @@ function showMessage(el, text, isError) {
 document.querySelectorAll('a[href^="http"]').forEach(function (link) {
   var isInternal = link.hostname === window.location.hostname;
   var isButton = link.classList.contains("button-link");
-  var isThumbnail = !!link.querySelector("img");
+  // An icon-only link (thumbnail or inline SVG mark) gets no arrow either.
+  var isThumbnail = !!link.querySelector("img, svg");
 
   if (!isInternal && !isButton && !isThumbnail) {
     link.classList.add("external-link");

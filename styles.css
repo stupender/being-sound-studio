@@ -2720,3 +2720,39 @@ body::after {
 .bio-more summary:hover { color: var(--accent); border-color: var(--accent); }
 .bio-more summary:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
 .bio-more .about-text { margin-top: 16px; }
+
+
+/* =================================================================
+   FOOTER SOCIAL — the contact row's links, as marks. Stroked icons
+   inheriting currentColor, so they take the accent on hover without a
+   second set of assets.
+   ================================================================= */
+.footer-social {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    list-style: none;
+    margin: 0 0 14px 0;
+    padding: 0;
+}
+.footer-social a {
+    display: inline-flex;
+    color: var(--ink);
+    border-bottom: none;
+    padding: 4px;
+    transition: color 0.2s, transform 0.2s;
+}
+.footer-social a:hover { color: var(--accent); transform: translateY(-1px); }
+.footer-social a:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+.footer-social svg {
+    width: 19px;
+    height: 19px;
+    display: block;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.6;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+.footer-social svg .solid { fill: currentColor; stroke: none; }
