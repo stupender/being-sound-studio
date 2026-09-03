@@ -129,12 +129,15 @@ const collaborationButton = document.querySelector(".collaboration");
 const eventsButton = document.querySelector(".events");
 const aboutLinks = Array.from(document.querySelectorAll(".about"));
 const stuLinks = Array.from(document.querySelectorAll(".stu"));
+const beingsoundLinks = Array.from(document.querySelectorAll(".beingsound"));
 const bespokeSonicWorldsLinks = Array.from(document.querySelectorAll(".bespoke-sonic-worlds"));
 const musicLessonsLinks = Array.from(document.querySelectorAll(".music-lessons"));
 const bespokeDesignLinks = Array.from(document.querySelectorAll(".bespoke-design"));
 
 const aboutCard = document.querySelector(".about-container");
 const stuCard = document.querySelector(".stu-container");
+const beingsoundCard = document.querySelector(".beingsound-container");
+const aboutOffersCard = document.querySelector(".about-offers-container");
 const contactCard = document.querySelector(".contact-container");
 const offersCard = document.querySelector(".offers-container");
 const teachingCard = document.querySelector(".teaching-container");
@@ -177,16 +180,23 @@ const pageRegistry = {
   about: {
     button: aboutButton,
     path: "/about",
-    sections: [aboutCard, contactCard],
+    sections: [aboutOffersCard, aboutCard],
     activeElements: aboutLinks,
     triggerElements: aboutLinks,
   },
   stu: {
     path: "/stu-pender",
     title: "Stu Pender | Being Sound Studio",
-    sections: [stuCard],
+    sections: [aboutOffersCard, stuCard],
     activeElements: stuLinks,
     triggerElements: stuLinks,
+  },
+  "being-sound-about": {
+    path: "/being-sound",
+    title: "Being Sound | Being Sound Studio",
+    sections: [aboutOffersCard, beingsoundCard],
+    activeElements: beingsoundLinks,
+    triggerElements: beingsoundLinks,
   },
   personal: {
     button: personalButton,
@@ -395,7 +405,8 @@ document
       ".loop-container > .section-pic," +
       ".events-container > .section-pic," +
       ".bespoke-design-container > .section-pic," +
-      ".stu-container > .section-pic"
+      ".stu-container > .section-pic," +
+      ".beingsound-container > .section-pic"
   )
   .forEach(function (image) {
     var mirror = image.cloneNode();

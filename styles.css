@@ -180,6 +180,7 @@ div.button-container {
 }
 
 .stu-container,
+.beingsound-container,
 .about-container {
     margin-left: 5%;
     margin-right: 5%;
@@ -570,6 +571,7 @@ a:hover {
 
 .about-container.show,
 .stu-container.show,
+.beingsound-container.show,
 .bespoke-sonic-worlds-container.show,
 .music-lessons-container.show,
 .listen-container.show,
@@ -1453,6 +1455,7 @@ ul.playlist.album-card-playlist {
 .teaching-container,
 .about-container,
 .stu-container,
+.beingsound-container,
 .bespoke-sonic-worlds-container,
 .music-lessons-container,
 .listen-container,
@@ -1470,6 +1473,7 @@ ul.playlist.album-card-playlist {
 .teaching-container > .section-pic,
 .about-container > .section-pic,
 .stu-container > .section-pic,
+.beingsound-container > .section-pic,
 .bespoke-sonic-worlds-container > .section-pic,
 .music-lessons-container > .section-pic,
 .listen-container > .section-pic,
@@ -1507,6 +1511,7 @@ ul.playlist.album-card-playlist {
 .teaching-container .text-section,
 .about-container .text-block,
 .stu-container .text-block,
+.beingsound-container .text-block,
 .bespoke-sonic-worlds-container .text-block,
 .music-lessons-container .text-block,
 .listen-container .text-block,
@@ -2762,3 +2767,25 @@ body::after {
 }
 
 .footer-social svg .solid { fill: currentColor; stroke: none; }
+
+
+/* =================================================================
+   ABOUT SUB-MENU — the same bar the service pages use, carried across
+   the About family (overview, Being Sound, Stu Pender).
+   ================================================================= */
+.about-offers-container {
+    margin-left: 5%;
+    margin-right: 5%;
+    padding-top: 15px;
+    padding-right: 30px;
+    padding-bottom: 17px;
+    display: none;
+    flex-direction: row;
+    justify-content: flex-start;
+    gap: clamp(28px, 6vw, 90px);
+    align-items: flex-start;
+}
+.about-offers-container.show {
+    display: flex;
+    border-top: 1px solid var(--hair);
+}
