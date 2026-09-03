@@ -2684,3 +2684,39 @@ body::after {
 /* Apps keep their own order — the type label leads, then the title,
    then the small uppercase line. Only the meta's treatment is borrowed
    from the music cards, which it now inherits (uppercase, muted). */
+
+
+/* =================================================================
+   BIO DISCLOSURE — the short bio reads by default; the full story sits
+   behind it. A native <details>, so it works without JavaScript and is
+   keyboard-operable on its own.
+   ================================================================= */
+.bio-more {
+    margin-top: 18px;
+}
+.bio-more summary {
+    display: inline-flex;
+    align-items: baseline;
+    gap: 0.4rem;
+    cursor: pointer;
+    list-style: none;
+    width: fit-content;
+    font-family: 'Chivo', sans-serif;
+    font-weight: 300;
+    font-size: 0.85em;
+    color: var(--bone);
+    border-bottom: 1px solid rgb(var(--bone-rgb) / 0.45);
+    padding-bottom: 2px;
+    transition: color 0.2s, border-color 0.2s;
+}
+.bio-more summary::-webkit-details-marker { display: none; }
+.bio-more summary::after {
+    content: "+";
+    font-size: 1.05em;
+    line-height: 1;
+    color: var(--accent);
+}
+.bio-more[open] summary::after { content: "–"; }
+.bio-more summary:hover { color: var(--accent); border-color: var(--accent); }
+.bio-more summary:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+.bio-more .about-text { margin-top: 16px; }
