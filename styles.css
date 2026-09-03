@@ -1531,6 +1531,7 @@ ul.playlist.album-card-playlist {
    is the mirror image — its text was always on the left. */
 .about-container .text-block,
 .stu-container .text-block,
+.beingsound-container .text-block,
 .bespoke-sonic-worlds-container .text-block,
 .music-lessons-container .text-block,
 .listen-container .text-block,
@@ -2789,3 +2790,10 @@ body::after {
     display: flex;
     border-top: 1px solid var(--hair);
 }
+
+/* The link's underline is a border across its whole box, and a flex
+   column stretches its children to the widest one — so a wider eyebrow
+   dragged the underline out past the name. Size each child to its own
+   content instead. */
+.about-offers-container .offers-group { align-items: flex-start; }
+.about-offers-container .contact-link { width: fit-content; }
