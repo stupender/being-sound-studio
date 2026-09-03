@@ -617,28 +617,10 @@ a:hover {
     margin: 8px 0 0 0;
 }
 
-/* Four across on a wide screen, stepping down to two and then one.
-   These use both class names (.album-grid.project-grid) so they beat the
-   plain .album-grid rule further down the file, which sets three. */
-.album-grid.project-grid {
-    grid-template-columns: repeat(4, 1fr);
-    gap: 8px;
-    margin-bottom: 25px;
-}
-
-/* Two across on tablets and narrow desktop windows. */
-@media only screen and (max-width: 1100px) {
-    .album-grid.project-grid {
-        grid-template-columns: repeat(2, 1fr);
-    }
-}
-
-/* One across on a phone. */
-@media only screen and (max-width: 600px) {
-    .album-grid.project-grid {
-        grid-template-columns: 1fr;
-    }
-}
+/* The apps grid follows the music grid: three across, stepping to two
+   at the same breakpoint. It previously ran four across on its own
+   breakpoints, which made the cards wrap differently from every other
+   card grid on the site. */
 
 /* Album-card overrides scoped to the projects page */
 .projects-container .album-card {
@@ -2675,6 +2657,12 @@ body::after {
 .projects-container .album-card-image,
 .personal-container .album-card-image,
 .collaboration-container .album-card-image { aspect-ratio: 1; }
+
+/* …except where the media is a video, which keeps its own proportions
+   so film stills and embeds are not cropped to a square. */
+.projects-container .album-card-image.album-card-video,
+.personal-container .album-card-image.album-card-video,
+.collaboration-container .album-card-image.album-card-video { aspect-ratio: 16 / 9; }
 
 .projects-container .album-card-info,
 .personal-container .album-card-info,
