@@ -128,11 +128,13 @@ const personalButton = document.querySelector(".personal");
 const collaborationButton = document.querySelector(".collaboration");
 const eventsButton = document.querySelector(".events");
 const aboutLinks = Array.from(document.querySelectorAll(".about"));
+const stuLinks = Array.from(document.querySelectorAll(".stu"));
 const bespokeSonicWorldsLinks = Array.from(document.querySelectorAll(".bespoke-sonic-worlds"));
 const musicLessonsLinks = Array.from(document.querySelectorAll(".music-lessons"));
 const bespokeDesignLinks = Array.from(document.querySelectorAll(".bespoke-design"));
 
 const aboutCard = document.querySelector(".about-container");
+const stuCard = document.querySelector(".stu-container");
 const contactCard = document.querySelector(".contact-container");
 const offersCard = document.querySelector(".offers-container");
 const teachingCard = document.querySelector(".teaching-container");
@@ -178,6 +180,13 @@ const pageRegistry = {
     sections: [aboutCard, contactCard],
     activeElements: aboutLinks,
     triggerElements: aboutLinks,
+  },
+  stu: {
+    path: "/stu-pender",
+    title: "Stu Pender | Being Sound Studio",
+    sections: [stuCard],
+    activeElements: stuLinks,
+    triggerElements: stuLinks,
   },
   personal: {
     button: personalButton,
@@ -385,7 +394,8 @@ document
       ".listen-welcome-container > .section-pic," +
       ".loop-container > .section-pic," +
       ".events-container > .section-pic," +
-      ".bespoke-design-container > .section-pic"
+      ".bespoke-design-container > .section-pic," +
+      ".stu-container > .section-pic"
   )
   .forEach(function (image) {
     var mirror = image.cloneNode();

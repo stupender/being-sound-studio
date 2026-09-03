@@ -179,6 +179,7 @@ div.button-container {
     flex-direction: column;
 }
 
+.stu-container,
 .about-container {
     margin-left: 5%;
     margin-right: 5%;
@@ -568,6 +569,7 @@ a:hover {
 }
 
 .about-container.show,
+.stu-container.show,
 .bespoke-sonic-worlds-container.show,
 .music-lessons-container.show,
 .listen-container.show,
@@ -1450,6 +1452,7 @@ ul.playlist.album-card-playlist {
    stays as a fallback while the image loads. */
 .teaching-container,
 .about-container,
+.stu-container,
 .bespoke-sonic-worlds-container,
 .music-lessons-container,
 .listen-container,
@@ -1466,6 +1469,7 @@ ul.playlist.album-card-playlist {
    instead of landing under the glass. */
 .teaching-container > .section-pic,
 .about-container > .section-pic,
+.stu-container > .section-pic,
 .bespoke-sonic-worlds-container > .section-pic,
 .music-lessons-container > .section-pic,
 .listen-container > .section-pic,
@@ -1502,6 +1506,7 @@ ul.playlist.album-card-playlist {
    that makes frosted glass; -webkit- covers Safari). */
 .teaching-container .text-section,
 .about-container .text-block,
+.stu-container .text-block,
 .bespoke-sonic-worlds-container .text-block,
 .music-lessons-container .text-block,
 .listen-container .text-block,
@@ -1520,6 +1525,7 @@ ul.playlist.album-card-playlist {
    uncovered left half shows the image plainly. The Services page
    is the mirror image — its text was always on the left. */
 .about-container .text-block,
+.stu-container .text-block,
 .bespoke-sonic-worlds-container .text-block,
 .music-lessons-container .text-block,
 .listen-container .text-block,
