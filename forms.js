@@ -108,12 +108,20 @@ function showMessage(el, text, isError) {
 //  one is never a surprise. Text links only — image thumbnails
 //  and buttons are skipped, since an arrow would clutter them.
 // ============================================================
-document.querySelectorAll('a[href^="http"]').forEach(function (link) {
+// Absolute links, plus any link explicitly opted in with data-outbound —
+// a root-relative href never starts with "http", so it would otherwise
+// never be considered.
+document.querySelectorAll('a[href^="http"], a[data-outbound]').forEach(function (link) {
   var isInternal = link.hostname === window.location.hostname;
   var isButton = link.classList.contains("button-link");
-  var isThumbnail = !!link.querySelector("img");
+  // An icon-only link (thumbnail or inline SVG mark) gets no arrow either.
+  var isThumbnail = !!link.querySelector("img, svg");
 
-  if (!isInternal && !isButton && !isThumbnail) {
+  // A same-domain link can still be an outbound-feeling one — the Fretboard
+  // app opens in its own tab. data-outbound opts it in explicitly.
+  var optedIn = link.hasAttribute("data-outbound");
+
+  if ((!isInternal || optedIn) && !isButton && !isThumbnail) {
     link.classList.add("external-link");
     // Security: stops the new tab from being able to touch this page.
     link.setAttribute("rel", "noopener noreferrer");

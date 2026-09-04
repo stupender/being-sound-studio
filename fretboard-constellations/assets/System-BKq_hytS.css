@@ -1,0 +1,1 @@
+.system{color:var(--ink);line-height:0}.system svg{width:100%;height:auto;display:block}.system svg path,.system svg rect{fill:currentColor;stroke:none}.system svg path[fill=none]{fill:none;stroke:currentColor}.system svg .vf-tabnote rect,.system svg .vf-stavenote rect{fill:var(--bg)}.system svg text{fill:currentColor}.system--loading{min-height:190px}
