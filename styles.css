@@ -140,10 +140,11 @@ button:hover {
     background-color: var(--ink);
     color: var(--bone);
     border: 1px solid var(--bone);
-    /* No font-family here on purpose: the `a` rule sets Chivo, which is
-       what this button has always rendered as. (The original declaration
-       was voided by a missing semicolon; restoring it changed the face,
-       so it stays out.) */
+    /* Chivo, stated explicitly. Without it the element type decides the
+       face — a <button class="button-link"> takes the button rule
+       (Montserrat) while an <a class="button-link"> takes the a rule
+       (Chivo), so the same class rendered in two fonts. */
+    font-family: 'Chivo', sans-serif;
     font-weight: 300;
     line-height: 1.5em;
     padding: 10px;

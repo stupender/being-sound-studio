@@ -99,7 +99,8 @@
       "Bash(git commit --quiet -m 'Say '\\\\''worked with'\\\\'' rather than '\\\\''performed and recorded with'\\\\'' *)",
       "Bash(curl -s -o /tmp/drive_new.html -w 'final: %{url_effective}\\\\nstatus: %{http_code}\\\\n' -L https://drive.google.com/file/d/__TRACKED_VAR__/view)",
       "Bash(git commit --quiet -m 'Point the download at the mp3 instead of the wav *)",
-      "Bash(git commit --quiet -m 'Draw the outbound-link marker as an icon instead of a character *)"
+      "Bash(git commit --quiet -m 'Draw the outbound-link marker as an icon instead of a character *)",
+      "Bash(git fetch *)"
     ]
   }
 }
