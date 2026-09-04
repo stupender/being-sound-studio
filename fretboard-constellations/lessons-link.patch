@@ -1,0 +1,41 @@
+--- a/src/ui/links.ts
++++ b/src/ui/links.ts
+@@ -18,6 +18,12 @@
+  */
+ export const SUBSTACK = 'https://beingsound.substack.com';
+ 
++/**
++ * One-to-one lessons. This app is a map; the teaching is the other half, so
++ * the footer offers it once, quietly, after the Substack.
++ */
++export const LESSONS = 'https://beingsound.studio/music-lessons';
++
+ /** Shown beside the copyright. */
+ export const AUTHOR = 'Stu Pender';
+ 
+--- a/src/App.tsx
++++ b/src/App.tsx
+@@ -44,6 +44,7 @@
+   BEING_SOUND,
+   FEEDBACK_EMAIL,
+   FEEDBACK_SUBJECT,
++  LESSONS,
+   SUBSTACK,
+ } from './ui/links';
+ import { alreadyAsked, markDismissed } from './ui/asked';
+@@ -610,6 +611,15 @@
+                 his Substack
+               </a>
+               .
++            </p>
++          )}
++          {LESSONS && (
++            <p>
++              Stu teaches{' '}
++              <a href={LESSONS} target="_blank" rel="noreferrer">
++                guitar lessons
++              </a>{' '}
++              at Being Sound.
+             </p>
+           )}
+           {/* THE ONE THING WORTH MORE THAN ANY DASHBOARD while this is in

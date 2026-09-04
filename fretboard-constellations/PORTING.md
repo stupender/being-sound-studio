@@ -26,18 +26,31 @@ and `stupender.github.io/method/` still works.
 ```
 git clone https://github.com/stupender/method.git
 cd method && git checkout <commit> && npm ci
+git apply /path/to/lessons-link.patch
 npx vite build --base=/fretboard-constellations/
 ```
 
-Then replace this folder's contents with `dist/`, and **re-apply the return
-link** below — it is added after the build and does not survive a rebuild.
+Then replace this folder's contents with `dist/`, keeping `PORTING.md` and
+`lessons-link.patch`.
 
-## The return link
+## The lessons link
 
-A footer appended to `index.html` immediately after `<div id="root"></div>`,
-pointing at the lessons page. It sits outside `#root`, so React never touches
-it, and it uses the app's own CSS variables so it matches whichever theme the
-app is in. Search `index.html` for `bs-return`.
+The app's own footer gains one line after the Substack line:
+
+> Stu teaches **guitar lessons** at Being Sound.
+
+This is a **source patch**, not an edit to the built output — `lessons-link.patch`
+in this folder adds a `LESSONS` constant to `src/ui/links.ts` and renders the
+line in `src/App.tsx`, following the footer's existing pattern (an empty URL
+renders nothing). It is not in the `method` repo; apply it after checkout:
+
+```
+git apply /path/to/lessons-link.patch
+```
+
+An earlier version of this port appended a separate strip below the app's
+footer, which duplicated the "Built by Stu Pender" credit already there. That
+is gone.
 
 ## Isolation
 
