@@ -108,7 +108,10 @@ function showMessage(el, text, isError) {
 //  one is never a surprise. Text links only — image thumbnails
 //  and buttons are skipped, since an arrow would clutter them.
 // ============================================================
-document.querySelectorAll('a[href^="http"]').forEach(function (link) {
+// Absolute links, plus any link explicitly opted in with data-outbound —
+// a root-relative href never starts with "http", so it would otherwise
+// never be considered.
+document.querySelectorAll('a[href^="http"], a[data-outbound]').forEach(function (link) {
   var isInternal = link.hostname === window.location.hostname;
   var isButton = link.classList.contains("button-link");
   // An icon-only link (thumbnail or inline SVG mark) gets no arrow either.
