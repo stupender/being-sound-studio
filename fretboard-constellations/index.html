@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <!-- The mark (see src/ui/Mark.tsx). Named mark.svg rather than favicon.svg
+         on purpose: browsers cache favicons far more stubbornly than pages, and
+         a fresh filename is the only reliable way to make an old one let go. If
+         the icon is ever redrawn again, rename it again. -->
+    <link rel="icon" type="image/svg+xml" href="/fretboard-constellations/mark.svg" />
+    <!-- iOS wants a PNG and composites it on black, so it gets the one drawn
+         on white rather than the SVG. -->
+    <link rel="apple-touch-icon" href="/fretboard-constellations/icon-192.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <title>Fretboard Constellations</title>
+
+    <!-- ADD TO HOME SCREEN. The manifest names the app and points at its
+         icons; the service worker (registered in src/main.tsx) is the other
+         half a browser insists on before it will offer to install a site.
+         Worth knowing where this DOESN'T work: WhatsApp opens links in its own
+         in-app browser, which is a webview with no install affordance at all.
+         Someone arriving from a WhatsApp message has to tap "Open in
+         Safari/Chrome" first — so this is for the second visit, not the
+         first. -->
+    <link rel="manifest" href="/fretboard-constellations/manifest.webmanifest" />
+    <meta name="theme-color" content="#f4efe3" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#14151d" media="(prefers-color-scheme: dark)" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-title" content="Constellations" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <meta
+      name="description"
+      content="A living textbook for the fretboard: scales, harmony and ear training, seen as constellations of possibility across the whole neck. So you can just play."
+    />
+
+    <!-- THE LINK PREVIEW. This release is written for someone who meets the app
+         as a pasted link in a WhatsApp thread, and without these tags that
+         message is a bare URL — which is a poor first impression of a thing
+         whose whole argument is that it's beautiful to look at.
+         og:image MUST be absolute; a relative path is simply ignored by every
+         scraper. So it names the host, and has to be changed by hand if the
+         app ever moves to its own domain. -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Fretboard Constellations" />
+    <meta
+      property="og:description"
+      content="A living textbook for the fretboard: scales, harmony and ear training, seen as constellations of possibility across the whole neck. So you can just play."
+    />
+    <meta property="og:url" content="https://stupender.github.io/method/" />
+    <meta property="og:image" content="https://stupender.github.io/method/icon-512.png" />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="Fretboard Constellations" />
+    <meta
+      name="twitter:description"
+      content="A living textbook for the fretboard: constellations of possibility across the whole neck."
+    />
+    <!-- The two faces of the art-book direction (see DESIGN.md "Paper & Night"):
+         Newsreader for display — a literary serif with real character at size —
+         and Karla for everything operational. Noto Music carries the clef and
+         accidental glyphs for the staff: system fonts don't reliably have the
+         Musical Symbols block (the treble clef falls back to a tofu box on
+         most machines), and this is a great deal smaller than a notation
+         library for the two glyphs we actually need. Both have system fallbacks in
+         index.css, so if the network is down the app degrades to the old
+         Palatino/system pairing rather than breaking. -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,500;1,6..72,300;1,6..72,400&family=Karla:wght@300;400;500;600;700&family=Noto+Music&display=swap"
+    />
+    <script type="module" crossorigin src="/fretboard-constellations/assets/index-Cii3z33t.js"></script>
+    <link rel="stylesheet" crossorigin href="/fretboard-constellations/assets/index-Bz98LpMA.css">
+  </head>
+  <body>
+    <div id="root"></div>
+    <!-- Added when the app was ported onto beingsound.studio. Re-apply
+         after any rebuild; see PORTING.md. Sits outside #root, so React
+         never touches it. -->
+    <footer class="bs-return">
+      <a href="https://beingsound.studio/music-lessons">Made by Stu Pender · Being Sound — guitar lessons →</a>
+    </footer>
+    <style>
+      .bs-return {
+        padding: 28px 20px 34px;
+        text-align: center;
+        border-top: 1px solid color-mix(in srgb, var(--ink, #1e1b16) 12%, transparent);
+        background: var(--bg, #f4efe3);
+      }
+      .bs-return a {
+        font-family: 'Karla', system-ui, sans-serif;
+        font-size: 13px;
+        font-weight: 400;
+        letter-spacing: 0.01em;
+        color: color-mix(in srgb, var(--ink, #1e1b16) 62%, transparent);
+        text-decoration: none;
+        border-bottom: 1px solid transparent;
+        transition: color 0.2s, border-color 0.2s;
+      }
+      .bs-return a:hover { color: var(--live, #ac5e40); border-bottom-color: currentColor; }
+      .bs-return a:focus-visible { outline: 2px solid var(--live, #ac5e40); outline-offset: 3px; }
+    </style>
+  </body>
+</html>

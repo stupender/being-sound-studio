@@ -114,7 +114,11 @@ document.querySelectorAll('a[href^="http"]').forEach(function (link) {
   // An icon-only link (thumbnail or inline SVG mark) gets no arrow either.
   var isThumbnail = !!link.querySelector("img, svg");
 
-  if (!isInternal && !isButton && !isThumbnail) {
+  // A same-domain link can still be an outbound-feeling one — the Fretboard
+  // app opens in its own tab. data-outbound opts it in explicitly.
+  var optedIn = link.hasAttribute("data-outbound");
+
+  if ((!isInternal || optedIn) && !isButton && !isThumbnail) {
     link.classList.add("external-link");
     // Security: stops the new tab from being able to touch this page.
     link.setAttribute("rel", "noopener noreferrer");
