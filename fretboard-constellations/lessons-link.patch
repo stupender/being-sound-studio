@@ -59,3 +59,22 @@
                .
              </p>
            )}
+--- a/index.html
++++ b/index.html
+@@ -45,9 +45,13 @@
+       property="og:description"
+       content="A living textbook for the fretboard: scales, harmony and ear training, seen as constellations of possibility across the whole neck. So you can just play."
+     />
+-    <meta property="og:url" content="https://stupender.github.io/method/" />
+-    <meta property="og:image" content="https://stupender.github.io/method/icon-512.png" />
+-    <meta name="twitter:card" content="summary" />
++    <meta property="og:url" content="https://beingsound.studio/fretboard-constellations/" />
++    <meta property="og:image" content="https://beingsound.studio/images/projects/Method.png" />
++    <meta property="og:image:width" content="1080" />
++    <meta property="og:image:height" content="1080" />
++    <meta property="og:image:alt" content="Fretboard Constellations — scales and harmony as colour-coded shapes across the neck, with notation below." />
++    <meta name="twitter:card" content="summary_large_image" />
++    <meta name="twitter:image" content="https://beingsound.studio/images/projects/Method.png" />
+     <meta name="twitter:title" content="Fretboard Constellations" />
+     <meta
+       name="twitter:description"
