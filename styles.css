@@ -1770,8 +1770,14 @@ body:has(.projects-container.show) .site-footer {
    comma, and not holding it open makes the rest of the line jump sideways
    whenever the pointer passes over. Always-on avoids both, and it is the
    honest choice anyway — a marker that only shows on hover cannot warn
-   anyone reading on a phone. It does brighten on hover, so the pairing of
-   link and icon still reads as one thing. */
+   anyone reading on a phone.
+
+   It does not react to hover at all. It used to fade 0.55 -> 0.9 over
+   150ms, but at roughly ten pixels across a brightness ramp doesn't read
+   as a highlight — it reads as a twitch, once going in and once coming
+   back out. The link itself already answers the hover; the marker's job
+   is to be legible before the pointer ever arrives. So it holds one
+   value and stays still. */
 .external-arrow {
     display: inline-block;
     /* Sized in em, so it tracks whatever text it follows — nav, body copy
@@ -1785,16 +1791,8 @@ body:has(.projects-container.show) .site-footer {
     vertical-align: -0.04em;
     margin-left: 0.32em;
     opacity: 0.55;
-    transition: opacity 0.15s ease;
     /* Never let it wrap onto a line by itself, away from its link. */
     white-space: nowrap;
-}
-
-/* Hovering either the link or the icon brightens it. :focus-within covers
-   the same ground for anyone tabbing through with a keyboard. */
-.external-wrap:hover .external-arrow,
-.external-wrap:focus-within .external-arrow {
-    opacity: 0.9;
 }
 
 .external-arrow svg {
