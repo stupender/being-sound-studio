@@ -1,6 +1,12 @@
 <!DOCTYPE html>
     <html lang="en">
         <head>
+            <!-- 404.html is a byte-for-byte copy of this file. GitHub Pages
+                 serves it for every extensionless route (/music-lessons,
+                 /bespoke-sound, …), and the router in script.js takes it from
+                 there — so a deep link only renders correctly if the copy is
+                 current. After editing this file, run:  cp index.html 404.html
+                 A stale copy is silent: the page loads, just as an older site. -->
             <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
             <meta name="viewport" content="width=device-width, initial-scale=1">
             <base href="/">
@@ -59,9 +65,11 @@
                  As a sibling it gets its own blur of the page behind. -->
             <ul class="transport-queue" id="transport-queue"></ul>
             <header>
-                <!-- <img src="images/spiral.png" id="spiral"> -->
-                <h1>Being Sound Studio</h1>
-                <h2>A sonic arts studio by Stu Pender</h2> 
+                <span id="studio-mark" aria-hidden="true"></span>
+                <div class="wordmark-text">
+                    <h1>Being Sound Studio</h1>
+                    <h2>A sonic arts studio by Stu Pender</h2>
+                </div>
             </header>
             <nav>
                 <a href="#" class="teaching">Services</a>
@@ -71,7 +79,7 @@
 
 
                 <div id="filters">
-                    <p class="filter-title">WORK</p>
+                    <p class="filter-title">PROJECTS</p>
                     <a href="#" class="filter-item personal">Music</a>
                     <a href="#" class="filter-item collaboration">Collaborations</a>
                     <a href="#" class="filter-item projects">Tools</a>
@@ -832,6 +840,15 @@
                 </div>
 
 
+                <!-- HIDDEN FOR NOW — the Bespoke Design door. The page, route and
+                     styling all remain in place; uncomment this block to bring it
+                     back. Its copy is still placeholder.
+                <div class="offers-group">
+                    <p class="contact-title">BUILD</p>
+                    <a href="/bespoke-design" class="contact-link bespoke-design">Bespoke Design</a>
+                </div>
+                -->
+
                 <div class="offers-group">
                     <p class="contact-title">DEVELOP</p>
                     <a href="/music-lessons" class="contact-link music-lessons">Music Lessons</a>
@@ -1138,7 +1155,7 @@
                             </a>
                         </div>
                         <div class="album-card-info">
-                            <p class="album-card-type">IOS APP</p>
+                            <p class="album-card-type">MACOS APP</p>
                             <div class="album-card-title"><a href="https://github.com/stupender/archive" target="_blank">Archive</a></div>
                             <div class="album-card-meta">Sonic Catalog &amp; Creative Process Tool · 2026</div>
                         </div>
@@ -1278,6 +1295,40 @@
                     </p>
                 </div>
                 -->
+            </div>
+
+            <!-- PLACEHOLDER COPY — every word below is a stand-in written from
+                 Stu's existing project work, to be replaced with his own. The
+                 structure is real; the sentences are not final. -->
+            <div class="bespoke-design-container page-section">
+                <img src="images/studio.jpg" class="section-pic" alt="">
+                <div class="text-block">
+                    <p class="body-subtitle">BESPOKE DESIGN</p>
+                    <p class="about-text about-text-tight"><b>Build the thing your practice needs.</b></p>
+                    <p class="about-text">
+                        The same attention I bring to sound, applied to the things people use. I design and build
+                        websites, tools, and instruments for practitioners, teachers, and small studios &mdash;
+                        working end to end, so what you get is finished and yours to keep.
+                    </p>
+                    <p class="body-subtitle">WHAT THIS CAN SUPPORT</p>
+                    <ul class="offer-items" id="offer-text">
+                        <li class="offer-items">Websites and landing pages for practitioners, teachers, and studios</li>
+                        <li class="offer-items">Interactive tools and instruments for learning and practice</li>
+                        <li class="offer-items">Local-first apps that keep your material on your own machine</li>
+                        <li class="offer-items">Content structure for a site that has outgrown its shape</li>
+                    </ul>
+                    <p class="body-subtitle">SELECTED WORK</p>
+                    <ul class="offer-items" id="offer-text">
+                        <li class="offer-items">Fretboard Constellations &mdash; an interactive music textbook you can hear and play</li>
+                        <li class="offer-items">Archive &mdash; a local-first tool for re-encountering your own recordings</li>
+                        <li class="offer-items">Yoga of the Voice &mdash; a landing page for a 108-hour certificate training</li>
+                        <li class="offer-items">Joan Gutiérrez &mdash; a brand and site for an embodiment educator</li>
+                    </ul>
+                    <p class="body-subtitle">NEXT STEP</p>
+                    <p class="about-text">
+                        <a href="mailto:stu_pender@me.com" class="button-link">Start a project</a>
+                    </p>
+                </div>
             </div>
 
             <div class="music-lessons-container page-section">
@@ -1501,5 +1552,5 @@
                 <p class="footer-note">© Being Sound Studio · <a href="mailto:stu_pender@me.com" class="footer-link">stu_pender@me.com</a></p>
             </footer>
 
-        </body>
+            </body>
     </html>
