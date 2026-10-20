@@ -8,7 +8,7 @@ the separate `stupender/method` repo.
 | | |
 |---|---|
 | Source repo | `github.com/stupender/method` |
-| Source commit | `f673cdf` — "Stems turn over at the middle line" |
+| Source commit | `7959310` — "The bar and the panel become one masthead" (2026-10-19; was `f673cdf`) |
 | Which was | the tip of `origin/main`, i.e. what was live at the time |
 | Built with | `npx vite build --base=/fretboard-constellations/` |
 | Output size | ~1.5 MB |
