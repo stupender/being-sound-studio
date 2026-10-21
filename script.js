@@ -215,7 +215,7 @@ const pageRegistry = {
   // The freebie landing page. No nav link points here (yet) — it's reached
   // directly, e.g. from a link or the QR code we'll generate later.
   // Shows the offers bar above it, like the other service pages, so people
-  // can keep moving between Bespoke Sound, Music Lessons, and the gift.
+  // can keep moving on to Bespoke Sound and Music Lessons.
   listen: {
     path: "/listen",
     title: "Listen | Being Sound Studio",

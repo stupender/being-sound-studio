@@ -568,9 +568,22 @@ div.button-container {
 .testimonial-title {
     margin-right: 10px;
     margin-bottom: 2px;
-    font-size: .75em;
+    /* Set like the short quotes' names (.cta-proof-name) and the section
+       labels: the caption face, at 12px, with the labels' tracking. */
+    font-family: var(--font-meta);
+    font-size: 0.75rem;
+    letter-spacing: var(--label-tracking);
     color: var(--bone);
     font-weight: 400;
+}
+
+/* A line under a name saying who they are: quieter, and in the text
+   face rather than the caption face, so a long one wraps cleanly. */
+.testimonial-affiliation {
+    font-family: var(--font-ui);
+    font-size: 0.9em;
+    letter-spacing: normal;
+    opacity: 0.5;
 }
 
 .testimonial-text + .testimonial-title {
@@ -2041,9 +2054,13 @@ body:has(.projects-container.show) .site-footer {
 .cta-proof-name {
     font-family: var(--font-meta);
     font-style: normal;
-    font-size: 0.85em;
+    /* The same size and tracking as the page's other capitals (the
+       section labels: 0.75em of a 16px panel). Set from the root rather
+       than from the quote, which runs larger than body text — as a
+       share of the quote it came out half a pixel bigger. */
+    font-size: 0.75rem;
     text-transform: uppercase;
-    letter-spacing: 0.5px;
+    letter-spacing: var(--label-tracking);
     opacity: 0.6;
     white-space: nowrap;
 }
