@@ -10,7 +10,10 @@
             <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
             <meta name="viewport" content="width=device-width, initial-scale=1">
             <base href="/">
-            <link rel="stylesheet" href="styles.css">
+            <!-- ?v= changes whenever styles.css does: browsers keep the stylesheet
+                 for ten minutes, and a fresh page with a stale stylesheet loses its
+                 fonts (Safari did, after the type change). A new URL can't be stale. -->
+            <link rel="stylesheet" href="styles.css?v=2">
             <script src="script.js" defer></script>
             <script src="forms.js" defer></script>
             <title>Stu Pender — Being Sound</title>
