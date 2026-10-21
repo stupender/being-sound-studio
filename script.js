@@ -413,7 +413,7 @@ document
   });
 
 // ============================================================
-//  Generative Music Player — "Music for Airports"
+//  Generative Music Player — "Guitars For Airports"
 //  The studio mark in the header is its play button. Nine sampled
 //  notes each repeat on their own loop length (10 to 30 seconds), so
 //  they line up differently every time round and the piece never
@@ -451,7 +451,7 @@ let SAMPLE_LIBRARY = {
 const OCTAVE = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B'];
 
 // Shown in the transport bar, as "Title — Artist — Album" like the tracks.
-const GENERATIVE_NAME = 'Music for Airports — Stu Pender — Generative, after Brian Eno';
+const GENERATIVE_NAME = 'Guitars For Airports — Stu Pender — Generative, after Brian Eno';
 
 // [instrument, note, loop length in seconds, first entry in seconds]
 const GENERATIVE_LOOPS = [
@@ -648,8 +648,8 @@ function reflectGenerative() {
   if (mark) {
     mark.setAttribute('aria-pressed', String(generativePlaying));
     mark.setAttribute('aria-label', generativePlaying
-      ? 'Pause Music for Airports'
-      : 'Play Music for Airports, a generative piece');
+      ? 'Pause Guitars For Airports'
+      : 'Play Guitars For Airports, a generative piece');
   }
   if (transportMode === 'generative') {
     transportPlayPause.innerHTML = generativePlaying ? transportPauseSVG : transportPlaySVG;
