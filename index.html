@@ -23,9 +23,18 @@
             <meta property="og:description" content="A sonic arts studio: bespoke soundscapes, music lessons, and free soundscapes for deep listening."/>
             <meta property="og:image" content="https://beingsound.studio/images/chicago.jpeg"/>
             <meta property="og:url" content="https://beingsound.studio/"/>
-            <link rel="preconnect" href="https://fonts.googleapis.com">
-            <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-            <link href="https://fonts.googleapis.com/css2?family=Chivo:ital,wght@0,100..900;1,100..900&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+            <!-- Type: Collletttivo faces, self-hosted (see the type tokens in
+                 styles.css). The two seen first are fetched early. -->
+            <link rel="preload" href="assets/fonts/Ronzino-Regular.woff2" as="font" type="font/woff2" crossorigin>
+            <link rel="preload" href="assets/fonts/OrticaLinear-Regular.woff2" as="font" type="font/woff2" crossorigin>
+            <!-- The original Chivo + Montserrat set, on request: ?type=original
+                 swaps the type tokens back and loads the two from Google Fonts. -->
+            <script>
+                if (new URLSearchParams(location.search).get("type") === "original") {
+                    document.documentElement.dataset.type = "original";
+                    document.write('<link href="https://fonts.googleapis.com/css2?family=Chivo:ital,wght@0,100..900;1,100..900&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">');
+                }
+            </script>
         </head>
         <body>
             <div class="transport-bar" id="transport-bar">
