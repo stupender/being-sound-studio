@@ -118,16 +118,21 @@
     --quote-scale:    1.08;
     --strong-weight:  700;     /* Ronzino has no Light, so bold must step further */
 
-    /* The wordmark. The subtitle is sized to run exactly as wide as the
-       studio name: 0.6527 is the name's width over the subtitle's, both
-       at the same size in these two faces — re-measure it if either face
-       or either line of text changes. The two lines sit close, and the
-       mark is as tall as the pair. */
-    --subtitle-size:     calc(1.5em * var(--display-scale) * 0.6527);
+    /* The wordmark. The subtitle is set like the section labels — Necto
+       Mono capitals — and tracked out to run exactly as wide as the studio
+       name. 0.1055em is that measured tracking; re-measure it if either
+       face, either size, or either line of text changes. The mark is as
+       tall as the two lines together. */
+    --subtitle-font:     var(--font-label);
+    --subtitle-case:     uppercase;
+    --subtitle-size:     0.6875em;   /* 11px */
+    --subtitle-tracking: 0.1055em;
     --title-leading:     1.05;
     --subtitle-leading:  1.15;
-    --subtitle-gap:      2px;
-    --mark-size:         calc(1.5em * var(--display-scale) * (1.05 + 0.6527 * 1.15) + 2px);
+    --subtitle-gap:      5px;
+    --mark-size:         calc(1.5em * var(--display-scale) * var(--title-leading)
+                              + var(--subtitle-gap)
+                              + var(--subtitle-size) * var(--subtitle-leading));
 }
 
 /* The original set — Chivo and Montserrat from Google Fonts. Kept whole
@@ -149,7 +154,10 @@
     --quote-scale:    1;
     --strong-weight:  400;     /* one step up from Montserrat Light */
 
+    --subtitle-font:     var(--font-ui);
+    --subtitle-case:     none;
     --subtitle-size:     .9em;
+    --subtitle-tracking: normal;
     --title-leading:     normal;
     --subtitle-leading:  normal;
     --subtitle-gap:      8px;
@@ -534,10 +542,12 @@ h1 {
 }
 
 h2 {
-    font-family: var(--font-ui);
+    font-family: var(--subtitle-font);
     font-weight: 100;
     font-size: var(--subtitle-size);
     line-height: var(--subtitle-leading);
+    text-transform: var(--subtitle-case);
+    letter-spacing: var(--subtitle-tracking);
     /* font-weight: 300; */
     margin: 0 0 0 0;
     padding: var(--subtitle-gap) 0 0 0;
