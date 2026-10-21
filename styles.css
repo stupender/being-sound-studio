@@ -207,29 +207,52 @@ header {
     min-width: 0;
 }
 
-/* The studio mark: one ink on warm stock. A riso blue disc masked by a
-   turbulence-filtered circle, so the ink lands mottled and imperfect the
-   way a risograph lays it down. Lifted from Paper & Night's own mark,
-   values and all.
-   The ink is alive: inside the mask the noise drifts (feOffset) and
-   breathes (baseFrequency) on three unrelated periods — 13s, 17s, 23s —
-   so the speckle never visibly loops. The circle itself stays still;
-   only the texture moves through it. Hovering turns and swells the
-   disc a little, and lets it settle back slowly. */
+/* The studio mark, which is also the play button for the generative
+   piece (script.js). At its centre, one ink on warm stock: a riso blue
+   disc masked by a turbulence-filtered circle, so the ink lands mottled
+   and imperfect the way a risograph lays it down — lifted from Paper &
+   Night's own mark, values and all. Around it, two orbs on faint rings,
+   after the portfolio's orbits mark: still while the piece is quiet,
+   orbiting while it plays.
+   The ink is alive either way: inside the mask the noise drifts
+   (feOffset) and breathes (baseFrequency) on three unrelated periods —
+   13s, 17s, 23s — so the speckle never visibly loops. Hovering turns
+   and swells the disc a little, and lets it settle back slowly. */
 #studio-mark {
-    --ink:       url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='m' x='-50%25' y='-50%25' width='200%25' height='200%25'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.04' numOctaves='3'%3E%3Canimate attributeName='baseFrequency' values='0.04;0.046;0.04' dur='23s' calcMode='spline' keyTimes='0;.5;1' keySplines='.45 0 .55 1;.45 0 .55 1' repeatCount='indefinite'/%3E%3C/feTurbulence%3E%3CfeOffset%3E%3Canimate attributeName='dx' values='0;16;0' dur='17s' calcMode='spline' keyTimes='0;.5;1' keySplines='.45 0 .55 1;.45 0 .55 1' repeatCount='indefinite'/%3E%3Canimate attributeName='dy' values='0;-11;0' dur='13s' calcMode='spline' keyTimes='0;.5;1' keySplines='.45 0 .55 1;.45 0 .55 1' repeatCount='indefinite'/%3E%3C/feOffset%3E%3CfeColorMatrix type='matrix' values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 -14 11'/%3E%3C/filter%3E%3Ccircle cx='60' cy='60' r='58' filter='url(%23m)'/%3E%3C/svg%3E");
-    --ink-still: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='m'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.04' numOctaves='3'/%3E%3CfeColorMatrix type='matrix' values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 -14 11'/%3E%3C/filter%3E%3Ccircle cx='60' cy='60' r='58' filter='url(%23m)'/%3E%3C/svg%3E");
+    --ink-mask:       url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='m' x='-50%25' y='-50%25' width='200%25' height='200%25'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.04' numOctaves='3'%3E%3Canimate attributeName='baseFrequency' values='0.04;0.046;0.04' dur='23s' calcMode='spline' keyTimes='0;.5;1' keySplines='.45 0 .55 1;.45 0 .55 1' repeatCount='indefinite'/%3E%3C/feTurbulence%3E%3CfeOffset%3E%3Canimate attributeName='dx' values='0;16;0' dur='17s' calcMode='spline' keyTimes='0;.5;1' keySplines='.45 0 .55 1;.45 0 .55 1' repeatCount='indefinite'/%3E%3Canimate attributeName='dy' values='0;-11;0' dur='13s' calcMode='spline' keyTimes='0;.5;1' keySplines='.45 0 .55 1;.45 0 .55 1' repeatCount='indefinite'/%3E%3C/feOffset%3E%3CfeColorMatrix type='matrix' values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 -14 11'/%3E%3C/filter%3E%3Ccircle cx='60' cy='60' r='58' filter='url(%23m)'/%3E%3C/svg%3E");
+    --ink-mask-still: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='m'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.04' numOctaves='3'/%3E%3CfeColorMatrix type='matrix' values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 -14 11'/%3E%3C/filter%3E%3Ccircle cx='60' cy='60' r='58' filter='url(%23m)'/%3E%3C/svg%3E");
     flex: none;
+    position: relative;
+    /* --mark-size is in ems, and a button's default font size is smaller
+       than the header's; inherit it, or the mark shrinks. */
+    font: inherit;
     width: var(--mark-size);
     aspect-ratio: 1;
+    padding: 0;
+    border: 0;
+    border-radius: 50%;
+    background: none;
+    cursor: pointer;
+}
+
+#studio-mark:focus-visible {
+    outline: 1px solid var(--ink);
+    outline-offset: 3px;
+}
+
+/* The disc: radius 11.5 of the 40-unit orbit drawing, so it clears the
+   inner orb's path even at its hover swell. */
+.mark-ink {
+    position: absolute;
+    inset: 21.25%;
     border-radius: 50%;
     background: var(--riso-blue);
     opacity: 0.95;
-    -webkit-mask-image: var(--ink);
+    -webkit-mask-image: var(--ink-mask);
     -webkit-mask-size: contain;
     -webkit-mask-repeat: no-repeat;
     -webkit-mask-position: center;
-    mask-image: var(--ink);
+    mask-image: var(--ink-mask);
     mask-size: contain;
     mask-repeat: no-repeat;
     mask-position: center;
@@ -237,22 +260,84 @@ header {
 }
 
 @media (hover: hover) {
-    #studio-mark:hover {
+    #studio-mark:hover .mark-ink {
         transform: scale(1.08) rotate(-24deg);
         opacity: 1;
         transition-duration: 1.2s;
     }
 }
 
-/* No drift, no turn — the mark as it was printed. */
+.mark-orbits {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    overflow: visible;
+}
+
+.mark-orbits .ring {
+    fill: none;
+    stroke: var(--ink);
+    stroke-width: 0.8;
+    opacity: 0.22;
+    transition: opacity 0.6s ease;
+}
+
+.mark-orbits .orb circle {
+    fill: var(--riso-blue);
+}
+
+/* Always animating but paused, so stopping the piece leaves the orbs
+   wherever they had got to. The negative delays only set where they
+   rest before the first play, so they don't both start at the top. */
+.mark-orbits .orb {
+    transform-box: view-box;
+    transform-origin: 20px 20px;
+    animation: mark-orbit 7s linear infinite paused;
+    animation-delay: -1.4s;
+}
+
+.mark-orbits .orb2 {
+    animation-duration: 12s;
+    animation-delay: -7.6s;
+}
+
+#studio-mark[aria-pressed="true"] .orb {
+    animation-play-state: running;
+}
+
+#studio-mark[aria-pressed="true"] .ring {
+    opacity: 0.42;
+}
+
+@keyframes mark-orbit {
+    to { transform: rotate(360deg); }
+}
+
+/* No drift, no turn, no orbit — the mark as it was printed. While the
+   piece plays, the brighter rings still say so. */
 @media (prefers-reduced-motion: reduce) {
     #studio-mark {
-        --ink: var(--ink-still);
+        --ink-mask: var(--ink-mask-still);
+    }
+    .mark-ink {
         transition: none;
     }
-    #studio-mark:hover {
+    #studio-mark:hover .mark-ink {
         transform: none;
     }
+    .mark-orbits .orb {
+        animation: none;
+    }
+}
+
+/* While the generative piece holds the transport bar there are no
+   tracks to step through, no queue, and no end to show progress
+   towards — just play/pause, the name, and the volume. */
+.transport-bar.is-generative .transport-step,
+.transport-bar.is-generative .transport-queue-toggle,
+.transport-bar.is-generative .transport-progress {
+    display: none;
 }
 
 nav {
@@ -776,6 +861,58 @@ a:hover {
     font-weight: 300;
     font-size: 0.9em;
     margin: 8px 0 0 0;
+}
+
+/* A card whose media is a short looping clip (the App page). It keeps
+   the clip's own proportions, like the video cards, rather than the
+   square crop, so the whole neck stays in frame. */
+.projects-container .album-card-image.album-card-clip {
+    aspect-ratio: 1040 / 900;
+}
+
+.album-card-clip .card-clip {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* The landscape card: the same card — outline, mat, framed media, the
+   type / title / meta lines — turned on its side so it can carry a
+   paragraph. Media on the left, words on the right, across the full
+   width of the grid. On a phone it stands back up: media on top.
+   (Scoped to the page, like the card rules it overrides, which sit
+   later in this file.) */
+.projects-container .album-card.album-card-wide {
+    grid-column: 1 / -1;
+    display: grid;
+    grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+    column-gap: 24px;
+    align-items: start;
+}
+
+.projects-container .album-card-wide .album-card-info {
+    padding: 4px 8px 4px 0;
+    gap: 8px;
+}
+
+.album-card-desc {
+    font-family: var(--font-body);
+    font-weight: 300;
+    font-size: 0.85em;
+    line-height: 1.55em;
+    margin: 6px 0 4px 0;
+    color: var(--bone);
+}
+
+@media only screen and (max-width: 600px) {
+    .projects-container .album-card.album-card-wide {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    .projects-container .album-card-wide .album-card-info {
+        padding: 12px 2px 4px;
+    }
 }
 
 /* The apps grid follows the music grid: three across, stepping to two
@@ -1339,9 +1476,9 @@ ul.playlist {
     pointer-events: none;
 }
 
-.album-card:hover .album-card-overlay {
-    opacity: 0.4;
-}
+/* The overlay no longer darkens the artwork on hover — a card answers
+   the pointer with its background and outline instead, and the picture
+   stays as bright as it is. */
 
 .album-card-play {
     position: absolute;
@@ -2149,7 +2286,7 @@ body:has(.projects-container.show) .site-footer {
 .listen-welcome-container .album-card,
 .listen-container .album-card,
 .teaching-container .album-card {
-    transition: background-color 0.2s ease;
+    transition: background-color 0.2s ease, border-color 0.2s ease;
 }
 
 .personal-container .album-card:hover,
@@ -2160,6 +2297,14 @@ body:has(.projects-container.show) .site-footer {
 .listen-container .album-card:hover,
 .teaching-container .album-card:hover {
     background-color: rgb(var(--bone-rgb) / 0.08);
+}
+
+/* On the water pages the card's outline is a faint hairline; on hover it
+   firms up. (The other pages' cards already have a solid outline.) */
+.personal-container .album-card:hover,
+.collaboration-container .album-card:hover,
+.projects-container .album-card:hover {
+    border-color: rgb(var(--bone-rgb) / 0.45);
 }
 
 /* The play control: a dark, blurred disc that only appears on hover —

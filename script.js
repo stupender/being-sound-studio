@@ -162,7 +162,8 @@ const pageRegistry = {
   },
   projects: {
     button: projectsButton,
-    path: "/projects",
+    path: "/app",
+    title: "Fretboard Constellations | Being Sound Studio",
     sections: [projectsCard],
     activeElements: [projectsButton],
   },
@@ -252,6 +253,9 @@ Object.entries(pageRegistry).forEach(([key, config]) => {
   const normalized = normalizePath(config.path);
   pathToPageMap[normalized] = key;
 });
+// The App page was Tools at /projects; keep old links landing on it.
+pathToPageMap["/projects"] = "projects";
+pathToPageMap["/tools"] = "projects";
 
 Object.entries(pageRegistry).forEach(([key, config]) => {
   const triggerElements = [];
@@ -323,10 +327,14 @@ function navigateToPage(pageKey, options = {}) {
 
   // Background videos only autoplay if they're visible when the page loads,
   // and these sections start hidden — so start the one on the page we just
-  // opened, and pause the others to save battery.
-  document.querySelectorAll(".section-video").forEach(function (video) {
+  // opened, and pause the others to save battery. Card clips (the App page)
+  // work the same way, except for anyone who has asked for less motion:
+  // they keep the clip's still poster frame.
+  var reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  document.querySelectorAll(".section-video, .card-clip").forEach(function (video) {
     var onShownPage = video.closest(".page-section.show");
-    if (onShownPage) {
+    var held = reduceMotion && video.classList.contains("card-clip");
+    if (onShownPage && !held) {
       var attempt = video.play();
       // Browsers return a promise here and reject it if they refuse; the
       // page looks fine either way, so we just swallow the refusal.
@@ -404,7 +412,16 @@ document
     image.parentNode.insertBefore(image, image.parentNode.firstChild);
   });
 
-// Generative Music Player
+// ============================================================
+//  Generative Music Player — "Music for Airports"
+//  The studio mark in the header is its play button. Nine sampled
+//  notes each repeat on their own loop length (10 to 30 seconds), so
+//  they line up differently every time round and the piece never
+//  repeats. Pressing the mark starts it (fading in) and shows it in
+//  the transport bar; pressing again, or pause in the bar, fades it
+//  out and stops it. It shares the bar with the album player, and
+//  only one of the two plays at a time.
+// ============================================================
 
 // Sampler Instrument
 
@@ -433,12 +450,50 @@ let SAMPLE_LIBRARY = {
 
 const OCTAVE = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B'];
 
-let audioContext = new AudioContext();
+// Shown in the transport bar, as "Title — Artist — Album" like the tracks.
+const GENERATIVE_NAME = 'Music for Airports — Stu Pender — Generative, after Brian Eno';
+
+// [instrument, note, loop length in seconds, first entry in seconds]
+const GENERATIVE_LOOPS = [
+  // Guitar flute sounds
+  ['Guitar Sustain', 'F4',  11.1, 0.0],
+  ['Guitar Sustain', 'Ab4', 10,   3.1],
+  ['Guitar Sustain', 'C5',  12.1, 5.6],
+  ['Guitar Sustain', 'Db5', 15.5, 9.6],
+  ['Guitar Sustain', 'Eb5', 17.3, 10.2],
+  ['Guitar Sustain', 'F5',  18.6, 11.1],
+  ['Guitar Sustain', 'Ab5', 23.1, 14.1],
+  // Eno & Fripp low padded chords
+  ['Eno & Fripp', 'C#3', 30, 15.1],
+  ['Eno & Fripp', 'F#2', 30, 25.1],
+];
+
+// The piece sits a little under a full-volume track.
+const GENERATIVE_LEVEL = 0.6;
+
+// Created on the first press, not on page load: browsers (Safari most of
+// all) only let audio start from something the visitor did.
+let audioContext = null;
+let generativeGain = null;
+let generativePlaying = false;
+let generativeTimers = [];
+const generativeSources = new Set();
+const sampleCache = {};
+
+// 'playlist' while an album track owns the transport bar, 'generative'
+// while this piece does.
+let transportMode = 'playlist';
 
 function fetchSample(path) {
-  return fetch(encodeURIComponent(path))
-    .then(response => response.arrayBuffer())
-    .then(arrayBuffer => audioContext.decodeAudioData(arrayBuffer));
+  if (!sampleCache[path]) {
+    // encodeURI keeps the slashes; '#' (as in F#2.mp3) still has to be
+    // escaped by hand, or it would be read as the start of a #fragment.
+    const url = encodeURI(path).replace(/#/g, '%23');
+    sampleCache[path] = fetch(url)
+      .then(response => response.arrayBuffer())
+      .then(arrayBuffer => audioContext.decodeAudioData(arrayBuffer));
+  }
+  return sampleCache[path];
 }
 
 function noteValue(note, octave) {
@@ -486,66 +541,124 @@ function getSample(instrument, noteAndOctave) {
 }
 
 function playSample(instrument, note, delaySeconds = 0) {
-    getSample(instrument, note).then(({audioBuffer, distance}) => {
-      let playbackRate = Math.pow(2, distance / 12);
-      let bufferSource = audioContext.createBufferSource();
-      bufferSource.buffer = audioBuffer;
-      bufferSource.playbackRate.value = playbackRate;
-      bufferSource.connect(audioContext.destination);
-      bufferSource.start(audioContext.currentTime + delaySeconds);
-    });
-  }
+  getSample(instrument, note).then(({audioBuffer, distance}) => {
+    // A sample still loading when the piece was stopped stays silent.
+    if (!generativePlaying) return;
+    let playbackRate = Math.pow(2, distance / 12);
+    let bufferSource = audioContext.createBufferSource();
+    bufferSource.buffer = audioBuffer;
+    bufferSource.playbackRate.value = playbackRate;
+    bufferSource.connect(generativeGain);
+    bufferSource.start(audioContext.currentTime + delaySeconds);
+    // Kept so stopping can silence notes already ringing.
+    generativeSources.add(bufferSource);
+    bufferSource.onended = () => generativeSources.delete(bufferSource);
+  }).catch(() => {});
+}
 
 function startLoop(instrument, note, loopLengthSeconds, delaySeconds) {
-    playSample(instrument, note, delaySeconds);
-    setInterval(
-      () => playSample(instrument, note, delaySeconds),
-      loopLengthSeconds * 1000
-    );
+  playSample(instrument, note, delaySeconds);
+  generativeTimers.push(setInterval(
+    () => playSample(instrument, note, delaySeconds),
+    loopLengthSeconds * 1000
+  ));
+}
+
+function generativeVolume() {
+  const slider = document.getElementById('transport-volume');
+  return GENERATIVE_LEVEL * (slider ? parseFloat(slider.value) : 1);
+}
+
+function startGenerative() {
+  if (generativePlaying) return;
+
+  if (!audioContext) {
+    const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+    if (!AudioContextClass) return;
+    audioContext = new AudioContextClass();
+    generativeGain = audioContext.createGain();
+    generativeGain.gain.value = 0;
+    generativeGain.connect(audioContext.destination);
   }
+  audioContext.resume();
 
-let playedOnce = false;
-// EVENT LISTENER
-  let button = document.querySelector('button.play');
-  button.addEventListener('click', function() {
-    if(playedOnce == true) {
-      return;
-    } else {
-              // Guitar Flute Sounds
-              startLoop('Guitar Sustain', 'F4', 11.1, 0.0);
-              startLoop('Guitar Sustain', 'Ab4', 10, 3.1);
-              startLoop('Guitar Sustain', 'C5', 12.1, 5.6);
-              startLoop('Guitar Sustain', 'Db5', 15.5, 9.6);
-              startLoop('Guitar Sustain', 'Eb5', 17.3, 10.2);
-              startLoop('Guitar Sustain', 'F5', 18.6, 11.1);
-              startLoop('Guitar Sustain', 'Ab5', 23.1, 14.1);  
-        
-              // Eno & Fripp Low Padded Chords
-              startLoop('Eno & Fripp', 'C#3', 30, 15.1);  
-              startLoop('Eno & Fripp', 'F#2', 30, 25.1);
+  // One thing plays at a time: the album player lets go of the bar.
+  if (!playlistAudio.paused) playlistAudio.pause();
+  playlistAudio.removeAttribute('src');
+  currentTrackSrc = null;
+  resetAllPlaylistBtns();
+  updateCardStates();
 
-              // startLoop('Field Recordings', 'C4', 60, 0.0);
+  generativePlaying = true;
+  transportMode = 'generative';
+  transportBar.classList.add('is-generative');
+  showTransport(GENERATIVE_NAME);
 
+  // Fade in over a couple of seconds rather than starting cold.
+  const now = audioContext.currentTime;
+  generativeGain.gain.cancelScheduledValues(now);
+  generativeGain.gain.setValueAtTime(generativeGain.gain.value, now);
+  generativeGain.gain.linearRampToValueAtTime(generativeVolume(), now + 2);
 
-              playedOnce = true;
-    }
-  });
+  GENERATIVE_LOOPS.forEach(([instrument, note, length, delay]) =>
+    startLoop(instrument, note, length, delay));
 
-// PLAY/PAUSE
-audioContext.suspend().then(function() {
-  button.textContent = 'Play';
-});
+  reflectGenerative();
+}
 
-button.onclick = function() {
-  if(audioContext.state === 'running') {
-    audioContext.suspend().then(function() {
-      button.textContent = 'Play';
-    });
-  } else if(audioContext.state === 'suspended') {
-    audioContext.resume().then(function() {
-      button.textContent = 'Pause';
-    });
+function stopGenerative() {
+  if (!generativePlaying) return;
+  generativePlaying = false;
+
+  generativeTimers.forEach(clearInterval);
+  generativeTimers = [];
+
+  // Fade out, then cut whatever is still ringing or waiting to start.
+  const now = audioContext.currentTime;
+  generativeGain.gain.cancelScheduledValues(now);
+  generativeGain.gain.setValueAtTime(generativeGain.gain.value, now);
+  generativeGain.gain.linearRampToValueAtTime(0, now + 0.8);
+  const ringing = Array.from(generativeSources);
+  generativeSources.clear();
+  setTimeout(() => {
+    ringing.forEach(source => { try { source.stop(); } catch (e) {} });
+  }, 900);
+
+  reflectGenerative();
+}
+
+function toggleGenerative() {
+  if (generativePlaying) {
+    stopGenerative();
+  } else {
+    startGenerative();
   }
+}
+
+// An album track is starting: the piece stops and gives the bar back.
+function leaveGenerative() {
+  stopGenerative();
+  transportMode = 'playlist';
+  transportBar.classList.remove('is-generative');
+}
+
+// The mark, its label, and the bar's play/pause icon all follow one state.
+function reflectGenerative() {
+  const mark = document.getElementById('studio-mark');
+  if (mark) {
+    mark.setAttribute('aria-pressed', String(generativePlaying));
+    mark.setAttribute('aria-label', generativePlaying
+      ? 'Pause Music for Airports'
+      : 'Play Music for Airports, a generative piece');
+  }
+  if (transportMode === 'generative') {
+    transportPlayPause.innerHTML = generativePlaying ? transportPauseSVG : transportPlaySVG;
+  }
+}
+
+const studioMark = document.getElementById('studio-mark');
+if (studioMark) {
+  studioMark.addEventListener('click', toggleGenerative);
 }
 
 // Playlist Player
@@ -811,10 +924,8 @@ playlistBtns.forEach(btn => {
     const item = btn.closest('.playlist-item');
     const trackName = item.getAttribute('data-transport-name') || item.querySelector('.playlist-track-name').textContent;
 
-    // Pause generative player if running
-    if (audioContext.state === 'running') {
-      audioContext.suspend().then(() => { button.textContent = 'Play'; });
-    }
+    // The generative piece stops when an album track starts.
+    if (transportMode === 'generative') leaveGenerative();
 
     if (currentTrackSrc === src && !playlistAudio.paused) {
       // Same track playing — pause it
@@ -845,6 +956,10 @@ const transportLeft = document.getElementById('transport-left');
 const transportRight = document.getElementById('transport-right');
 
 transportLeft.addEventListener('click', () => {
+  if (transportMode === 'generative') {
+    toggleGenerative();
+    return;
+  }
   if (playlistAudio.paused) {
     playlistAudio.play();
     transportPlayPause.innerHTML = transportPauseSVG;
@@ -866,6 +981,8 @@ transportLeft.addEventListener('click', () => {
 });
 
 transportRight.addEventListener('click', () => {
+  // The generative piece has no queue to show.
+  if (transportMode === 'generative') return;
   transportQueue.classList.toggle('open');
   transportQueueToggle.classList.toggle('open');
 });
@@ -923,6 +1040,9 @@ if (transportVolume) {
   transportVolume.addEventListener('input', (event) => {
     event.stopPropagation();
     playlistAudio.volume = parseFloat(transportVolume.value);
+    if (generativePlaying) {
+      generativeGain.gain.setTargetAtTime(generativeVolume(), audioContext.currentTime, 0.05);
+    }
     paintVolumeFill();
   });
 
@@ -983,20 +1103,6 @@ document.addEventListener('visibilitychange', () => {
   }
 });
 
-// When generative Play button resumes, pause playlist
-const origOnClick = button.onclick;
-button.onclick = function() {
-  if (audioContext.state === 'suspended') {
-    // Generative player is resuming — pause playlist if playing
-    if (!playlistAudio.paused) {
-      playlistAudio.pause();
-      resetAllPlaylistBtns();
-      transportPlayPause.innerHTML = transportPlaySVG;
-    }
-  }
-  origOnClick.call(this);
-};
-
 // ============================================================
 //  Keyboard control for the player
 //  Space plays and pauses; the left and right arrows step between
@@ -1011,6 +1117,15 @@ document.addEventListener('keydown', (event) => {
     target &&
     (target.matches('input, textarea, select') || target.isContentEditable);
   if (isTyping || event.metaKey || event.ctrlKey || event.altKey) return;
+
+  // While the generative piece holds the bar, space plays and pauses it.
+  if (transportMode === 'generative') {
+    if (event.code === 'Space' && event.target === document.body) {
+      event.preventDefault();
+      toggleGenerative();
+    }
+    return;
+  }
 
   // Nothing to control until a track has been chosen.
   if (!currentTrackSrc) return;

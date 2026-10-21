@@ -10,11 +10,11 @@
             <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
             <meta name="viewport" content="width=device-width, initial-scale=1">
             <base href="/">
-            <!-- ?v= changes whenever styles.css does: browsers keep the stylesheet
-                 for ten minutes, and a fresh page with a stale stylesheet loses its
-                 fonts (Safari did, after the type change). A new URL can't be stale. -->
-            <link rel="stylesheet" href="styles.css?v=4">
-            <script src="script.js" defer></script>
+            <!-- ?v= changes whenever the file does: browsers keep these for ten
+                 minutes, and a fresh page with a stale stylesheet or script breaks
+                 (Safari lost its fonts after the type change). A new URL can't be stale. -->
+            <link rel="stylesheet" href="styles.css?v=9">
+            <script src="script.js?v=3" defer></script>
             <script src="forms.js" defer></script>
             <title>Stu Pender — Being Sound</title>
             <link rel="icon" href="images/favicon.jpg"/>
@@ -77,7 +77,12 @@
                  As a sibling it gets its own blur of the page behind. -->
             <ul class="transport-queue" id="transport-queue"></ul>
             <header>
-                <span id="studio-mark" aria-hidden="true"></span>
+                <!-- The studio mark is also the play button for the generative
+                     piece: the ink disc, with two orbs that orbit while it plays. -->
+                <button type="button" id="studio-mark" aria-pressed="false" aria-label="Play Music for Airports, a generative piece" title="Music for Airports">
+                    <span class="mark-ink"></span>
+                    <svg class="mark-orbits" viewBox="0 0 40 40" aria-hidden="true"><circle class="ring" cx="20" cy="20" r="14.5"/><circle class="ring" cx="20" cy="20" r="18.6"/><g class="orb orb1"><circle cx="20" cy="5.5" r="1.9"/></g><g class="orb orb2"><circle cx="20" cy="1.4" r="1.9"/></g></svg>
+                </button>
                 <div class="wordmark-text">
                     <h1>Being Sound Studio</h1>
                     <h2>A sonic arts studio by Stu Pender</h2>
@@ -87,14 +92,13 @@
                 <a href="#" class="teaching">Services</a>
                 <a href="#" class="events">Calendar</a>
                 <a href="#" class="about">About</a>
-                <button class="play" style="display:none">Play</button>
 
 
                 <div id="filters">
                     <p class="filter-title">PROJECTS</p>
                     <a href="#" class="filter-item personal">Music</a>
                     <a href="#" class="filter-item collaboration">Collaborations</a>
-                    <a href="#" class="filter-item projects">Tools</a>
+                    <a href="#" class="filter-item projects">App</a>
                 </div>
             </nav>
     
@@ -1135,29 +1139,38 @@
                 <video class="section-video" autoplay loop muted playsinline aria-hidden="true">
                     <source src="video/water.mp4" type="video/mp4">
                 </video>
+                <!-- App: laid out like Music and Collaborations — a label, then
+                     the card, here the landscape kind (.album-card-wide) so it
+                     can carry a paragraph. When a second app is ready for this
+                     audience, add another card and rename the nav link to "Apps". -->
                 <div class="projects-intro">
-                    <p class="contact-title">TOOLS</p>
-                    <p class="projects-intro-title">Instruments for Presence</p>
-                    <p class="projects-intro-text">
-                        Technology in the service of embodiment. Alongside the music, I build the digital tools, templates, and systems my own practice needs to stay grounded—then share them here to support yours.
-                    </p>
+                    <p class="contact-title">APP</p>
                 </div>
 
                 <div class="album-grid project-grid">
 
-                    <div class="album-card">
-                        <div class="album-card-image">
-                            <a class="album-card-thumb-link" href="/fretboard-constellations/" data-outbound target="_blank">
-                                <img src="images/projects/Method.png" alt="Fretboard Constellations">
+                    <div class="album-card album-card-wide">
+                        <div class="album-card-image album-card-clip">
+                            <a class="album-card-thumb-link" href="/fretboard-constellations/" target="_blank" rel="noopener">
+                                <video class="card-clip" src="images/projects/fretboard-key-change.mp4" poster="images/projects/fretboard-key-change-poster.jpg" loop muted playsinline preload="metadata" aria-label="Fretboard Constellations: the key changes from E-flat to A-flat, D-flat, G and C, and the whole neck re-lights each time"></video>
                                 <div class="album-card-overlay"></div>
                             </a>
                         </div>
                         <div class="album-card-info">
                             <p class="album-card-type">WEB APP</p>
                             <div class="album-card-title"><a href="/fretboard-constellations/" data-outbound target="_blank">Fretboard Constellations</a></div>
-                            <div class="album-card-meta">A Living, Interactive Music Textbook · 2026</div>
+                            <div class="album-card-meta">Free · Guitar &amp; Ukulele · 2026</div>
+                            <p class="album-card-desc">
+                                <b>See the whole key at once.</b> A living, interactive music textbook for the guitar. Every note of a key lights up across the whole neck, each scale degree in its own color, and re-lights the moment the key changes. Scales, chords and inversions appear in every position, with notation and TAB, and all of it plays.
+                            </p>
                         </div>
                     </div>
+
+                </div>
+
+                <!-- From the old Tools page, kept for when they suit this
+                     audience. (Its other cards are in git history, before
+                     the Tools page became App.)
 
                     <div class="album-card">
                         <div class="album-card-image">
@@ -1173,39 +1186,6 @@
                         </div>
                     </div>
 
-                    <!-- Hidden for now — delete these comment markers to show
-                         either card again.
-
-                    <div class="album-card">
-                        <div class="album-card-image">
-                            <a class="album-card-thumb-link" href="https://stupender.github.io/yoga-of-the-voice/" target="_blank">
-                                <img src="images/projects/Yoga%20of%20the%20Voice.png" alt="Yoga of the Voice">
-                                <div class="album-card-overlay"></div>
-                            </a>
-                        </div>
-                        <div class="album-card-info">
-                            <p class="album-card-type">LANDING PAGE</p>
-                            <div class="album-card-title"><a href="https://stupender.github.io/yoga-of-the-voice/" target="_blank">Yoga of the Voice — Silvia Nakkach</a></div>
-                            <div class="album-card-meta">For Vox Mundi School · 2026</div>
-                        </div>
-                    </div>
-
-                    <div class="album-card">
-                        <div class="album-card-image">
-                            <span class="album-card-thumb-link album-card-pending" data-project="being-sound">
-                                <img src="images/projects/Being%20Sound%20Studio.png" alt="Being Sound Studio">
-                                <div class="album-card-overlay"></div>
-                            </span>
-                        </div>
-                        <div class="album-card-info">
-                            <p class="album-card-type">WEBSITE &amp; BRAND IDENTITY</p>
-                            <div class="album-card-title"><span class="album-card-pending" data-project="being-sound">Being Sound</span></div>
-                            <div class="album-card-meta">beingsound.studio · 2024</div>
-                        </div>
-                    </div>
-
-                    -->
-
                     <div class="album-card">
                         <div class="album-card-image">
                             <a class="album-card-thumb-link" href="https://beingsound.substack.com/p/free-resource-listening-journal" target="_blank">
@@ -1220,49 +1200,7 @@
                         </div>
                     </div>
 
-                    <div class="album-card">
-                        <div class="album-card-image">
-                            <span class="album-card-thumb-link album-card-pending" data-project="sound-station">
-                                <img src="images/projects/Sound%20Station.png" alt="Sound Station">
-                                <div class="album-card-overlay"></div>
-                            </span>
-                        </div>
-                        <div class="album-card-info">
-                            <p class="album-card-type">ABLETON TEMPLATE</p>
-                            <div class="album-card-title"><span class="album-card-pending" data-project="sound-station">Sound Station</span></div>
-                            <div class="album-card-meta">Performance template · ongoing</div>
-                        </div>
-                    </div>
-
-                    <!-- <div class="album-card">
-                        <div class="album-card-image">
-                            <span class="album-card-thumb-link album-card-pending" data-project="ground-beneath-our-feet">
-                                <img src="images/projects/Ground%20Beneath%20Our%20Feet.png" alt="Ground Beneath Our Feet">
-                                <div class="album-card-overlay"></div>
-                            </span>
-                        </div>
-                        <div class="album-card-info">
-                            <p class="album-card-type">WEBSITE &amp; BRAND IDENTITY</p>
-                            <div class="album-card-title"><a href="#" data-project="ground-beneath-our-feet">Ground Beneath Our Feet</a></div>
-                            <div class="album-card-meta">Wellness practitioner</div>
-                        </div>
-                    </div>
-
-                    <div class="album-card">
-                        <div class="album-card-image">
-                            <span class="album-card-thumb-link album-card-pending" data-project="bloc-projects">
-                                <img src="images/projects/Bloc.png" alt="Bloc Projects">
-                                <div class="album-card-overlay"></div>
-                            </span>
-                        </div>
-                        <div class="album-card-info">
-                            <p class="album-card-type">FOUNDATIONS</p>
-                            <div class="album-card-title"><a href="#" data-project="bloc-projects">Bloc Projects</a></div>
-                            <div class="album-card-meta">Bootcamp coursework · 2018–19</div>
-                        </div>
-                    </div> -->
-
-                </div>
+                -->
 
                 <!--
                 <div class="skills-section">
