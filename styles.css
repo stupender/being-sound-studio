@@ -1733,10 +1733,6 @@ ul.playlist.album-card-playlist {
         grid-template-columns: repeat(2, 1fr);
     }
 
-    .personal-container {
-        padding-right: 0;
-    }
-
     /* .project-grid's phone layout is set with the rest of its breakpoints,
        next to the rule itself. */
 
@@ -2132,9 +2128,19 @@ body:has(.projects-container.show) .site-footer {
         display: none;
     }
 
-    .capture-form-inline .capture-input,
-    .capture-form-inline .capture-button {
-        flex: 1 1 100%;
+    /* About is the exception: the portrait leads, a square above the text,
+       rather than sitting behind it under the glass. */
+    .about-container > .section-pic {
+        position: relative;
+        height: auto;
+        aspect-ratio: 1;
+    }
+
+    /* The field and Subscribe still share a line on a phone: the button
+       takes what it needs and the field takes the rest. */
+    .capture-form-inline .capture-input {
+        flex: 1 1 0;
+        min-width: 0;
     }
 
     .cta-proof {
@@ -2176,6 +2182,20 @@ body:has(.projects-container.show) .site-footer {
        nothing sits against the edge. */
     padding: 30px;
     box-sizing: border-box;
+}
+
+/* On a phone these run edge to edge like every other dark page, and keep
+   less padding inside: the cards carry their own mat, so the panel's
+   padding plus the card's added up to a wide gutter. */
+@media only screen and (max-width: 600px) {
+    .personal-container,
+    .collaboration-container,
+    .projects-container {
+        margin-left: 0;
+        margin-right: 0;
+        padding-left: 20px;
+        padding-right: 20px;
+    }
 }
 
 /* The footage: behind everything, covering the card. */
