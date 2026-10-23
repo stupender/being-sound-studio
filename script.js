@@ -163,7 +163,7 @@ const pageRegistry = {
   projects: {
     button: projectsButton,
     path: "/app",
-    title: "Fretboard Constellations | Being Sound Studio",
+    title: "Apps | Being Sound Studio",
     sections: [projectsCard],
     activeElements: [projectsButton],
   },
