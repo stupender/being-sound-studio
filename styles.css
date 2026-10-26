@@ -890,6 +890,36 @@ a:hover {
     object-fit: cover;
 }
 
+/* "Between sessions" on Music Lessons: the apps a student uses between
+   lessons, each framed with the cards' hairline and set to the text
+   column's 30px margins. A clip (Fretboard Constellations) or a still
+   (Soundscape) fills the frame. */
+.session-app-clip {
+    display: block;
+    margin: 0 30px 15px 30px;
+    border: 1px solid rgb(var(--bone-rgb) / 0.18);
+    border-bottom: 1px solid rgb(var(--bone-rgb) / 0.18);
+    aspect-ratio: 1040 / 900;
+    transition: border-color 0.2s ease;
+}
+
+.session-app-clip:hover {
+    background-color: transparent;
+    border-color: rgb(var(--bone-rgb) / 0.45);
+}
+
+.session-app-clip .card-clip,
+.session-app-clip img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.session-app + .session-app {
+    margin-top: 22px;
+}
+
 /* The landscape card: the same card — outline, mat, framed media, the
    type / title / meta lines — turned on its side so it can carry a
    paragraph. Media on the left, words on the right, across the full
