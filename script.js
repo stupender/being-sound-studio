@@ -162,7 +162,7 @@ const pageRegistry = {
   },
   projects: {
     button: projectsButton,
-    path: "/app",
+    path: "/apps",
     title: "Apps | Being Sound Studio",
     sections: [projectsCard],
     activeElements: [projectsButton],
@@ -253,9 +253,11 @@ Object.entries(pageRegistry).forEach(([key, config]) => {
   const normalized = normalizePath(config.path);
   pathToPageMap[normalized] = key;
 });
-// The App page was Tools at /projects; keep old links landing on it.
+// The Apps page was Tools at /projects, then App at /app; keep old links
+// landing on it.
 pathToPageMap["/projects"] = "projects";
 pathToPageMap["/tools"] = "projects";
+pathToPageMap["/app"] = "projects";
 
 Object.entries(pageRegistry).forEach(([key, config]) => {
   const triggerElements = [];
