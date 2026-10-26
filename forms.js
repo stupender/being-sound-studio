@@ -114,8 +114,9 @@ function showMessage(el, text, isError) {
 document.querySelectorAll('a[href^="http"], a[data-outbound]').forEach(function (link) {
   var isInternal = link.hostname === window.location.hostname;
   var isButton = link.classList.contains("button-link");
-  // An icon-only link (thumbnail or inline SVG mark) gets no arrow either.
-  var isThumbnail = !!link.querySelector("img, svg");
+  // A picture-only link (thumbnail, looping clip or inline SVG mark) gets no
+  // arrow either.
+  var isThumbnail = !!link.querySelector("img, svg, video");
 
   // A same-domain link can still be an outbound-feeling one — the Fretboard
   // app opens in its own tab. data-outbound opts it in explicitly.
