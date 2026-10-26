@@ -434,8 +434,7 @@ div.button-container {
     color: var(--bone);
 }
 
-.music-lessons-container,
-.sound-sessions-container {
+.music-lessons-container {
     margin-left: 5%;
     margin-right: 5%;
     display: none;
@@ -830,7 +829,6 @@ a:hover {
 .about-container.show,
 .bespoke-sonic-worlds-container.show,
 .music-lessons-container.show,
-.sound-sessions-container.show,
 .listen-container.show,
 .listen-welcome-container.show,
 .loop-container.show,
@@ -886,30 +884,6 @@ a:hover {
 }
 
 .album-card-clip .card-clip {
-    display: block;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
-
-/* "Between sessions" on Sound Sessions and Music Lessons: the same
-   Fretboard Constellations clip as the App page, framed with the cards'
-   hairline and set to the text column's 30px margins. */
-.session-app-clip {
-    display: block;
-    margin: 0 30px 15px 30px;
-    border: 1px solid rgb(var(--bone-rgb) / 0.18);
-    border-bottom: 1px solid rgb(var(--bone-rgb) / 0.18);
-    aspect-ratio: 1040 / 900;
-    transition: border-color 0.2s ease;
-}
-
-.session-app-clip:hover {
-    background-color: transparent;
-    border-color: rgb(var(--bone-rgb) / 0.45);
-}
-
-.session-app-clip .card-clip {
     display: block;
     width: 100%;
     height: 100%;
@@ -1080,7 +1054,6 @@ a:hover {
 .about-container .text-block,
 .bespoke-sonic-worlds-container .text-block,
 .music-lessons-container .text-block,
-.sound-sessions-container .text-block,
 .listen-container .text-block,
 .listen-welcome-container .text-block,
 .loop-container .text-block,
@@ -1658,7 +1631,6 @@ ul.playlist.album-card-playlist {
     .about-container.show,
     .bespoke-sonic-worlds-container.show,
     .music-lessons-container.show,
-    .sound-sessions-container.show,
     .listen-container.show,
     .listen-welcome-container.show,
     .loop-container.show,
@@ -1681,8 +1653,7 @@ ul.playlist.album-card-playlist {
         flex-direction: column;
     }
 
-    .music-lessons-container,
-    .sound-sessions-container {
+    .music-lessons-container {
         margin-left: 0;
         margin-right: 0;
         flex-direction: column;
@@ -1788,7 +1759,6 @@ ul.playlist.album-card-playlist {
 .about-container,
 .bespoke-sonic-worlds-container,
 .music-lessons-container,
-.sound-sessions-container,
 .listen-container,
 .listen-welcome-container,
 .loop-container,
@@ -1796,10 +1766,6 @@ ul.playlist.album-card-playlist {
 .bespoke-design-container {
     position: relative;
     overflow: hidden;
-    /* Keep the photo layers and frosted panel in one predictable paint
-       context. Some desktop browser compositors otherwise paint the
-       backdrop-filter panel as a flat fill, while the phone layout works. */
-    isolation: isolate;
 }
 
 /* The page image fills its own half of the card, so the photograph is
@@ -1809,7 +1775,6 @@ ul.playlist.album-card-playlist {
 .about-container > .section-pic,
 .bespoke-sonic-worlds-container > .section-pic,
 .music-lessons-container > .section-pic,
-.sound-sessions-container > .section-pic,
 .listen-container > .section-pic,
 .listen-welcome-container > .section-pic,
 .loop-container > .section-pic,
@@ -1846,7 +1811,6 @@ ul.playlist.album-card-playlist {
 .about-container .text-block,
 .bespoke-sonic-worlds-container .text-block,
 .music-lessons-container .text-block,
-.sound-sessions-container .text-block,
 .listen-container .text-block,
 .listen-welcome-container .text-block,
 .loop-container .text-block,
@@ -1865,7 +1829,6 @@ ul.playlist.album-card-playlist {
 .about-container .text-block,
 .bespoke-sonic-worlds-container .text-block,
 .music-lessons-container .text-block,
-.sound-sessions-container .text-block,
 .listen-container .text-block,
 .listen-welcome-container .text-block,
 .loop-container .text-block,
@@ -1895,7 +1858,6 @@ ul.playlist.album-card-playlist {
 .about-container .button-link,
 .bespoke-sonic-worlds-container .button-link,
 .music-lessons-container .button-link,
-.sound-sessions-container .button-link,
 .listen-container .button-link,
 .listen-welcome-container .button-link,
 .loop-container .button-link,
@@ -1911,7 +1873,6 @@ ul.playlist.album-card-playlist {
 .about-container .button-link:hover,
 .bespoke-sonic-worlds-container .button-link:hover,
 .music-lessons-container .button-link:hover,
-.sound-sessions-container .button-link:hover,
 .listen-container .button-link:hover,
 .listen-welcome-container .button-link:hover,
 .loop-container .button-link:hover,
@@ -1942,7 +1903,6 @@ body:has(.teaching-container.show) .site-footer,
 body:has(.about-container.show) .site-footer,
 body:has(.bespoke-sonic-worlds-container.show) .site-footer,
 body:has(.music-lessons-container.show) .site-footer,
-body:has(.sound-sessions-container.show) .site-footer,
 body:has(.listen-container.show) .site-footer,
 body:has(.listen-welcome-container.show) .site-footer,
 body:has(.loop-container.show) .site-footer,
@@ -2155,7 +2115,6 @@ body:has(.projects-container.show) .site-footer {
     .about-container > .section-pic,
     .bespoke-sonic-worlds-container > .section-pic,
     .music-lessons-container > .section-pic,
-    .sound-sessions-container > .section-pic,
     .listen-container > .section-pic,
     .listen-welcome-container > .section-pic,
     .loop-container > .section-pic,

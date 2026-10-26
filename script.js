@@ -130,7 +130,6 @@ const eventsButton = document.querySelector(".events");
 const aboutLinks = Array.from(document.querySelectorAll(".about"));
 const bespokeSonicWorldsLinks = Array.from(document.querySelectorAll(".bespoke-sonic-worlds"));
 const musicLessonsLinks = Array.from(document.querySelectorAll(".music-lessons"));
-const soundSessionsLinks = Array.from(document.querySelectorAll(".sound-sessions"));
 const bespokeDesignLinks = Array.from(document.querySelectorAll(".bespoke-design"));
 
 const aboutCard = document.querySelector(".about-container");
@@ -139,7 +138,6 @@ const offersCard = document.querySelector(".offers-container");
 const teachingCard = document.querySelector(".teaching-container");
 const bespokeSonicWorldsCard = document.querySelector(".bespoke-sonic-worlds-container");
 const musicLessonsCard = document.querySelector(".music-lessons-container");
-const soundSessionsCard = document.querySelector(".sound-sessions-container");
 const bespokeDesignCard = document.querySelector(".bespoke-design-container");
 const personalCard = document.querySelector(".personal-container");
 const collaborationCard = document.querySelector(".collaboration-container");
@@ -208,19 +206,8 @@ const pageRegistry = {
     activeElements: bespokeDesignLinks,
     triggerElements: bespokeDesignLinks,
   },
-  "sound-sessions": {
-    path: "/sound-sessions",
-    title: "Sound Sessions | Being Sound Studio",
-    sections: [offersCard, soundSessionsCard],
-    activeElements: soundSessionsLinks,
-    triggerElements: soundSessionsLinks,
-  },
-  // Unlisted: no menu links here, and noindex keeps it out of search. It stays
-  // for current students and anyone sent the link.
   "music-lessons": {
     path: "/music-lessons",
-    title: "Music Lessons | Being Sound Studio",
-    noindex: true,
     sections: [offersCard, musicLessonsCard],
     activeElements: musicLessonsLinks,
     triggerElements: musicLessonsLinks,
@@ -404,7 +391,6 @@ document
       ".about-container > .section-pic," +
       ".bespoke-sonic-worlds-container > .section-pic," +
       ".music-lessons-container > .section-pic," +
-      ".sound-sessions-container > .section-pic," +
       ".listen-container > .section-pic," +
       ".listen-welcome-container > .section-pic," +
       ".loop-container > .section-pic," +
