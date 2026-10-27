@@ -8,7 +8,7 @@ the separate `stupender/method` repo.
 | | |
 |---|---|
 | Source repo | `github.com/stupender/method` |
-| Source commit | `7959310` — "The bar and the panel become one masthead" (2026-10-19; was `f673cdf`) |
+| Source commit | `e945300` — "Drop 3s find their home string set, lines come back, and the dots light up" (2026-10-27; before that `7959310`, then `f673cdf`) |
 | Which was | the tip of `origin/main`, i.e. what was live at the time |
 | Built with | `npx vite build --base=/fretboard-constellations/` |
 | Output size | ~1.5 MB |
