@@ -909,13 +909,43 @@ a:hover {
     text-align: left;
 }
 
+/* The apps are a side note on these pages, so the preview stays small:
+   a thumbnail beside the words rather than half the card. */
+.text-block .session-apps .album-card.album-card-wide {
+    grid-template-columns: 200px minmax(0, 1fr);
+    column-gap: 20px;
+}
+
+/* In a narrow column the thumbnail sits beside the type, name and
+   details, and the paragraph runs full width underneath. (display:
+   contents lets the info lines join the card's own grid.) */
 @container (max-width: 560px) {
     .text-block .session-apps .album-card.album-card-wide {
-        grid-template-columns: minmax(0, 1fr);
+        grid-template-columns: 112px minmax(0, 1fr);
+        column-gap: 14px;
+        row-gap: 4px;
+        align-items: start;
     }
 
     .text-block .session-apps .album-card-wide .album-card-info {
-        padding: 12px 2px 4px;
+        display: contents;
+    }
+
+    .text-block .session-apps .album-card-wide .album-card-image {
+        grid-column: 1;
+        grid-row: 1 / span 4;
+        align-self: start;
+    }
+
+    .text-block .session-apps .album-card-wide .album-card-info > * {
+        grid-column: 2;
+        margin: 0;
+    }
+
+    .text-block .session-apps .album-card-wide .album-card-info > .album-card-desc {
+        grid-column: 1 / -1;
+        grid-row: 5;
+        margin-top: 10px;
     }
 }
 
@@ -1926,17 +1956,11 @@ ul.playlist.album-card-playlist {
 
 /* --- Long service pages: one glass panel over the whole card ---
    Sound Sessions and Bespoke Sound run long, so a half-width photo
-   stretched down the full page crops badly. Here the photograph sits
-   behind the whole card at the height of the screen and stays pinned
-   while the text scrolls over it (position: sticky; overflow: clip
-   rather than hidden, because hidden would stop sticky working).
+   stretched down the full page crops badly. Here the photograph sits at
+   the top of the card at its own proportions (the card's width, natural
+   height) and scrolls with the page; its lower edge fades into the dark
+   card so the rest of the glass sits on the plain ink.
    The glass spans the card, with the same margin at the sides as at the top. */
-.sound-sessions-container,
-.bespoke-sonic-worlds-container {
-    overflow: hidden;
-    overflow: clip;
-}
-
 .sound-sessions-container.show,
 .bespoke-sonic-worlds-container.show {
     display: grid;
@@ -1945,14 +1969,13 @@ ul.playlist.album-card-playlist {
 
 .sound-sessions-container > .section-pic,
 .bespoke-sonic-worlds-container > .section-pic {
-    grid-area: 1 / 1;
-    position: sticky;
+    position: absolute;
     top: 0;
     left: 0;
     width: 100%;
-    height: 100vh;
-    height: 100svh;
-    align-self: start;
+    height: auto;
+    -webkit-mask-image: linear-gradient(to bottom, #000 70%, transparent);
+    mask-image: linear-gradient(to bottom, #000 70%, transparent);
 }
 
 .sound-sessions-container .text-block,
