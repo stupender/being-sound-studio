@@ -1957,9 +1957,9 @@ ul.playlist.album-card-playlist {
 /* --- Long service pages: one glass panel over the whole card ---
    Sound Sessions and Bespoke Sound run long, so a half-width photo
    stretched down the full page crops badly. Here the photograph spans
-   the whole card, stretched top to bottom (it is only seen blurred
-   through the glass, so the stretch reads as colour, not distortion),
-   and scrolls with the page.
+   the whole card top to bottom, scaled up at its own proportions
+   (object-fit: cover crops the sides, never distorts the photo), and
+   scrolls with the page.
    The glass spans the card, with the same margin at the sides as at the top. */
 .sound-sessions-container.show,
 .bespoke-sonic-worlds-container.show {
@@ -1974,7 +1974,8 @@ ul.playlist.album-card-playlist {
     left: 0;
     width: 100%;
     height: 100%;
-    object-fit: fill;
+    object-fit: cover;
+    object-position: center;
 }
 
 .sound-sessions-container .text-block,
