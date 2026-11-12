@@ -881,7 +881,7 @@ a:hover {
 /* A card whose media is a short looping clip (the App page). It keeps
    the clip's own proportions, like the video cards, rather than the
    square crop, so the whole neck stays in frame. */
-.projects-container .album-card-image.album-card-clip {
+:is(.projects-container, .session-apps) .album-card-image.album-card-clip {
     aspect-ratio: 1040 / 900;
 }
 
@@ -892,33 +892,31 @@ a:hover {
     object-fit: cover;
 }
 
-/* "Between sessions" on Sound Sessions and Music Lessons: the apps a
-   student uses between sessions, each framed with the cards' hairline and
-   set to the text column's 30px margins. A looping clip fills the frame. */
-.session-app-clip {
-    display: block;
-    margin: 0 30px 15px 30px;
-    border: 1px solid rgb(var(--bone-rgb) / 0.18);
-    border-bottom: 1px solid rgb(var(--bone-rgb) / 0.18);
-    aspect-ratio: 1040 / 900;
-    transition: border-color 0.2s ease;
+/* "Between sessions" on Sound Sessions and Music Lessons: the same
+   landscape cards as the Apps page, set to the text column's 30px
+   margins. The card rules below are shared with the Apps page via
+   :is(.projects-container, .session-apps). In a narrow column (Music
+   Lessons' half-width glass) each card stands up, media on top. */
+.session-apps {
+    margin: 0 30px 30px 30px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    container-type: inline-size;
 }
 
-.session-app-clip:hover {
-    background-color: transparent;
-    border-color: rgb(var(--bone-rgb) / 0.45);
+.session-apps .album-card-desc {
+    text-align: left;
 }
 
-.session-app-clip .card-clip,
-.session-app-clip img {
-    display: block;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
+@container (max-width: 560px) {
+    .text-block .session-apps .album-card.album-card-wide {
+        grid-template-columns: minmax(0, 1fr);
+    }
 
-.session-app + .session-app {
-    margin-top: 22px;
+    .text-block .session-apps .album-card-wide .album-card-info {
+        padding: 12px 2px 4px;
+    }
 }
 
 /* The landscape card: the same card — outline, mat, framed media, the
@@ -927,7 +925,7 @@ a:hover {
    width of the grid. On a phone it stands back up: media on top.
    (Scoped to the page, like the card rules it overrides, which sit
    later in this file.) */
-.projects-container .album-card.album-card-wide {
+:is(.projects-container, .session-apps) .album-card.album-card-wide {
     grid-column: 1 / -1;
     display: grid;
     grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
@@ -935,7 +933,7 @@ a:hover {
     align-items: start;
 }
 
-.projects-container .album-card-wide .album-card-info {
+:is(.projects-container, .session-apps) .album-card-wide .album-card-info {
     padding: 4px 8px 4px 0;
     gap: 8px;
 }
@@ -950,11 +948,11 @@ a:hover {
 }
 
 @media only screen and (max-width: 600px) {
-    .projects-container .album-card.album-card-wide {
+    :is(.projects-container, .session-apps) .album-card.album-card-wide {
         grid-template-columns: minmax(0, 1fr);
     }
 
-    .projects-container .album-card-wide .album-card-info {
+    :is(.projects-container, .session-apps) .album-card-wide .album-card-info {
         padding: 12px 2px 4px;
     }
 }
@@ -965,17 +963,17 @@ a:hover {
    card grid on the site. */
 
 /* Album-card overrides scoped to the projects page */
-.projects-container .album-card {
+:is(.projects-container, .session-apps) .album-card {
     padding: 10px;
     padding-bottom: 16px;
     cursor: pointer;
 }
 
-.projects-container .album-card-info {
+:is(.projects-container, .session-apps) .album-card-info {
     padding: 12px 0 4px 0;
 }
 
-.projects-container .album-card-type {
+:is(.projects-container, .session-apps) .album-card-type {
     font-family: var(--font-meta);
     font-size: 0.65em;
     font-weight: 400;
@@ -985,18 +983,18 @@ a:hover {
     text-transform: uppercase;
 }
 
-.projects-container .album-card-title {
+:is(.projects-container, .session-apps) .album-card-title {
     font-size: 0.85em;
     margin-bottom: 4px;
     text-transform: none;
 }
 
-.projects-container .album-card-title a {
+:is(.projects-container, .session-apps) .album-card-title a {
     border-bottom-color: transparent;
     font-weight: 300;
 }
 
-.projects-container .album-card-thumb-link {
+:is(.projects-container, .session-apps) .album-card-thumb-link {
     display: block;
     position: absolute;
     inset: 0;
@@ -1004,7 +1002,7 @@ a:hover {
     border-bottom: none;
 }
 
-.projects-container .album-card-thumb-link:hover {
+:is(.projects-container, .session-apps) .album-card-thumb-link:hover {
     background: transparent;
 }
 
@@ -1932,7 +1930,7 @@ ul.playlist.album-card-playlist {
    behind the whole card at the height of the screen and stays pinned
    while the text scrolls over it (position: sticky; overflow: clip
    rather than hidden, because hidden would stop sticky working).
-   The glass spans the card and the text keeps a readable column. */
+   The glass spans the card, with the same margin at the sides as at the top. */
 .sound-sessions-container,
 .bespoke-sonic-worlds-container {
     overflow: hidden;
@@ -1960,8 +1958,6 @@ ul.playlist.album-card-playlist {
 .sound-sessions-container .text-block,
 .bespoke-sonic-worlds-container .text-block {
     grid-area: 1 / 1;
-    padding-left: max(0px, calc((100% - 780px) / 2));
-    padding-right: max(0px, calc((100% - 780px) / 2));
 }
 
 
@@ -2322,7 +2318,7 @@ body:has(.projects-container.show) .site-footer {
 /* On the dark card, the cards and links take the light ink. */
 .personal-container .album-card,
 .collaboration-container .album-card,
-.projects-container .album-card,
+:is(.projects-container, .session-apps) .album-card,
 .bespoke-sonic-worlds-container .album-card,
 .listen-welcome-container .album-card,
 .listen-container .album-card,
@@ -2332,7 +2328,7 @@ body:has(.projects-container.show) .site-footer {
 
 .personal-container .album-card-image,
 .collaboration-container .album-card-image,
-.projects-container .album-card-image,
+:is(.projects-container, .session-apps) .album-card-image,
 .bespoke-sonic-worlds-container .album-card-image,
 .listen-welcome-container .album-card-image,
 .listen-container .album-card-image,
@@ -2348,11 +2344,11 @@ body:has(.projects-container.show) .site-footer {
 .collaboration-container .album-card-title a,
 .collaboration-container .album-card-meta,
 .collaboration-container a,
-.projects-container .album-card-title,
-.projects-container .album-card-title a,
-.projects-container .album-card-meta,
-.projects-container .album-card-type,
-.projects-container .album-card-pending,
+:is(.projects-container, .session-apps) .album-card-title,
+:is(.projects-container, .session-apps) .album-card-title a,
+:is(.projects-container, .session-apps) .album-card-meta,
+:is(.projects-container, .session-apps) .album-card-type,
+:is(.projects-container, .session-apps) .album-card-pending,
 .projects-container a,
 .bespoke-sonic-worlds-container .album-card-title,
 .bespoke-sonic-worlds-container .album-card-title a,
@@ -2389,12 +2385,12 @@ body:has(.projects-container.show) .site-footer {
    which vanishes against this background). */
 .personal-container .album-card-external:hover .album-card-title a,
 .collaboration-container .album-card-external:hover .album-card-title a,
-.projects-container .album-card-external:hover .album-card-title a,
+:is(.projects-container, .session-apps) .album-card-external:hover .album-card-title a,
 .bespoke-sonic-worlds-container .album-card-external:hover .album-card-title a,
 .teaching-container .album-card-external:hover .album-card-title a,
 .personal-container .album-card-title a:hover,
 .collaboration-container .album-card-title a:hover,
-.projects-container .album-card-title a:hover,
+:is(.projects-container, .session-apps) .album-card-title a:hover,
 .bespoke-sonic-worlds-container .album-card-title a:hover {
     background-color: var(--bone);
     color: var(--ink);
@@ -2403,7 +2399,7 @@ body:has(.projects-container.show) .site-footer {
 /* Hovering the card lifts it very slightly out of the background. */
 .personal-container .album-card,
 .collaboration-container .album-card,
-.projects-container .album-card,
+:is(.projects-container, .session-apps) .album-card,
 .bespoke-sonic-worlds-container .album-card,
 .listen-welcome-container .album-card,
 .listen-container .album-card,
@@ -2413,7 +2409,7 @@ body:has(.projects-container.show) .site-footer {
 
 .personal-container .album-card:hover,
 .collaboration-container .album-card:hover,
-.projects-container .album-card:hover,
+:is(.projects-container, .session-apps) .album-card:hover,
 .bespoke-sonic-worlds-container .album-card:hover,
 .listen-welcome-container .album-card:hover,
 .listen-container .album-card:hover,
@@ -2425,7 +2421,7 @@ body:has(.projects-container.show) .site-footer {
    firms up. (The other pages' cards already have a solid outline.) */
 .personal-container .album-card:hover,
 .collaboration-container .album-card:hover,
-.projects-container .album-card:hover {
+:is(.projects-container, .session-apps) .album-card:hover {
     border-color: rgb(var(--bone-rgb) / 0.45);
 }
 
@@ -3058,7 +3054,7 @@ body::after {
    media's shape: apps are screenshots (landscape), records are sleeves
    (square). Colours stay the section's own.
    ================================================================= */
-.projects-container .album-card,
+:is(.projects-container, .session-apps) .album-card,
 .personal-container .album-card,
 .collaboration-container .album-card {
     display: flex;
@@ -3072,7 +3068,7 @@ body::after {
     padding: 10px;
 }
 
-.projects-container .album-card-image,
+:is(.projects-container, .session-apps) .album-card-image,
 .personal-container .album-card-image,
 .collaboration-container .album-card-image {
     /* a hairline around the artwork inside the mat — a frame within a
@@ -3084,17 +3080,17 @@ body::after {
 }
 
 /* square across the board — screenshots and sleeves alike */
-.projects-container .album-card-image,
+:is(.projects-container, .session-apps) .album-card-image,
 .personal-container .album-card-image,
 .collaboration-container .album-card-image { aspect-ratio: 1; }
 
 /* …except where the media is a video, which keeps its own proportions
    so film stills and embeds are not cropped to a square. */
-.projects-container .album-card-image.album-card-video,
+:is(.projects-container, .session-apps) .album-card-image.album-card-video,
 .personal-container .album-card-image.album-card-video,
 .collaboration-container .album-card-image.album-card-video { aspect-ratio: 16 / 9; }
 
-.projects-container .album-card-info,
+:is(.projects-container, .session-apps) .album-card-info,
 .personal-container .album-card-info,
 .collaboration-container .album-card-info {
     /* aligned to the artwork's edges, not the card's */
