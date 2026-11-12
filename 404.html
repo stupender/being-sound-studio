@@ -13,7 +13,7 @@
             <!-- ?v= changes whenever the file does: browsers keep these for ten
                  minutes, and a fresh page with a stale stylesheet or script breaks
                  (Safari lost its fonts after the type change). A new URL can't be stale. -->
-            <link rel="stylesheet" href="styles.css?v=22">
+            <link rel="stylesheet" href="styles.css?v=23">
             <script src="script.js?v=6" defer></script>
             <script src="forms.js?v=2" defer></script>
             <title>Stu Pender — Being Sound</title>
@@ -1379,11 +1379,21 @@
                         <li class="offer-items"><span class="testimonial-text">"Stu is a such a wonderful guitar teacher! His flexible approach to lessons have made it easy to stay passionate about learning new things on the guitar. My lessons with him have taught me more than just how to play chords and scales-he's helped me truly understand the music I love on a deeper level."</span><span class="testimonial-title">— SCOTT H.</span></li>
                     </ul>
                     <p class="body-subtitle">NEXT STEP</p>
-                    <p class="about-text">If this resonates, you're invited to book a free 15-minute clarity call, or go straight to a first session. A longer cohort community-style immersive is on its way: <a href="/loop" class="p-link">join the waitlist</a> to stay in the loop.</p>
+                    <p class="about-text">If this resonates, you're invited to book a free 15-minute clarity call, or go straight to a first session.</p>
                     <div class="button-container">
                         <a href="https://cal.com/stu-pender/clarity" class="button-link flex-button" target="_blank">Book a clarity call</a>
                         <a href="https://cal.com/stu-pender/sound-session-60m" class="button-link flex-button" target="_blank">Book a Sound Session</a>
                     </div>
+                    <!-- Waitlist for the cohort immersive: signs up in place (no page
+                         change), tagged source "immersive-waitlist" in Kit. -->
+                    <p class="about-text session-waitlist-text">A longer cohort community-style immersive is on its way: join the waitlist to stay in the loop.</p>
+                    <form class="capture-form capture-form-inline session-waitlist" data-source="immersive-waitlist" data-success-message="You're on the list." novalidate>
+                        <input type="text" class="capture-hp" name="website" tabindex="-1" autocomplete="off" aria-hidden="true">
+                        <label class="capture-label" for="waitlist-email">Email address</label>
+                        <input type="email" id="waitlist-email" name="email_address" class="capture-input" placeholder="you@example.com" required autocomplete="email">
+                        <button type="submit" class="button-link capture-button">Join the waitlist</button>
+                        <p class="capture-message" role="status" aria-live="polite"></p>
+                    </form>
                 </div>
             </div>
 

@@ -2092,6 +2092,17 @@ body:has(.projects-container.show) .site-footer {
     margin-top: 0;
 }
 
+/* --- Sound Sessions: the cohort immersive waitlist, under the booking
+   buttons. The one-line form, set to the text column's 30px margins. --- */
+.session-waitlist-text {
+    margin-top: 30px;
+    margin-bottom: 12px;
+}
+
+.capture-form-inline.session-waitlist {
+    margin: 0 30px 30px 30px;
+}
+
 /* --- The events page's "never miss a show" block --- */
 /* It leads the page, so it needs room beneath it rather than above —
    30px, the same gap the site's other buttons leave below themselves. */
