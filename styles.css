@@ -1926,6 +1926,45 @@ ul.playlist.album-card-playlist {
 }
 
 
+/* --- Long service pages: one glass panel over the whole card ---
+   Sound Sessions and Bespoke Sound run long, so a half-width photo
+   stretched down the full page crops badly. Here the photograph sits
+   behind the whole card at the height of the screen and stays pinned
+   while the text scrolls over it (position: sticky; overflow: clip
+   rather than hidden, because hidden would stop sticky working).
+   The glass spans the card and the text keeps a readable column. */
+.sound-sessions-container,
+.bespoke-sonic-worlds-container {
+    overflow: hidden;
+    overflow: clip;
+}
+
+.sound-sessions-container.show,
+.bespoke-sonic-worlds-container.show {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+}
+
+.sound-sessions-container > .section-pic,
+.bespoke-sonic-worlds-container > .section-pic {
+    grid-area: 1 / 1;
+    position: sticky;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    height: 100svh;
+    align-self: start;
+}
+
+.sound-sessions-container .text-block,
+.bespoke-sonic-worlds-container .text-block {
+    grid-area: 1 / 1;
+    padding-left: max(0px, calc((100% - 780px) / 2));
+    padding-right: max(0px, calc((100% - 780px) / 2));
+}
+
+
 /* ============================================================
    CONVERSION LAYER
    Footer capture, the light-background form variant, proof
