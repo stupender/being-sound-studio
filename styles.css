@@ -2103,6 +2103,34 @@ body:has(.projects-container.show) .site-footer {
     margin: 0 30px 30px 30px;
 }
 
+/* --- Booking by length (Sound Sessions, Music Lessons) ---
+   A small label, then one button per session length, each linking to
+   its own Cal event; an email line underneath for anything else. */
+.booking-lengths-label {
+    margin: 0 30px 10px 30px;
+    font-family: var(--font-meta);
+    font-size: 0.65em;
+    letter-spacing: 0.04em;
+    color: var(--accent);
+}
+
+.booking-lengths {
+    margin: 0 30px 0 30px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+/* Buttons carry a 30px right/bottom margin site-wide; here the row's gap
+   does the spacing instead. */
+.booking-lengths .button-link {
+    margin: 0;
+}
+
+.booking-inquiry {
+    margin-top: 18px;
+}
+
 /* --- App gate: the one-line signup an app card opens (forms.js) ---
    It sits under the card's words, in the card's own small type. */
 .capture-form-inline.app-gate {

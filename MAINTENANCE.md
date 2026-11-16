@@ -99,6 +99,21 @@ The `source` tag is how you tell in Kit which door someone came through.
 
 ---
 
+## Ads and the app gate
+
+- **Ad tags:** paste the Meta Pixel ID and the Google tag ID (AW-… or G-…)
+  at the top of `tracking.js`. Empty means nothing loads. The site then
+  counts page views, every email signup (Lead) and every click on a Cal link
+  (BookingClick). Bookings themselves are counted by Cal: each event type →
+  Apps → Meta Pixel / Google Analytics / Google Ads, with the same IDs.
+- **Ad links:** point ads at `https://beingsound.studio/?page=sound-sessions`
+  (or `?page=music-lessons`), plus your `utm_…` tags. The home address answers
+  "200 OK"; a deep link like `/sound-sessions` comes through `404.html`, which
+  ad platforms read as a broken page. The `utm_…` tags ride along onto Cal.
+- **App gate:** app cards ask for an email before opening the app (`forms.js`,
+  `APPS`). Signups arrive in Kit with source `app-soundscape` /
+  `app-fretboard`. Once someone signs up, that browser is never asked again.
+
 ## Common jobs
 
 ### The twelve soundscapes
