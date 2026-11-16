@@ -2158,6 +2158,18 @@ body:has(.projects-container.show) .site-footer {
     padding: 6px 0;
 }
 
+/* The gate's button is clear, like the buttons on the glass pages, so it
+   reads the same on the Apps page as on Sound Sessions; it fills light on
+   hover, as buttons do everywhere. */
+.app-gate .button-link {
+    background-color: transparent;
+}
+
+.app-gate .button-link:hover {
+    background-color: var(--bone);
+    color: var(--ink);
+}
+
 .app-gate-open {
     margin-top: 10px;
 }
