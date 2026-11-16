@@ -2103,6 +2103,46 @@ body:has(.projects-container.show) .site-footer {
     margin: 0 30px 30px 30px;
 }
 
+/* --- App gate: the one-line signup an app card opens (forms.js) ---
+   It sits under the card's words, in the card's own small type. */
+.capture-form-inline.app-gate {
+    margin: 12px 0 4px 0;
+    max-width: none;
+}
+
+.capture-form-inline.app-gate[hidden],
+.app-gate[hidden] {
+    display: none;
+}
+
+.app-gate-text,
+.app-gate-open {
+    flex: 1 1 100%;
+    margin: 0;
+    font-family: var(--font-body);
+    font-weight: 300;
+    font-size: 0.8em;
+    color: var(--bone);
+}
+
+.app-gate .capture-input {
+    font-size: 0.8em;
+    padding: 6px 0;
+}
+
+.app-gate-open {
+    margin-top: 10px;
+}
+
+/* In the narrow Between-sessions card the words join the card's grid
+   (display: contents), so the gate takes its own full-width row. */
+.text-block .session-apps .album-card-wide .album-card-info > .app-gate,
+.text-block .session-apps .album-card-wide .album-card-info > .app-gate-open {
+    grid-column: 1 / -1;
+    grid-row: 6;
+    margin-top: 12px;
+}
+
 /* --- The events page's "never miss a show" block --- */
 /* It leads the page, so it needs room beneath it rather than above —
    30px, the same gap the site's other buttons leave below themselves. */

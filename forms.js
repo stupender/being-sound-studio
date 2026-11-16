@@ -19,9 +19,11 @@ const KIT_FORM_ENDPOINT = "https://app.kit.com/forms/9739307/subscriptions";
 // A simple, forgiving email check: something@something.something
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-// Wire up every capture form on the page. There may be one (on /listen),
-// or several (once /loop and the footer are added) — they all share this code.
-document.querySelectorAll(".capture-form").forEach(function (form) {
+// Wire up every capture form on the page. They all share this code; the
+// app gates (further down) are built by script and wired the same way.
+document.querySelectorAll(".capture-form").forEach(wireCaptureForm);
+
+function wireCaptureForm(form) {
   form.addEventListener("submit", function (event) {
     event.preventDefault(); // never let the browser do its own submit + page reload
 
@@ -70,8 +72,16 @@ document.querySelectorAll(".capture-form").forEach(function (form) {
         // from the reply body, so we don't parse it — we just check it's OK.
         if (!response.ok) { throw new Error("Bad response from backend"); }
 
-        // Success. Two possible behaviours, chosen by data- attributes on the form:
-        if (form.dataset.success === "redirect" && form.dataset.redirect) {
+        // Count the signup for ads, if a tag is set up (tracking.js).
+        if (typeof trackEvent === "function") {
+          trackEvent("Lead", { source: form.dataset.source || "unknown" });
+        }
+
+        // Success. Three possible behaviours, chosen by data- attributes on the form:
+        if (form.dataset.success === "unlock") {
+          // An app gate: open the apps for this visitor (see below).
+          unlockApps(form);
+        } else if (form.dataset.success === "redirect" && form.dataset.redirect) {
           // Show the hidden welcome page, without reloading, so the freebie can
           // stream immediately. navigateToPage() lives in script.js.
           if (typeof navigateToPage === "function") {
@@ -93,7 +103,127 @@ document.querySelectorAll(".capture-form").forEach(function (form) {
         if (button) { button.disabled = false; }
       });
   });
+}
+
+// ============================================================
+//  App gate
+//  The apps are free, but the first time someone opens one from this
+//  site they leave their email. Clicking an app's picture or name
+//  opens a one-line signup in its card; once they're signed up the
+//  link opens, and it stays open on that browser from then on.
+//
+//  The links in the HTML are ordinary links, so with JavaScript off
+//  they simply work. On the apps' own sites there's no gate: their
+//  mailing-list bar is optional there.
+//
+//  To gate another app, add its address to APPS.
+// ============================================================
+var APPS = {
+  "soundscapes.beingsound.studio": { name: "Soundscape", source: "app-soundscape" },
+  "fretboardconstellations.beingsound.studio": { name: "Fretboard Constellations", source: "app-fretboard" },
+};
+var UNLOCK_KEY = "bs-apps-unlocked";
+var appsUnlocked = false;
+try { appsUnlocked = localStorage.getItem(UNLOCK_KEY) === "yes"; } catch (e) { /* storage blocked: ask once per visit */ }
+
+function appFor(link) {
+  return link && link.hostname ? APPS[link.hostname] : null;
+}
+
+// Build one gate form per app card. Made with DOM methods (no innerHTML),
+// so nothing from the page is ever read as markup.
+document.querySelectorAll(".album-card").forEach(function (card) {
+  var link = Array.prototype.find.call(card.querySelectorAll("a[href]"), appFor);
+  var info = card.querySelector(".album-card-info");
+  if (!link || !info) return;
+  var app = appFor(link);
+
+  var form = document.createElement("form");
+  form.className = "capture-form capture-form-inline app-gate";
+  form.dataset.source = app.source;
+  form.dataset.success = "unlock";
+  form.dataset.appUrl = link.href;
+  form.dataset.appName = app.name;
+  form.noValidate = true;
+  form.hidden = true;
+
+  var text = document.createElement("p");
+  text.className = "app-gate-text";
+  text.textContent = "Free to use. Leave your email and the link opens right here.";
+
+  var honeypot = document.createElement("input");
+  honeypot.type = "text";
+  honeypot.className = "capture-hp";
+  honeypot.name = "website";
+  honeypot.tabIndex = -1;
+  honeypot.autocomplete = "off";
+  honeypot.setAttribute("aria-hidden", "true");
+
+  var id = "gate-" + app.source + "-" + Math.random().toString(36).slice(2, 7);
+  var label = document.createElement("label");
+  label.className = "capture-label";
+  label.htmlFor = id;
+  label.textContent = "Email address";
+
+  var email = document.createElement("input");
+  email.type = "email";
+  email.id = id;
+  email.name = "email_address";
+  email.className = "capture-input";
+  email.placeholder = "you@example.com";
+  email.required = true;
+  email.autocomplete = "email";
+
+  var button = document.createElement("button");
+  button.type = "submit";
+  button.className = "button-link capture-button";
+  button.textContent = "Get the link";
+
+  var message = document.createElement("p");
+  message.className = "capture-message";
+  message.setAttribute("role", "status");
+  message.setAttribute("aria-live", "polite");
+
+  [text, honeypot, label, email, button, message].forEach(function (el) { form.appendChild(el); });
+  info.appendChild(form);
+  wireCaptureForm(form);
 });
+
+// A click on an app link before signing up opens that card's gate instead.
+document.addEventListener("click", function (event) {
+  if (appsUnlocked) return;
+  var link = event.target.closest && event.target.closest("a[href]");
+  if (!appFor(link)) return;
+  var card = link.closest(".album-card");
+  var gate = card && card.querySelector(".app-gate");
+  if (!gate) return; // not in a card: let it through
+  event.preventDefault();
+  gate.hidden = false;
+  var field = gate.querySelector(".capture-input");
+  if (field) { field.focus({ preventScroll: true }); }
+  gate.scrollIntoView({ block: "nearest", behavior: "smooth" });
+});
+
+// Signed up: open every app for this visitor, and put a plain link to the
+// app they asked for where the form was (opening it ourselves after the
+// wait would be blocked as a pop-up).
+function unlockApps(form) {
+  appsUnlocked = true;
+  try { localStorage.setItem(UNLOCK_KEY, "yes"); } catch (e) { /* this visit only */ }
+  document.querySelectorAll(".app-gate").forEach(function (gate) {
+    gate.hidden = true;
+  });
+  var done = document.createElement("p");
+  done.className = "app-gate-open";
+  done.appendChild(document.createTextNode("You're in. "));
+  var open = document.createElement("a");
+  open.href = form.dataset.appUrl;
+  open.target = "_blank";
+  open.rel = "noopener noreferrer";
+  open.textContent = "Open " + form.dataset.appName;
+  done.appendChild(open);
+  form.parentNode.insertBefore(done, form.nextSibling);
+}
 
 // Small helper: show a status or error message under a form.
 function showMessage(el, text, isError) {

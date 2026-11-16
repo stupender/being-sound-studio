@@ -298,7 +298,7 @@ const robotsMeta =
   );
 
 function navigateToPage(pageKey, options = {}) {
-  const { updateHistory = true, replaceState = false } = options;
+  const { updateHistory = true, replaceState = false, query = "" } = options;
   const targetKey = pageRegistry[pageKey] ? pageKey : defaultPageKey;
 
   // Keep noindex pages out of search; let every other page be indexed normally.
@@ -334,7 +334,7 @@ function navigateToPage(pageKey, options = {}) {
     const normalizedCurrent = normalizePath(window.location.pathname);
     const normalizedDesired = normalizePath(desiredPath);
     if (replaceState) {
-      window.history.replaceState({ page: targetKey }, "", desiredPath);
+      window.history.replaceState({ page: targetKey }, "", desiredPath + query);
     } else if (normalizedCurrent !== normalizedDesired) {
       window.history.pushState({ page: targetKey }, "", desiredPath);
     }
@@ -361,6 +361,11 @@ function navigateToPage(pageKey, options = {}) {
 
   // Reset scroll so each "page" loads at the top.
   window.scrollTo({ top: 0, left: 0, behavior: "auto" });
+
+  // Count the page view for ads, if a tag is set up (tracking.js).
+  if (typeof trackPageView === "function") {
+    trackPageView(pageRegistry[targetKey].path, document.title);
+  }
 }
 
 function normalizePath(pathname) {
@@ -381,8 +386,24 @@ window.addEventListener("popstate", () => {
   navigateToPage(pageKey, { updateHistory: false });
 });
 
-const initialPage = getPageFromPath(window.location.pathname);
-navigateToPage(initialPage, { replaceState: true });
+// The first page comes from the address. Ads can also link to the home
+// address with ?page=sound-sessions — the home address always answers
+// with a normal page, which ad platforms check before running an ad
+// (a deep link like /sound-sessions is served through 404.html, so it
+// reports "not found" to them even though people see the page fine).
+// The rest of the query (utm_… ad details) stays in the address.
+const landingQuery = new URLSearchParams(window.location.search);
+const requestedPage = landingQuery.get("page");
+landingQuery.delete("page");
+const initialPage =
+  requestedPage && pageRegistry[requestedPage]
+    ? requestedPage
+    : getPageFromPath(window.location.pathname);
+const keptQuery = landingQuery.toString();
+navigateToPage(initialPage, {
+  replaceState: true,
+  query: (keptQuery ? "?" + keptQuery : "") + window.location.hash,
+});
 
 // ============================================================
 //  Background halves (the glass pages)
