@@ -2131,6 +2131,24 @@ body:has(.projects-container.show) .site-footer {
     margin-top: 18px;
 }
 
+.booking-guide {
+    margin-bottom: 14px;
+    font-size: 0.8em;
+}
+
+/* 60 minutes is where most people start, so it's the one filled button:
+   anyone unsure has an obvious default. (Overrides the glass pages'
+   clear buttons; it inverts on hover like the rest.) */
+.booking-lengths .button-link.booking-suggested {
+    background-color: var(--bone);
+    color: var(--ink);
+}
+
+.booking-lengths .button-link.booking-suggested:hover {
+    background-color: transparent;
+    color: var(--bone);
+}
+
 /* --- App gate: the one-line signup an app card opens (forms.js) ---
    It sits under the card's words, in the card's own small type. */
 .capture-form-inline.app-gate {
